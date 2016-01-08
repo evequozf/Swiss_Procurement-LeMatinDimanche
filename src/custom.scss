@@ -1,0 +1,142 @@
+@CHARSET "UTF-8";
+
+$serif    : 'Droid Serif','Baskerville','Baskerville Old Face','Hoefler Text',Garamond,'Libre Baskerville','Times New Roman',serif;
+$sans     : 'Raleway', sans-serif;
+
+body {
+  font-family: $sans;
+  font-weight: 400;
+}
+
+h1 {
+  font-family: $serif;
+  font-weight: 700;
+}
+
+h2, h3, h4 {
+	font-family: $serif;
+}
+
+svg {
+	//border: 1px solid #ccc;
+}
+
+#graph-container {
+	//padding-top: 2em;
+	& #left-column, & #right-column {
+		//border: 1px solid green;
+	}
+	& #left-column {
+		& #sunburst-container {
+			text-align: center;
+			//border: 1px solid yellow;
+		}
+		& svg {
+			//text-align: center;
+			//border: 1px solid red;
+		}
+		& g {
+			cursor: pointer;
+		}
+		& path {
+			stroke: white;
+			stroke-width:1;
+			fill: white;
+		}
+		& text {
+			// make text non-selectable / non-highlitable
+			pointer-events: none;
+			-webkit-touch-callout: none;
+		    -webkit-user-select: none;
+		    -khtml-user-select: none;
+		    -moz-user-select: none;
+		    -ms-user-select: none;
+		    user-select: none;
+			//fill: white;
+		}
+	}
+	& #right-column {
+		border: 1px solid #ddd;
+		background: #fafafa;
+		
+		& #details-pane {
+			//border: 1px solid green;
+		}
+
+		& #officename {
+			font-weight: bold;
+		}
+
+		& .details {
+			font-size: 120%;
+			padding: 1em 0;
+		}
+		& rect {
+			fill: #ccc;
+		}
+		.axis path,
+		.axis line {
+		  fill: none;
+		  stroke: #000;
+		  shape-rendering: crispEdges;
+		}
+		.y.axis path,
+		.x.axis path {
+		  display: none;
+		}
+	}
+	//border: 1px solid yellow;
+}
+
+#over-sunburst {
+	width: 100%;
+	position: relative;
+
+	#breadcrumb {
+		top: 0;
+		left: 0;
+		position: absolute;
+		//float:left;  // uncomment to try (but comment position and top-left-right above, here, and below)
+		// ALTERNATIVE -> SET UP DIFFERENT INTERACTIONS FOR MOBILE & DESKTOP !!
+		& span {
+			padding: .25em;
+			&:hover {
+				//text-decoration: underline;
+			}
+			&.separator:hover {
+				text-decoration: none;
+			}
+			cursor: pointer;
+		}
+		//border: 1px solid yellow;
+	} 
+
+	#fixed-tooltip {
+		top: 0;
+		right: 0;
+		position: absolute;
+		//float:right  //uncomment to try
+		text-align: right;
+		background-color: white;
+		padding: .25em;
+		//border: 1px solid lightgray;
+		& #fixed-tooltip-dept {
+			font-size: 100%;
+		}
+		& #fixed-tooltip-chf {
+			font-size: 120%;
+			font-weight: bold;
+		}
+		//border: 1px solid green;
+	}
+}
+
+
+
+.tooltip {
+	background: white;
+	padding: 1em;
+	border: 1px solid #333;
+	box-shadow: 0 0 5px #888;
+}
+

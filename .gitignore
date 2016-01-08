@@ -11,3 +11,7 @@ src/js/viz.js
 src/js/sunburst.js
 
 src/js/bar.js
+
+src/viz.js
+
+src/import/fake.csv
