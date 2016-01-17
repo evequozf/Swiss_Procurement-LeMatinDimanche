@@ -5,18 +5,33 @@ A DISCUTER
 - quoi afficher dans détails
 - comment faire figurer montant connus / inconnus (ma suggestion: pas dans sunburst)
 
-
 HIGH
 - calculer pourcentages dans données
 - multilingue : à discuter -> fichier lang.fr.js importé dans .html et qui crée une variable globale ? 
 Probablement le plus simple...
 
+CONVENU CAFE DE GRANCY
+√ - fixed-tooltip à cacher sur mobile
+√ - tooltip: afficher aussi on mouse-over du breadcrumb
+- label sunburst : mettre % en + sur les plus gros (si place)
+- dernier niveau (seulement) -> ajouter le type de prestation, par ex. avec icône ? 
+- catégories : sparkline similaire NY times pour vue détaillée, fonction qui le fait
+- tooltip sur entreprise: table avec catégories de dépenses (reprendre icônes ?)
+- switch années au-dessous sunburst "Année: 2011 2012 2013 etc."
+- basic tracking analytics
+
+
 MIDDLE
 - "polissage" par Inventaire ?
+- garder "état de la visualisation" quand on change d'année ? (= actuel filter, je pense, garder le datum actuel...)
+- pym.js
+
 
 LOW
+X - Breadcrumb sur mobile (pas d'overlap)
 - transition pour bar chart
 - vraies données
+- use breadcrumb from bootstrap
 - interaction continue sur mobile pour sunburst (y.c. fixed tooltip -> différencier avec media queries ?)
   => voir aussi http://bl.ocks.org/mbostock/770ae19ca830a4ce87f5 -> listener ailleurs ? laisser tomber ?
 
@@ -26,6 +41,7 @@ LOW
 √ - tooltip: dans sunburst une zone fixe plutôt ?? Sous le breadcrumb par ex. ?
 √ - highlight sunburst en masquant les autres (baisser opacité)
 √ - rendre interaction indépendante du clic -> avoir une fonction "showDetail(dept)"
+√ - update showDetail to provide data in argument, not dept name
 
 
 *******************/
@@ -45,7 +61,7 @@ d3.dsv(";")("import/fake-utf8.csv", function(error, data) {
 	buildSunburst(sbData);
 
 	//show the details pane for root node of sunburst
-	showDetail(sbData.name);
+	showDetail(sbData);
 
 	// init responsiveness of svgs
 	ds.responsive(d3.select("#sunburst-container svg")).start();
@@ -151,12 +167,12 @@ function buildSunburst(data) {
   var paths = sunburstG.append("path")
       .attr("d", arc)
       .style("fill", function(d) { return d.color; })
-	  .on("click", function(d) { return showDetail(d.name); })
+	  .on("click", function(d) { return showDetail(d); })
 	  .on("mouseover", mouseOver)
 	  .on("mouseout", mouseOut)
 	  //.on("touchstart", function(d) { console.log("touchstart"); console.log(d); mouseOver(d); })
 	  //.on("touchmove", function(d) { console.log("touchmove"); console.log(d); mouseOver(d); })
-	  .on("mouseout", mouseOut)
+	  //.on("mouseout", mouseOut)
       //.style("fill", "#ccc")//function(d) { return color((d.children ? d : d.parent).name); })
 	  //.style("fill", function(d) { return color(d.depth) });
       
@@ -201,12 +217,12 @@ function mouseOut(d) {
 	d3.selectAll("#fixed-tooltip *").text(null);
 }
 
-// show extended details pane for a selected / clicked element
-function showDetail(dept) {
+// show extended details pane for a selected / clicked element (given data)
+function showDetail(d) {
 	
 	// find dept (must be called on elements where data was bound, i.e 'g' here !)
-	var s = sunburstG.filter(function(d){ return d.name === dept; });
-	var d = s.datum();
+	//var s = sunburstG.filter(function(d){ return d.name === dept; });
+	//var d = s.datum();
 	
 	// update sunburst
 	var trans = sunburstG.transition()
@@ -252,8 +268,11 @@ function breadCrumb(d) {
 			.attr("class","separator")
 			.text(">");
 		var n = bc.insert("span", ":first-child")
+      .datum(p) // attach current data to breadcrumb button
 			.attr("class","btn btn-default")
-			.on("click", function() { showDetail(this.textContent) }); // (text content of trail is used as param to showDetail)
+			.on("click", function(dd) { showDetail(dd) })
+      .on("mouseover", mouseOver) // show tooltip on hover of breadcrumb
+      .on("mouseout", mouseOut);   // hide tooltip on hover of breadcrumb
 		// home icon for root
 		if(p.name == globals.lang.root) {
 			n.append("i").attr("class", "fa fa-home");
