@@ -20,7 +20,7 @@
 	<h2 class="col-md-12">Répartition par départements et offices</h2>
 </div>
 <div class="row" id="graph-container">
-	<div class="col-md-12 col-lg-6" id="left-column">
+	<div class="col-sm-12 col-md-6" id="left-column">
 		<!--<div id="breadcrumb">Niveau:</div>-->
 		<div id="over-sunburst">
 			<div id="breadcrumb"></div>
@@ -33,19 +33,31 @@
 		<div id="sunburst-container"></div>
 	</div>
 	<!--<div class="col-lg-2"></div>-->
-	<div class="col-md-12 col-lg-6" id="right-column">
+	<div class="col-sm-12 col-md-6" id="right-column">
 		<div id="details-pane">
 			<h2>Détails pour <span id="officename"></span></h2>
 			<div class="details">
-				<div>(chiffre fictifs -> à implémenter)</div>
-				<div>Montant total des mandats: <span>CHF 1'000'0000'0000.-</span></div>
+				<table>
+				<tr>
+					<td>Montant total des mandats</td><td id="details-total"></td><td class="percent"></td>
+				</tr>
+				<tr>
+					<td>dont mandataires connus</td><td id="details-known"></td><td id="details-known-percent" class="percent"></td>
+				</tr>
+				<tr>
+					<td>dont mandataires inconnus</td><td id="details-unknown"></td><td id="details-unknown-percent" class="percent"></td>
+				</tr>
+				</table>
+				<!--
 				<div>
 					&nbsp;&nbsp;&nbsp;dont mandataires connus : CHF 45'000'0000.- (xx% du total)<br/>
 					&nbsp;&nbsp;&nbsp;dont mandataires inconnus : CHF 45'000'0000.- (xx% du total)</p>
-				</div>
+				</div>-->
 			</div>
 			<h4>Mandataires principaux</h4>
 			<div id="barchart-container"></div>
+			<h4>Mandats par catégorie</h4>
+			<div id="sparkline-container"></div>
 		</div>
 	</div>
 </div>
@@ -53,6 +65,7 @@
 </div> <!-- end container fluid -->
 
 <script src="./d3.v3.min.js"></script>
+<script src="./d3-jetpack.js"></script>
 <script src="./dsutils.js"></script>
 <script src="./viz.js"></script>
 <!-- PYM specifics -->

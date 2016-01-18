@@ -6,19 +6,22 @@ A DISCUTER
 - comment faire figurer montant connus / inconnus (ma suggestion: pas dans sunburst)
 
 HIGH
-- calculer pourcentages dans données
+√ - calculer pourcentages dans données (0.5h : 16:00)
 - multilingue : à discuter -> fichier lang.fr.js importé dans .html et qui crée une variable globale ? 
 Probablement le plus simple...
 
 CONVENU CAFE DE GRANCY
-√ - fixed-tooltip à cacher sur mobile
-√ - tooltip: afficher aussi on mouse-over du breadcrumb
-- label sunburst : mettre % en + sur les plus gros (si place)
-- dernier niveau (seulement) -> ajouter le type de prestation, par ex. avec icône ? 
-- catégories : sparkline similaire NY times pour vue détaillée, fonction qui le fait
+√ - fixed-tooltip à cacher sur mobile 
+√ - tooltip: afficher aussi on mouse-over du breadcrumb (1h - 15:30)
+~ - catégories : sparkline similaire NY times pour vue détaillée, fonction qui le fait (+ icônes?) -> refactor disposition
+- détails, comme dans carnet
 - tooltip sur entreprise: table avec catégories de dépenses (reprendre icônes ?)
 - switch années au-dessous sunburst "Année: 2011 2012 2013 etc."
+- intégrer données Alex
+- refactor données pour calculer la valeur des 'Unknown'
 - basic tracking analytics
+- label sunburst : mettre % en + sur les plus gros (si place)
+- dernier niveau (seulement) -> ajouter le type de prestation, par ex. avec icône ? 
 
 
 MIDDLE
@@ -48,16 +51,17 @@ X - Breadcrumb sur mobile (pas d'overlap)
 
 var globals = require('./globals.js');
 var load = require('./load.js');
+var spark = require('./sparkline.js');
 
 /**************** data loading & initialization ******************/
 
 var fullData; // full data 
-d3.dsv(";")("import/fake-utf8.csv", function(error, data) {
+d3.dsv(";")("import/fake2.csv", function(error, data) {
 	
 	fullData = data;
 
 	// create sunburst
-	var sbData = load.prepareDataSunburst(data);
+	var sbData = load.prepareDataSunburst(data,globals.currentYear);
 	buildSunburst(sbData);
 
 	//show the details pane for root node of sunburst
@@ -66,6 +70,7 @@ d3.dsv(";")("import/fake-utf8.csv", function(error, data) {
 	// init responsiveness of svgs
 	ds.responsive(d3.select("#sunburst-container svg")).start();
 	ds.responsive(d3.select("#barchart-container svg")).start();
+
 });
 
 /**************** sunburst building *****************/
@@ -167,7 +172,7 @@ function buildSunburst(data) {
   var paths = sunburstG.append("path")
       .attr("d", arc)
       .style("fill", function(d) { return d.color; })
-	  .on("click", function(d) { return showDetail(d); })
+	  .on("click touchend", function(d) { return showDetail(d); })
 	  .on("mouseover", mouseOver)
 	  .on("mouseout", mouseOut)
 	  //.on("touchstart", function(d) { console.log("touchstart"); console.log(d); mouseOver(d); })
@@ -208,13 +213,29 @@ function mouseOver(d) {
   	// Fixed tooltip on sunburst
   	d3.select("#fixed-tooltip-dept").text(d.nameFull);
   	d3.select("#fixed-tooltip-chf").text("CHF " + ds.formatNumber(d.value));
-  	d3.select("#fixed-tooltip-percent").text("(xx % " + globals.lang.dutotal + ")");
+  	d3.select("#fixed-tooltip-percent").text( 
+      (typeof d.parent !== 'undefined' ?  //root node -> no text
+        (d.percent < 1 ? "< 1" : d.percent)  + " % " + globals.lang.of + " " + d.parent.name 
+        : "")); 
 }
 
 function mouseOut(d) {
 	sunburstG
 	    .style("opacity", "1");
 	d3.selectAll("#fixed-tooltip *").text(null);
+}
+
+// Returns amount of known suppliers in d and children
+function getChildrenAmountKnown(d) {
+  var f;
+  if(d.depth == 0) {
+    f = function(dd) { return dd.supplier !== globals.UNKNOWN; }
+  } else if(d.depth == 1) {
+    f = function(dd) { return (dd.supplier !== globals.UNKNOWN) && (dd.dept === d.name); }
+  } else if(d.depth == 2) {
+    f = function(dd) { return (dd.supplier !== globals.UNKNOWN) && (dd.office === d.name); }
+  }
+  return d3.sum(fullData.filter(f), function(dd) {return +dd.amount})
 }
 
 // show extended details pane for a selected / clicked element (given data)
@@ -224,6 +245,9 @@ function showDetail(d) {
 	//var s = sunburstG.filter(function(d){ return d.name === dept; });
 	//var d = s.datum();
 	
+  // global color to be this color
+  globals.currentColor = d.color;
+
 	// update sunburst
 	var trans = sunburstG.transition()
       .duration(750)
@@ -240,7 +264,15 @@ function showDetail(d) {
 	  	  .attrTween("text-anchor", function(d) { return function() { return textAnchor(d); } })
 	  	  .styleTween("opacity", function(d) { return function() { return textOpacity(d); }; });
 
-	// update bar chart
+  // update detail text
+  var known = getChildrenAmountKnown(d), unknown = d.chf - known;
+  d3.select("#details-total").text("CHF "+ds.formatNumber(d.chf));
+  d3.select("#details-known").text("CHF "+ds.formatNumber(known));
+  d3.select("#details-unknown").text("CHF "+ds.formatNumber(unknown));
+  d3.select("#details-known-percent").text(Math.round(100*known/d.chf) + "%");
+  d3.select("#details-unknown-percent").text(Math.round(100*unknown/d.chf) + "%");
+	
+  // update bar chart
 	var fdata;
 	if(d.depth == 0) {
 		fdata = fullData;
@@ -249,13 +281,22 @@ function showDetail(d) {
 	} else if (d.depth == 2) {
 		fdata = fullData.filter(function(dd){return dd.office === d.name});
 	}
-	updateBar(fdata);
+	updateBar(fdata,d.color);
 
 	// update bar chart title
-	d3.select("#officename").text(d.name);
+	d3.select("#officename").text(d.nameFull);
 
 	// update breadcrumb trail
 	breadCrumb(d);
+
+  // update sparklines
+  // test sparkline
+  var div = d3.select("#sparkline-container");
+  div.selectAll("*").remove();
+  for(var i=0; i<3; i++) {
+    var sparkdata = fullData.filter(function(d) {return d.office === "BBL" && d.category === "Bureautique"});
+    spark.Sparkline(div,sparkdata);
+  }
 }
 
 // Given data d, build breadcrumb iteratively
@@ -294,7 +335,7 @@ function breadCrumb(d) {
 function textOpacity(d) {
   	var diff = arc.startAngle()(d) - arc.endAngle()(d);
   	var mina = Math.PI * globals.MINANGLE / 180; 
-  	var show = Math.abs(diff) > mina && arc.innerRadius()(d) != 0; // inner radius = 0 if center
+  	var show = Math.abs(diff) > mina && arc.innerRadius()(d) != 0; // inner radius == 0 iff center
   	return show ? 1 : 0;
 }
 
@@ -303,9 +344,9 @@ function getAngle(d) {
 	var angle = ( (arc.startAngle()(d) + arc.endAngle()(d)) / 2 ) - Math.PI / 2;
 	angle = angle / Math.PI * 180; // to degrees 
 	var newAngle = angle;
-    while (newAngle <= 0) newAngle += 360;
-    while (newAngle > 360) newAngle -= 360;
-    return newAngle;
+  while (newAngle <= 0) newAngle += 360;
+  while (newAngle > 360) newAngle -= 360;
+  return newAngle;
 }
 
 // text should be flipped if between 90 and 270
@@ -394,7 +435,8 @@ function buildBar(data) {
       .attr("y", function(d) { return ybar(d.supplier); })
       .attr("height", ybar.rangeBand())
       .attr("x", function(d) { return xbar(0); })
-      .attr("width", function(d) { return xbar(d.amount); });
+      .attr("width", function(d) { return xbar(d.amount); })
+      .style("fill", globals.currentColor);
 
   // tooltip
   var tt = ds.ttip(bars);

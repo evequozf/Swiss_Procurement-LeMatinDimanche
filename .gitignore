@@ -2,6 +2,8 @@
 bin/
 src/.sass-cache/
 
+src/bootstrap/
+
 src/viz - original.js
 
 src/Makefile 2

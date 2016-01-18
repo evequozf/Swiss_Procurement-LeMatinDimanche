@@ -4,8 +4,11 @@ var globals = require('./globals.js');
 
 // Prepare data format for sunburst: should look like import/fake-sunburst.json
 // + added fields e.g. fullDept, fullOffice, percentages, ...
-function prepareDataSunburst(fulldata) {
+function prepareDataSunburst(fulldata,year) {
 	
+	//sunburst shows only one year -> keep only current year
+	filtereddata = fulldata.filter(function(d) { return +d.year == year; });
+
 	//console.log(data);
 	var nest = d3.nest()
 		.key(function(d) {return d.dept;})
@@ -15,7 +18,7 @@ function prepareDataSunburst(fulldata) {
 			"fullOffice": values[0].fullOffice, // store additional params
 			"chf":d3.sum(values, function(dd) {return +dd.amount;})
 		}})
-		.map(fulldata,d3.map);
+		.map(filtereddata,d3.map);
 	//console.log(nest);
 
 	// construct sunburst data (aka fake.json format) from nested data above
@@ -33,6 +36,12 @@ function prepareDataSunburst(fulldata) {
 			sumoffices += +value.chf;
 			fullDept = value.fullDept;  // parameters are stored at the leaf level, i.e. here
 		});
+		// level 2 : insert proportion of each office
+		offices = offices.map(function(d) {
+			d.percent = Math.round(100 * d.chf / sumoffices); 
+			return d;
+		});
+		// level 1 : dept create
 		depts.push( {
 				"name": key,
 				"nameFull": fullDept,
@@ -40,8 +49,13 @@ function prepareDataSunburst(fulldata) {
 				"children": offices
 			});
 		sumdepts += sumoffices;
+		// level 1 : insert proportion of each dept
+		depts = depts.map(function(d) {
+			d.percent = Math.round(100 * d.chf / sumdepts); 
+			return d;
+		})
 	});
-	return {"name":globals.lang.root, "nameFull":globals.lang.root, "children": depts, "chf": sumdepts};
+	return {"name":globals.lang.root, "nameFull":globals.lang.root, "children": depts, "chf": sumdepts, "percent": 100};
 }
 
 /**************** data preparation bar ******************/

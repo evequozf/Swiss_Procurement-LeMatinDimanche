@@ -3,6 +3,9 @@
 $serif    : 'Droid Serif','Baskerville','Baskerville Old Face','Hoefler Text',Garamond,'Libre Baskerville','Times New Roman',serif;
 $sans     : 'Raleway', sans-serif;
 
+$spark_col_decoration: gray;
+
+
 body {
   font-family: $sans;
   font-weight: 400;
@@ -57,7 +60,8 @@ svg {
 	}
 	& #right-column {
 		border: 1px solid #ddd;
-		background: #fafafa;
+		//background: #fafafa;
+		background: #eee;
 		
 		& #details-pane {
 			//border: 1px solid green;
@@ -68,11 +72,19 @@ svg {
 		}
 
 		& .details {
-			font-size: 120%;
+			//font-size: 120%;
 			padding: 1em 0;
+
+			table td {
+				padding-right: 2em;
+				padding-top: 0.2em;
+				padding-bottom: 0.2em;
+			}
 		}
-		& rect {
+		.bar {
 			fill: #ccc;
+			stroke-width: .5;
+			stroke: $spark_col_decoration;
 		}
 		.axis path,
 		.axis line {
@@ -80,6 +92,7 @@ svg {
 		  stroke: #000;
 		  shape-rendering: crispEdges;
 		}
+		.y.axis line,
 		.y.axis path,
 		.x.axis path {
 		  display: none;
@@ -127,6 +140,9 @@ svg {
 			font-size: 120%;
 			font-weight: bold;
 		}
+		& #fixed-tooltip-percent {
+			color: gray;
+		}
 		//border: 1px solid green;
 	}
 }
@@ -139,4 +155,41 @@ svg {
 	border: 1px solid #333;
 	box-shadow: 0 0 5px #888;
 }
+
+
+/********** Sparklines *******************/
+.sparkline {
+	margin: 3em 0;
+	font-size: 75%;
+	div.left, 
+	div.right {
+		display: inline-block;
+		//border: 1px solid green;
+		//vertical-align: text-top;
+		vertical-align: middle;
+	}
+	div.left {
+		font-weight: bold;
+		margin-right: 5em;
+	}
+	.bar {
+		stroke-width: .5;
+		stroke: $spark_col_decoration;
+	}
+	.axis text {
+		fill: $spark_col_decoration;
+	}
+	.axis path,
+	.axis line {
+	  stroke: $spark_col_decoration !important;
+	  shape-rendering: crispEdges;
+	}
+	.axis path {
+	  display: none;
+	}
+	.y.axis line {
+		display: none;
+	}
+}
+
 
