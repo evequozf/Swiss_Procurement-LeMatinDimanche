@@ -20,8 +20,8 @@ function Sparkline(element, data) {
 		})
 		.entries(data);
 
-	var margin = {top: 8, right: 100, bottom: 20, left: 10},
-    	width = 200 - margin.left - margin.right,
+	var margin = {top: 8, right: 10, bottom: 20, left: 80},
+    	width = 180 - margin.left - margin.right,
     	height = 60 - margin.top - margin.bottom;
 
 	var x = d3.scale.ordinal()
@@ -36,12 +36,12 @@ function Sparkline(element, data) {
 
 	var yAxis = d3.svg.axis()
 	    .scale(y)
-	    .orient("right");
+	    .orient("left");
 
 	//function my() {
 
       //console.log(_data);
-      var div = _element.append("div.sparkline");
+      var div = _element.append("div.sparkline.col-xs-6.col-md-4.col-lg-3");
       var leftdiv = div.append("div.left");
       var rightdiv = div.append("div.right");
 
@@ -51,7 +51,8 @@ function Sparkline(element, data) {
 		  .append("g")
 		    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	  x.domain(_data.map(function(d) { return d.key; }));             // FIXME : should it be fixed ?
+	  //x.domain(_data.map(function(d) { return d.key; })); 
+	  x.domain([2011,2012,2013,2014]);              // FIXME : should it be fixed ?
 	  y.domain([0, d3.max(_data, function(d) { return d.values; })]);  // FIXME : should it be fixed ?
 
 	  //ticks : max and min only 
@@ -67,7 +68,7 @@ function Sparkline(element, data) {
 
 	  chart.append("g")
 	      .attr("class", "y axis")
-	      .attr("transform", "translate("+width+",0)")
+	      //.attr("transform", "translate("+width+",0)")
 	      .call(yAxis);
 
 	  chart.selectAll(".bar")
@@ -83,6 +84,8 @@ function Sparkline(element, data) {
 	  // text
 	  leftdiv.text(_fullData[0].fullCategory);
 	//}
+
+	  //ds.responsive(rightdiv.select("svg")).start();
 	
 	//return my;
 }

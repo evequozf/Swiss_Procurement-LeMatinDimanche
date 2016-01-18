@@ -1,14 +1,18 @@
 @CHARSET "UTF-8";
 
-$serif    : 'Droid Serif','Baskerville','Baskerville Old Face','Hoefler Text',Garamond,'Libre Baskerville','Times New Roman',serif;
-$sans     : 'Raleway', sans-serif;
+$serif    : 'Lora','Droid Serif','Georgia','Baskerville','Baskerville Old Face','Hoefler Text',Garamond,'Libre Baskerville','Times New Roman',serif;
+$sans     : 'Source Sans Pro','Raleway', arial, sans-serif;
+
+//$serif    : 'Georgia','Baskerville','Baskerville Old Face','Hoefler Text',Garamond,'Libre Baskerville','Times New Roman',serif;
+//$sans     : arial, sans-serif;
+
 
 $spark_col_decoration: gray;
 
 
 body {
   font-family: $sans;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 h1 {
@@ -16,8 +20,15 @@ h1 {
   font-weight: 700;
 }
 
-h2, h3, h4 {
-	font-family: $serif;
+h3, h4 {
+	//font-family: $serif;
+	font-family: $sans;
+	font-weight: 700;
+}
+
+h4 {
+	padding-bottom: .2em;
+	border-bottom: 1px solid lightgray;
 }
 
 svg {
@@ -67,7 +78,8 @@ svg {
 			//border: 1px solid green;
 		}
 
-		& #officename {
+		& #officename,
+		& #year {
 			font-weight: bold;
 		}
 
@@ -75,27 +87,56 @@ svg {
 			//font-size: 120%;
 			padding: 1em 0;
 
-			table td {
-				padding-right: 2em;
-				padding-top: 0.2em;
-				padding-bottom: 0.2em;
+/***************************** Table summary *********************/
+			table {
+				border-collapse: collapse;
 			}
+
+			tr.total {
+				font-weight: bold;
+				font-size: 110%;
+			}
+
+			td {
+				padding: 0.2em 1em;
+			}
+
+			td.number, td.percent {
+				text-align: right;
+			}
+
+			td.percent {
+				padding-right: 0;
+			}
+
+
 		}
-		.bar {
+		
+/****************** bar chart suppliers *****************/
+		& #barchart-container {
+			text-align: center;
+		}
+
+		& .bar {
 			fill: #ccc;
 			stroke-width: .5;
 			stroke: $spark_col_decoration;
 		}
-		.axis path,
-		.axis line {
+		
+		& .axis path,
+		& .axis line {
 		  fill: none;
 		  stroke: #000;
 		  shape-rendering: crispEdges;
 		}
-		.y.axis line,
-		.y.axis path,
-		.x.axis path {
+		& .y.axis line,
+		& .y.axis path,
+		& .x.axis path {
 		  display: none;
+		}
+
+		& .axis text {
+			font-size: 75%;
 		}
 	}
 	//border: 1px solid yellow;
@@ -159,18 +200,26 @@ svg {
 
 /********** Sparklines *******************/
 .sparkline {
-	margin: 3em 0;
-	font-size: 75%;
+	height: 150px;
+	margin: 1.5em 0em;
+	//border: 1px solid red;
+	//position: relative;
+	//font-size: 75%;
 	div.left, 
 	div.right {
-		display: inline-block;
+		//display: inline-block;
+		//vertical-align: middle;
 		//border: 1px solid green;
 		//vertical-align: text-top;
-		vertical-align: middle;
 	}
 	div.left {
 		font-weight: bold;
-		margin-right: 5em;
+		//vertical-align: bottom;
+		//margin-right: 5em;
+	}
+	div.right {
+		position: absolute;
+		bottom: 0;
 	}
 	.bar {
 		stroke-width: .5;

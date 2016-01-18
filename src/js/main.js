@@ -14,13 +14,13 @@ CONVENU CAFE DE GRANCY
 √ - fixed-tooltip à cacher sur mobile 
 √ - tooltip: afficher aussi on mouse-over du breadcrumb (1h - 15:30)
 ~ - catégories : sparkline similaire NY times pour vue détaillée, fonction qui le fait (+ icônes?) -> refactor disposition
-- détails, comme dans carnet
+~ - détails, comme dans carnet
 - tooltip sur entreprise: table avec catégories de dépenses (reprendre icônes ?)
 - switch années au-dessous sunburst "Année: 2011 2012 2013 etc."
-- intégrer données Alex
-- refactor données pour calculer la valeur des 'Unknown'
+√ - intégrer données Alex
+√ - refactor données pour calculer la valeur des 'Unknown'
 - basic tracking analytics
-- label sunburst : mettre % en + sur les plus gros (si place)
+X - label sunburst : mettre % en + sur les plus gros (si place)
 - dernier niveau (seulement) -> ajouter le type de prestation, par ex. avec icône ? 
 
 
@@ -56,9 +56,14 @@ var spark = require('./sparkline.js');
 /**************** data loading & initialization ******************/
 
 var fullData; // full data 
-d3.dsv(";")("import/fake2.csv", function(error, data) {
-	
+//d3.dsv(";")("import/fake2.csv", function(error, data) {
+d3.dsv(",")("import/EDA-2014-merge.csv", function(error, data) {
+  globals.currentYear = 2014; 
+
 	fullData = data;
+
+  // set year
+  d3.select("#year").text(globals.currentYear)
 
 	// create sunburst
 	var sbData = load.prepareDataSunburst(data,globals.currentYear);
@@ -264,13 +269,8 @@ function showDetail(d) {
 	  	  .attrTween("text-anchor", function(d) { return function() { return textAnchor(d); } })
 	  	  .styleTween("opacity", function(d) { return function() { return textOpacity(d); }; });
 
-  // update detail text
-  var known = getChildrenAmountKnown(d), unknown = d.chf - known;
-  d3.select("#details-total").text("CHF "+ds.formatNumber(d.chf));
-  d3.select("#details-known").text("CHF "+ds.formatNumber(known));
-  d3.select("#details-unknown").text("CHF "+ds.formatNumber(unknown));
-  d3.select("#details-known-percent").text(Math.round(100*known/d.chf) + "%");
-  d3.select("#details-unknown-percent").text(Math.round(100*unknown/d.chf) + "%");
+  // update detail summary text
+  updateSummary(d);
 	
   // update bar chart
 	var fdata;
@@ -281,7 +281,7 @@ function showDetail(d) {
 	} else if (d.depth == 2) {
 		fdata = fullData.filter(function(dd){return dd.office === d.name});
 	}
-	updateBar(fdata,d.color);
+	updateBar(fdata);
 
 	// update bar chart title
 	d3.select("#officename").text(d.nameFull);
@@ -290,13 +290,7 @@ function showDetail(d) {
 	breadCrumb(d);
 
   // update sparklines
-  // test sparkline
-  var div = d3.select("#sparkline-container");
-  div.selectAll("*").remove();
-  for(var i=0; i<3; i++) {
-    var sparkdata = fullData.filter(function(d) {return d.office === "BBL" && d.category === "Bureautique"});
-    spark.Sparkline(div,sparkdata);
-  }
+  updateSparklines(fdata);
 }
 
 // Given data d, build breadcrumb iteratively
@@ -373,9 +367,9 @@ function textAnchor(d) {
 /***************** bar chart -> to export elsewhere ? **************************/
 
 
-var barmargin = {top: 30, right: 40, bottom: 20, left: 90},
+var barmargin = {top: 20, right: 40, bottom: 20, left: 150},
 	barwidth = 500 - barmargin.left - barmargin.right,
-    barheight = 300 - barmargin.top - barmargin.bottom;
+  barheight = 400 - barmargin.top - barmargin.bottom;
 
 var ybar = d3.scale.ordinal()
     .rangeRoundBands([0, barheight], .1);
@@ -387,11 +381,13 @@ var xAxis = d3.svg.axis()
     .scale(xbar)
     .orient("top")
     .ticks(4)
-    .tickFormat(function(d) {return ds.formatNumber(d); });
+    .tickFormat(function(d) { return ds.formatNumber(d) });
 
 var yAxis = d3.svg.axis()
     .scale(ybar)
-    .orient("left");
+    .orient("left")
+    .tickFormat(function(d) { return d.substring(0, globals.SUPPLIER_LABEL_MAX) 
+          + (d.length > globals.SUPPLIER_LABEL_MAX ? "..." : ""); });
 
 var svgbar = d3.select("#barchart-container").append("svg")
     .attr("width", barwidth + barmargin.left + barmargin.right)
@@ -403,7 +399,7 @@ var svgbar = d3.select("#barchart-container").append("svg")
 
 function updateBar(data) {
 	var d = load.prepareDataBar(data);
-	buildBar(d);
+	buildBar(d.slice(0, globals.SUPPLIER_AMOUNT)); //take only SUPPLIER_AMOUNT first suppliers, FIXME : put elsewhere ?
 }
 
 /**************** viz building bar ******************/
@@ -445,4 +441,46 @@ function buildBar(data) {
   			"<p>CHF  "+ds.formatNumber(d.amount)+"</p>"
   	}
   );
+}
+
+
+/**************** details: 'summary' ******************/
+
+function updateSummary(d) {
+  var known = getChildrenAmountKnown(d), unknown = d.chf - known;
+  d3.select("#details-total").text(ds.formatNumber(d.chf));
+  d3.select("#details-known").text(ds.formatNumber(known));
+  d3.select("#details-unknown").text(ds.formatNumber(unknown));
+  d3.select("#details-known-percent").text(Math.round(100*known/d.chf));
+  d3.select("#details-unknown-percent").text(Math.round(100*unknown/d.chf));
+  d3.select(".total").style("background-color", globals.currentColor);
+}
+
+/**************** details: sparklines ******************/
+
+function updateSparklines(filtereddata) {
+  // clean sparkline
+  var div = d3.select("#sparkline-container");
+  div.selectAll("*").remove();
+  
+  //with fake data
+  /*
+  for(var i=0; i<3; i++) {
+    var sparkdata = fullData.filter(function(d) {return d.office === "BBL" && d.category === "Bureautique"});
+    spark.Sparkline(div,sparkdata);
+  }
+  */
+  
+  // with real data
+  // group by category, compute total over category, and store in array
+  var cats = d3.nest()
+    .key(function(d) { return d.fullCategory; })
+    .rollup(function(values) { return d3.sum(values, function(d) {return +d.amount; }) })
+    .entries(filtereddata);
+  // sort by descending total over category
+  cats = cats.sort(function(a,b) {return d3.descending(a.values,b.values)});
+  // create a sparkline for each category
+  cats.forEach(function(c) {
+    spark.Sparkline(div, filtereddata.filter(function(dd) { return dd.fullCategory === c.key; }));
+  }); 
 }
