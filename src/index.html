@@ -12,21 +12,23 @@
 <link href='./custom.css' rel='stylesheet' type='text/css'>
 <body>
 
-<div class="container-fluid">
+<div class="container">
 
-<!--
 <div class="row">
 	<h1 class="col-md-12">Mandats de la Confédération</h1>
 </div>
+<!--
 <div class="row">
 	<h2 class="col-md-12">Répartition par départements et offices</h2>
 </div>
 -->
+<div class="row">
+<div id="breadcrumb"></div>
+</div>
 <div class="row" id="graph-container">
 	<div class="col-sm-12 col-md-6" id="left-column">
 		<!--<div id="breadcrumb">Niveau:</div>-->
 		<div id="over-sunburst">
-			<div id="breadcrumb"></div>
 			<div id="fixed-tooltip" class="hidden-xs"> <!-- hidden on mobile -->
 				<div id="fixed-tooltip-dept"></div>
 				<div id="fixed-tooltip-chf"></div>
@@ -39,17 +41,17 @@
 	<div class="col-sm-12 col-md-6" id="right-column">
 		<div id="details-pane">
 			<h2>Mandats <span id="year"></span> de <span id="officename"></span></h2>
-			<div class="details">
+			<div class="details table-responsive">
 				<!-- <h4>Résumé</h4> -->
-				<table>
+				<table class="table">
 				<tr class="total">
-					<td>Montant total des mandats</td><td>CHF</td><td class="number" id="details-total"></td><td class="percent"></td><td></td>
+					<td colspan="2">Total des mandats</td><td>CHF</td><td class="number" id="details-total"></td><td class="percent"></td><td></td>
 				</tr>
 				<tr>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dont mandataires connus</td><td>CHF</td><td class="number" id="details-known"></td><td id="details-known-percent" class="percent"></td><td>%</td>
+					<td></td><td>dont mandataires connus</td><td>CHF</td><td class="number" id="details-known"></td><td id="details-known-percent" class="percent"></td><td class="percent-sign">%</td>
 				</tr>
 				<tr>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dont mandataires inconnus</td><td>CHF</td><td class="number" id="details-unknown"></td><td id="details-unknown-percent" class="percent"></td><td>%</td>
+					<td></td><td>dont mandataires inconnus</td><td>CHF</td><td class="number" id="details-unknown"></td><td id="details-unknown-percent" class="percent"></td><td class="percent-sign">%</td>
 				</tr>
 				</table>
 				<!--

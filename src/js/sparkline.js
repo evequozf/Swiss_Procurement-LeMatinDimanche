@@ -41,7 +41,7 @@ function Sparkline(element, data) {
 	//function my() {
 
       //console.log(_data);
-      var div = _element.append("div.sparkline.col-xs-6.col-md-4.col-lg-3");
+      var div = _element.append("div.sparkline.col-xs-12.col-sm-6.col-md-4");
       var leftdiv = div.append("div.left");
       var rightdiv = div.append("div.right");
 

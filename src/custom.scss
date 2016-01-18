@@ -72,7 +72,8 @@ svg {
 	& #right-column {
 		border: 1px solid #ddd;
 		//background: #fafafa;
-		background: #eee;
+		background: #f0f0f0;
+		//background: #eee;
 		
 		& #details-pane {
 			//border: 1px solid green;
@@ -95,10 +96,12 @@ svg {
 			tr.total {
 				font-weight: bold;
 				font-size: 110%;
+				border: 1px solid lightgray;
 			}
 
 			td {
 				padding: 0.2em 1em;
+				border: 0;
 			}
 
 			td.number, td.percent {
@@ -107,6 +110,10 @@ svg {
 
 			td.percent {
 				padding-right: 0;
+			}
+
+			td.percent-sign {
+				padding-left: 0;
 			}
 
 
@@ -142,14 +149,10 @@ svg {
 	//border: 1px solid yellow;
 }
 
-#over-sunburst {
-	width: 100%;
-	position: relative;
-
-	#breadcrumb {
-		top: 0;
-		left: 0;
-		position: absolute;
+#breadcrumb {
+		//top: 0;
+		//left: 0;
+		//position: absolute;
 		//float:left;  // uncomment to try (but comment position and top-left-right above, here, and below)
 		// ALTERNATIVE -> SET UP DIFFERENT INTERACTIONS FOR MOBILE & DESKTOP !!
 		& span {
@@ -164,6 +167,12 @@ svg {
 		}
 		//border: 1px solid yellow;
 	} 
+
+#over-sunburst {
+	width: 100%;
+	position: relative;
+
+	
 
 	#fixed-tooltip {
 		top: 0;

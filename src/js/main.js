@@ -246,11 +246,7 @@ function getChildrenAmountKnown(d) {
 // show extended details pane for a selected / clicked element (given data)
 function showDetail(d) {
 	
-	// find dept (must be called on elements where data was bound, i.e 'g' here !)
-	//var s = sunburstG.filter(function(d){ return d.name === dept; });
-	//var d = s.datum();
-	
-  // global color to be this color
+   // global color to be this color
   globals.currentColor = d.color;
 
 	// update sunburst
