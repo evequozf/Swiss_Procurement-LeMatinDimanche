@@ -6,6 +6,10 @@
 
 var globals = require("./globals.js");
 
+
+//test -> with or without legend on axis
+var LEGEND = false;
+
 function Sparkline(element, data) {
 
 	var _element = element;
@@ -20,7 +24,7 @@ function Sparkline(element, data) {
 		})
 		.entries(data);
 
-	var margin = {top: 8, right: 10, bottom: 20, left: 80},
+	var margin = {top: 8, right: 10, bottom: 20, left: (LEGEND ? 80 : 10)},
     	width = 180 - margin.left - margin.right,
     	height = 60 - margin.top - margin.bottom;
 
@@ -66,10 +70,12 @@ function Sparkline(element, data) {
 	      .attr("transform", "translate(0," + height + ")")
 	      .call(xAxis);
 
-	  chart.append("g")
-	      .attr("class", "y axis")
-	      //.attr("transform", "translate("+width+",0)")
-	      .call(yAxis);
+	  if(LEGEND) {
+		  chart.append("g")
+		      .attr("class", "y axis")
+		      //.attr("transform", "translate("+width+",0)")
+		      .call(yAxis);
+	  }
 
 	  chart.selectAll(".bar")
 	      .data(_data)
@@ -82,7 +88,9 @@ function Sparkline(element, data) {
 	      .style("fill", function(d) { return (d.key == globals.currentYear ? globals.currentColor : null) });
 
 	  // text
-	  leftdiv.text(_fullData[0].fullCategory);
+	  leftdiv.append("h5").text(_fullData[0].fullCategory);
+	  var amountThisYear = _data.filter(function(d){ return d.key == globals.currentYear; })[0].values;
+	  leftdiv.append("p").text("CHF " + ds.formatNumber(amountThisYear) /*+ " (" + globals.currentYear + ")"*/);
 	//}
 
 	  //ds.responsive(rightdiv.select("svg")).start();

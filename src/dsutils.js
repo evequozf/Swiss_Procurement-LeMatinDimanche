@@ -575,7 +575,7 @@ FIXME : needs to use locale by D3
 
 */
 	function formatNumber(d) {
-		return d3.format(",f")(d).replace(/,/g,"'");	
+		return d3.format(",f")(d).replace(/,/g," ");	
 	}
 
 	ds.formatNumber = formatNumber;

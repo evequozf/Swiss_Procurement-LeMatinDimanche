@@ -15,6 +15,7 @@ CONVENU CAFE DE GRANCY
 √ - tooltip: afficher aussi on mouse-over du breadcrumb (1h - 15:30)
 ~ - catégories : sparkline similaire NY times pour vue détaillée, fonction qui le fait (+ icônes?) -> refactor disposition
 ~ - détails, comme dans carnet
+- résumé dans structures bootstrap plutôt que table
 - tooltip sur entreprise: table avec catégories de dépenses (reprendre icônes ?)
 - switch années au-dessous sunburst "Année: 2011 2012 2013 etc."
 √ - intégrer données Alex
@@ -57,7 +58,7 @@ var spark = require('./sparkline.js');
 
 var fullData; // full data 
 //d3.dsv(";")("import/fake2.csv", function(error, data) {
-d3.dsv(",")("import/EDA-2014-merge.csv", function(error, data) {
+d3.dsv(",")("import/EDA-UVEK-merge.csv", function(error, data) {
   globals.currentYear = 2014; 
 
 	fullData = data;
@@ -363,34 +364,6 @@ function textAnchor(d) {
 /***************** bar chart -> to export elsewhere ? **************************/
 
 
-var barmargin = {top: 20, right: 40, bottom: 20, left: 150},
-	barwidth = 500 - barmargin.left - barmargin.right,
-  barheight = 400 - barmargin.top - barmargin.bottom;
-
-var ybar = d3.scale.ordinal()
-    .rangeRoundBands([0, barheight], .1);
-
-var xbar = d3.scale.linear()
-    .range([0, barwidth]);
-
-var xAxis = d3.svg.axis()
-    .scale(xbar)
-    .orient("top")
-    .ticks(4)
-    .tickFormat(function(d) { return ds.formatNumber(d) });
-
-var yAxis = d3.svg.axis()
-    .scale(ybar)
-    .orient("left")
-    .tickFormat(function(d) { return d.substring(0, globals.SUPPLIER_LABEL_MAX) 
-          + (d.length > globals.SUPPLIER_LABEL_MAX ? "..." : ""); });
-
-var svgbar = d3.select("#barchart-container").append("svg")
-    .attr("width", barwidth + barmargin.left + barmargin.right)
-    .attr("height", barheight + barmargin.top + barmargin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + barmargin.left + "," + barmargin.top + ")");
-
 /**************** update bar ******************/
 
 function updateBar(data) {
@@ -401,8 +374,43 @@ function updateBar(data) {
 /**************** viz building bar ******************/
 
 function buildBar(data) {
+  
+  var HEIGHT = 16; // height of bar
+
+  var barmargin = {top: 20, right: 40, bottom: 20, left: 150},
+  barwidth = 500 - barmargin.left - barmargin.right,
+  barheight = Math.max(HEIGHT,                                       // FIXME : not sure...
+                data.length * HEIGHT - barmargin.top - barmargin.bottom
+            );
+
+  var ybar = d3.scale.ordinal()
+      .rangeRoundBands([0, barheight], .1);
+
+  var xbar = d3.scale.linear()
+      .range([0, barwidth]);
+
+  var xAxis = d3.svg.axis()
+      .scale(xbar)
+      .orient("top")
+      .ticks(4)
+      .tickFormat(function(d) { return ds.formatNumber(d) });
+
+  var yAxis = d3.svg.axis()
+      .scale(ybar)
+      .orient("left")
+      .tickFormat(function(d) { return d.substring(0, globals.SUPPLIER_LABEL_MAX) 
+            + (d.length > globals.SUPPLIER_LABEL_MAX ? "..." : ""); });
+
   //cleanup
-  svgbar.selectAll("*").remove();
+  d3.select("#barchart-container svg").remove();
+  
+  var svgbar = d3.select("#barchart-container").append("svg")
+      .attr("width", barwidth + barmargin.left + barmargin.right)
+      .attr("height", barheight + barmargin.top + barmargin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + barmargin.left + "," + barmargin.top + ")");
+
+  //svgbar.selectAll("*").remove();
 
   xbar.domain([0, d3.max(data, function(d) { return d.amount; })]);
   ybar.domain(data.map(function(d) { return d.supplier; }));
@@ -466,7 +474,7 @@ function updateSparklines(filtereddata) {
     spark.Sparkline(div,sparkdata);
   }
   */
-  
+  ///*
   // with real data
   // group by category, compute total over category, and store in array
   var cats = d3.nest()
@@ -479,4 +487,5 @@ function updateSparklines(filtereddata) {
   cats.forEach(function(c) {
     spark.Sparkline(div, filtereddata.filter(function(dd) { return dd.fullCategory === c.key; }));
   }); 
+//*/
 }
