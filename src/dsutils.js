@@ -14,7 +14,7 @@ ds = (function() {
 (function() {
 
 	//Declare version
-	ds.version = "0.1";
+	ds.version = "0.2";
 
 /************ Adding util - example prototype *****************/
 /*
@@ -450,6 +450,10 @@ Minimal use case with callback :
 				svg.attr("viewBox","0 0 "+w+" "+h).attr("preserveAspectRatio","xMidYMid");
 				init = false;
 			}
+			if(svg.node().parentNode == null) return; // to fix updates of not connected to DOM elements
+			//console.log(svg.node());
+			//console.log(svg.node().parentNode);
+			//console.log(svg.node().parentNode == null);
 			var targetWidth = svg.node().parentNode.offsetWidth;
 		  	targetWidth = targetWidth < w ? targetWidth : w;
 		  	var targetHeight = targetWidth / aspect;

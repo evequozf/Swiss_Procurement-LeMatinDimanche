@@ -1,5 +1,11 @@
 var globals = require('./globals.js');
 
+/*****************************/
+module.exports = {
+	prepareDataSunburst: prepareDataSunburst,
+	prepareDataBar: prepareDataBar
+}
+
 /**************** data preparation sunburst ******************/
 
 // Prepare data format for sunburst: should look like import/fake-sunburst.json
@@ -81,11 +87,3 @@ function prepareDataBar(filtereddata) {
 	});
 	return data.sort(function(a,b) {return d3.descending(a.amount, b.amount)});
 }
-
-
-/*****************************/
-module.exports = {
-	prepareDataSunburst: prepareDataSunburst,
-	prepareDataBar: prepareDataBar
-}
-

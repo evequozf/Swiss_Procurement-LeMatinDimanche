@@ -22,7 +22,7 @@ h1 {
 
 h2 {
 	font-family: $serif;
-	font-size: 180%;
+	font-size: 150%;
 }
 
 h3, h4 {
@@ -47,6 +47,7 @@ svg {
 	}
 	& #left-column {
 		& #sunburst-container {
+			z-index: 1;
 			text-align: center;
 			//border: 1px solid yellow;
 		}
@@ -94,14 +95,8 @@ svg {
 			padding: 1em 0;
 
 /***************************** Table summary - bootstrap *********************/
-			/*table {
-				border-collapse: collapse;
-				margin-bottom: 0;
-			}
-			*/
-
-			.total, .known, .unknown {
-				padding: 0.2em 0;
+			.row {
+				//margin: 0;
 			}
 
 			.total {
@@ -110,28 +105,9 @@ svg {
 				border: 1px solid lightgray;
 			}
 
-			/*
-			td {
-				padding: 0.2em 1em;
-				border: 0;
-			}
-			*/
-
 			.number, .percent {
 				text-align: right;
 			}
-
-			.percent {
-				padding-right: 0;
-			}
-
-			/*
-			td.percent-sign {
-				padding-left: 0;
-			}
-			*/
-
-
 		}
 		
 /****************** bar chart suppliers *****************/
@@ -185,19 +161,22 @@ svg {
 
 #over-sunburst {
 	width: 100%;
-	position: relative;
+	//position: relative;
 
 	
 
 	#fixed-tooltip {
 		top: 0;
 		right: 0;
+		//height: 40px;
+		z-index: 999;
 		position: absolute;
 		//float:right  //uncomment to try
 		text-align: right;
-		background-color: white;
-		padding: .25em;
-		//border: 1px solid lightgray;
+		background-color: rgba(255,255,255,0.4);
+
+		padding: .8em;
+		//border: 1px solid yellow;
 		& #fixed-tooltip-dept {
 			font-size: 100%;
 		}
@@ -224,7 +203,7 @@ svg {
 
 /********** Sparklines *******************/
 .sparkline {
-	height: 150px;
+	height: 180px;
 	margin: 1.5em 0em;
 	//border: 1px solid red;
 	//position: relative;
@@ -238,12 +217,13 @@ svg {
 	}
 	div.left h5 {
 		font-weight: bold;
-		height: 50px;
+		height: 65px;
 		//vertical-align: bottom;
 		//margin-right: 5em;
 	}
 	div.left p {
 		font-size: 75%;
+		margin-bottom: 0;
 	}
 	div.right {
 		position: absolute;
@@ -267,6 +247,61 @@ svg {
 	.y.axis line {
 		display: none;
 	}
+}
+
+
+/********* buttons years ****************/
+#years {
+	text-align: center;
+}
+
+#years span {
+	//margin: .5em .5em .5em 0;
+	//padding: .5em;
+	//color: lightgray;
+
+	&:hover {
+		color: black;
+	}
+/*
+	&.selected {
+		//font-size: 120%;
+		font-weight: bold;
+		color: black;
+	}
+*/
+}
+
+.vis-button {
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  margin-right:-1px;
+  color: gray;
+  cursor: pointer;
+  box-shadow: 0px 2px 3px #eee; 
+  display: inline-block;
+  
+  $r : 4px;
+  &:first-child {
+    border-top-left-radius: $r;
+    border-bottom-left-radius: $r;
+  }
+  &:last-child{
+    border-top-right-radius: $r;
+    border-bottom-right-radius: $r;
+  }
+
+  &.selected {
+    background: #eee;
+    color: black;
+    font-weight: bold;
+    box-shadow: inset 2px 2px 3px #ddd;
+  }
+
+  //.&.selected:hover, .&:hover {
+  //background: turquoise;
+  //}
+
 }
 
 

@@ -15,7 +15,10 @@
 <div class="container">
 
 <div class="row">
-	<h1 class="col-md-12">Mandats de la Confédération</h1>
+	<h1 class="col-xs-12">Mandats de la Confédération</h1>
+</div>
+<div class="row">
+	<div class="col-xs-12" id="years"></div>
 </div>
 <!--
 <div class="row">
@@ -23,10 +26,10 @@
 </div>
 -->
 <div class="row">
-<div id="breadcrumb"></div>
+<div id="breadcrumb" class="col-xs-12"></div>
 </div>
 <div class="row" id="graph-container">
-	<div class="col-sm-12 col-md-6" id="left-column">
+	<div class="col-sm-12 col-md-5" id="left-column">
 		<!--<div id="breadcrumb">Niveau:</div>-->
 		<div id="over-sunburst">
 			<div id="fixed-tooltip" class="hidden-xs"> <!-- hidden on mobile -->
@@ -38,7 +41,7 @@
 		<div id="sunburst-container"></div>
 	</div>
 	<!--<div class="col-lg-2"></div>-->
-	<div class="col-sm-12 col-md-6" id="right-column">
+	<div class="col-sm-12 col-md-7" id="right-column">
 		<div id="details-pane">
 			<h2>Mandats <span id="year"></span> de <span id="officename"></span></h2>
 			<!--
@@ -58,25 +61,19 @@
 			-->
 			<div class="details summary">
 				<div class="row total">
-					<div class="col-xs-12 col-sm-4">Total des mandats</div>
-					<div class="col-xs-1">CHF</div>
-					<div class="col-xs-4 col-sm-5 number" id="details-total"></div>
+					<div class="col-xs-12 col-sm-5">Total des mandats</div>
+					<div class="col-xs-4 col-sm-4 number" id="details-total"></div>
 					<div class="col-xs-1 percent"></div>
-					
 				</div>
 				<div class="row known">
-					<div class="col-xs-12 col-sm-4">dont mandataires connus</div>
-					<div class="col-xs-1">CHF</div>
-					<div class="col-xs-4 col-sm-5 number" id="details-known"></div>
+					<div class="col-xs-12 col-sm-5">dont mandataires connus</div>
+					<div class="col-xs-4 col-sm-4 number" id="details-known"></div>
 					<div class="col-xs-1 percent" id="details-known-percent" ></div>
-					
 				</div>
 				<div class="row unknown">
-					<div class="col-xs-12 col-sm-4">dont mandataires inconnus</div>
-					<div class="col-xs-1">CHF</div>
-					<div class="col-xs-4 col-sm-5 number" id="details-unknown"></div>
-					<div class="col-xs-1 percent" id="details-unknown-percent" ></div>
-					
+					<div class="col-xs-12 col-sm-5">dont mandataires inconnus</div>
+					<div class="col-xs-4 col-sm-4 number" id="details-unknown"></div>
+					<div class="col-xs-1 percent" id="details-unknown-percent" ></div>	
 				</div>
 			</div>
 			<div class="details">

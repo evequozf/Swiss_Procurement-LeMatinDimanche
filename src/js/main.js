@@ -2,27 +2,28 @@
 TODO :
 
 A DISCUTER
-- quoi afficher dans détails
-- comment faire figurer montant connus / inconnus (ma suggestion: pas dans sunburst)
+~ - quoi afficher dans détails
+√ - comment faire figurer montant connus / inconnus (ma suggestion: pas dans sunburst)
 
 HIGH
 √ - calculer pourcentages dans données (0.5h : 16:00)
-- multilingue : à discuter -> fichier lang.fr.js importé dans .html et qui crée une variable globale ? 
+~ - multilingue : à discuter -> fichier lang.fr.js importé dans .html et qui crée une variable globale ? 
 Probablement le plus simple...
 
 CONVENU CAFE DE GRANCY
 √ - fixed-tooltip à cacher sur mobile 
 √ - tooltip: afficher aussi on mouse-over du breadcrumb (1h - 15:30)
 ~ - catégories : sparkline similaire NY times pour vue détaillée, fonction qui le fait (+ icônes?) -> refactor disposition
-~ - détails, comme dans carnet
-- résumé dans structures bootstrap plutôt que table
-- tooltip sur entreprise: table avec catégories de dépenses (reprendre icônes ?)
-- switch années au-dessous sunburst "Année: 2011 2012 2013 etc."
+√ - détails, comme dans carnet
+√ - résumé dans structures bootstrap plutôt que table
+~ - switch années au-dessous sunburst "Année: 2011 2012 2013 etc."
 √ - intégrer données Alex
 √ - refactor données pour calculer la valeur des 'Unknown'
 - basic tracking analytics
+- tooltip sur entreprise: table avec catégories de dépenses (reprendre icônes ?)
 X - label sunburst : mettre % en + sur les plus gros (si place)
 - dernier niveau (seulement) -> ajouter le type de prestation, par ex. avec icône ? 
+- show more ? cf. http://jsfiddle.net/KyleMit/MD2FP/
 
 
 MIDDLE
@@ -52,31 +53,69 @@ X - Breadcrumb sur mobile (pas d'overlap)
 
 var globals = require('./globals.js');
 var load = require('./load.js');
+var bar = require('./bar.js');
 var spark = require('./sparkline.js');
 
 /**************** data loading & initialization ******************/
 
-var fullData; // full data 
+// used to create global fields, e.g. 'd.fullCategory' from 'd.fullCategoryFr')
+function addField(d, name) {
+  d[name] = d[name + globals.lang.dataSuffix];
+  return d;
+}
+
+var fullData; // full data
+var thisYearData; //only this year 
 //d3.dsv(";")("import/fake2.csv", function(error, data) {
-d3.dsv(",")("import/EDA-UVEK-merge.csv", function(error, data) {
-  globals.currentYear = 2014; 
+//d3.dsv(",")("https://dl.dropboxusercontent.com/s/36k9pc7ll8yhhe3/master_export.csv?dl=1", function(error, data) {
+d3.dsv(",")("import/master_export.csv", function(error, data) { 
 
-	fullData = data;
+  //create global fields depending on language, and store as full data
+  fullData = data.map(function(d) {
+    d = addField(d, "dept");
+    d = addField(d, "fullDept");
+    d = addField(d, "fullCategory");
+    d = addField(d, "office");
+    d = addField(d, "fullOffice");
+    return d;
+  });
 
-  // set year
-  d3.select("#year").text(globals.currentYear)
+  //console.log(fullData);
 
-	// create sunburst
-	var sbData = load.prepareDataSunburst(data,globals.currentYear);
-	buildSunburst(sbData);
+  /*********** create buttons years ***********/
+  d3.select("#years").selectAll("span.year")
+    .data([2011, 2012, 2013, 2014])
+      .enter()
+      .append("span.year.vis-button")
+      .text(function(d) { return d; })
+      .on("click", function(d) { 
+        d3.selectAll("#years .year").classed("selected", function(dd) { return dd == d; })
+        return updateYear(d); 
+      });
 
-	//show the details pane for root node of sunburst
-	showDetail(sbData);
-
-	// init responsiveness of svgs
-	ds.responsive(d3.select("#sunburst-container svg")).start();
-
+   updateYear(2014);
+   d3.selectAll("#years .year").classed("selected", function(d) { return d == 2014; })
 });
+
+/**************** main update function: based on year ******************/
+
+function updateYear(year) {
+  
+  // set year
+  globals.currentYear = year; 
+  thisYearData = fullData.filter(function(d) { return +d.year == globals.currentYear; });
+  d3.select("#year").text(globals.currentYear);
+
+  // create sunburst
+  var sbData = load.prepareDataSunburst(fullData, globals.currentYear);
+  buildSunburst(sbData);
+
+  //show the details pane for root node of sunburst
+  showDetail(sbData);
+
+  // fire resize event to update responsive svgs
+  window.dispatchEvent(new Event('resize'));
+}
 
 /**************** sunburst building *****************/
 
@@ -84,13 +123,7 @@ var margin = {top: 30, right: 20, bottom: 20, left: 20},
     width = 550 - margin.left - margin.right,
     height = 550 - margin.top - margin.bottom;
 
-var svg = d3.select("#sunburst-container").append("svg")
-    .attr("width", width+margin.left+margin.right)
-    .attr("height", height+margin.top+margin.bottom)
-    .append("g")
-      .attr("transform","translate("+margin.left+","+margin.top+")")
-    .append("g")
-      .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
+var svg; // will contain sunburst
 
 var radius = (Math.min(width, height) / 2) - 5;
 
@@ -161,6 +194,8 @@ function inSubTree(n,p) {
 //g's with data associated in sunburst
 var sunburstG; 
 
+//var responsiveSunburst;
+
 function buildSunburst(data) {
   // Partition & Build viz
   var nodes = partition.nodes(data);
@@ -170,6 +205,22 @@ function buildSunburst(data) {
   nodes.forEach(function(n,i){ setColors(n,i) });
   //color.domain([0,2]);
 
+  // clean and create new
+  /*
+  if(typeof responsiveSunburst !== 'undefined') {
+    responsiveSunburst.stop();
+  }
+  */
+  d3.select("#sunburst-container svg").remove();
+
+  svg = d3.select("#sunburst-container").append("svg")
+    .attr("width", width+margin.left+margin.right)
+    .attr("height", height+margin.top+margin.bottom)
+    .append("g")
+      .attr("transform","translate("+margin.left+","+margin.top+")")
+    .append("g")
+      .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
+  
   sunburstG = svg.selectAll("path")
       .data(nodes)
     .enter().append("g");
@@ -205,7 +256,15 @@ function buildSunburst(data) {
   			"<p>CHF  "+ds.formatNumber(d.value)+"</p>"
   	}
   );
-*/
+*/ 
+
+  // init responsiveness of svgs
+  /*
+  responsiveSunburst = ds.responsive(d3.select("#sunburst-container svg"));
+  responsiveSunburst.start();
+  //console.log("sunburst responsive start...");
+  */
+  ds.responsive(d3.select("#sunburst-container svg")).start();
 }
 
 /**************** interaction *****************/
@@ -240,7 +299,7 @@ function getChildrenAmountKnown(d) {
   } else if(d.depth == 2) {
     f = function(dd) { return (dd.supplier !== globals.UNKNOWN) && (dd.office === d.name); }
   }
-  return d3.sum(fullData.filter(f), function(dd) {return +dd.amount})
+  return d3.sum(thisYearData.filter(f), function(dd) {return +dd.amount});
 }
 
 // show extended details pane for a selected / clicked element (given data)
@@ -268,16 +327,18 @@ function showDetail(d) {
   // update detail summary text
   updateSummary(d);
 	
-  // update bar chart
-	var fdata;
+  // select relevant data
+	var fdata = fullData;
 	if(d.depth == 0) {
-		fdata = fullData;
+		// nothing
 	} else if (d.depth == 1) {
-		fdata = fullData.filter(function(dd){return dd.dept === d.name});
+		fdata = fdata.filter(function(dd){return dd.dept === d.name});
 	} else if (d.depth == 2) {
-		fdata = fullData.filter(function(dd){return dd.office === d.name});
+		fdata = fdata.filter(function(dd){return dd.office === d.name});
 	}
-	updateBar(fdata);
+
+  // update bar chart -> just this year
+	bar.updateBar(fdata.filter(function(d) { return +d.year == globals.currentYear; }));
 
 	// update bar chart title
 	d3.select("#officename").text(d.nameFull);
@@ -285,8 +346,8 @@ function showDetail(d) {
 	// update breadcrumb trail
 	breadCrumb(d);
 
-  // update sparklines
-  updateSparklines(fdata);
+  // update sparklines (data with all years)
+  updateSparklines(fdata,d.name);
 }
 
 // Given data d, build breadcrumb iteratively
@@ -359,103 +420,17 @@ function textAnchor(d) {
 	return shouldFlipText(getAngle(d)) ? "end" : "start";
 }
 
-
-
-/***************** bar chart -> to export elsewhere ? **************************/
-
-
-/**************** update bar ******************/
-
-function updateBar(data) {
-	var d = load.prepareDataBar(data);
-	buildBar(d.slice(0, globals.SUPPLIER_AMOUNT)); //take only SUPPLIER_AMOUNT first suppliers, FIXME : put elsewhere ?
-}
-
-/**************** viz building bar ******************/
-
-function buildBar(data) {
-  
-  var HEIGHT = 16; // height of bar
-
-  var barmargin = {top: 20, right: 40, bottom: 20, left: 150},
-  barwidth = 500 - barmargin.left - barmargin.right,
-  barheight = Math.max(HEIGHT,                                       // FIXME : not sure...
-                data.length * HEIGHT - barmargin.top - barmargin.bottom
-            );
-
-  var ybar = d3.scale.ordinal()
-      .rangeRoundBands([0, barheight], .1);
-
-  var xbar = d3.scale.linear()
-      .range([0, barwidth]);
-
-  var xAxis = d3.svg.axis()
-      .scale(xbar)
-      .orient("top")
-      .ticks(4)
-      .tickFormat(function(d) { return ds.formatNumber(d) });
-
-  var yAxis = d3.svg.axis()
-      .scale(ybar)
-      .orient("left")
-      .tickFormat(function(d) { return d.substring(0, globals.SUPPLIER_LABEL_MAX) 
-            + (d.length > globals.SUPPLIER_LABEL_MAX ? "..." : ""); });
-
-  //cleanup
-  d3.select("#barchart-container svg").remove();
-  
-  var svgbar = d3.select("#barchart-container").append("svg")
-      .attr("width", barwidth + barmargin.left + barmargin.right)
-      .attr("height", barheight + barmargin.top + barmargin.bottom)
-    .append("g")
-      .attr("transform", "translate(" + barmargin.left + "," + barmargin.top + ")");
-
-  //svgbar.selectAll("*").remove();
-
-  xbar.domain([0, d3.max(data, function(d) { return d.amount; })]);
-  ybar.domain(data.map(function(d) { return d.supplier; }));
-
-  svgbar.append("g")
-      .attr("class", "x axis")
-      .call(xAxis)
-      .append("text")
-      	.attr("x", xbar.range()[1])
-      	.attr("dy", "-.71em")
-      	//.style("text-anchor", "end")
-      	.text("CHF");
-
-  svgbar.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-
-  var bars = svgbar.selectAll(".bar")
-      .data(data)
-    .enter().append("rect")
-      .attr("class", "bar")
-      .attr("y", function(d) { return ybar(d.supplier); })
-      .attr("height", ybar.rangeBand())
-      .attr("x", function(d) { return xbar(0); })
-      .attr("width", function(d) { return xbar(d.amount); })
-      .style("fill", globals.currentColor);
-
-  // tooltip
-  var tt = ds.ttip(bars);
-  tt.html(function(d) { 
-  		return "<h4>"+d.supplier+"</h4>"+
-  			"<p>CHF  "+ds.formatNumber(d.amount)+"</p>"
-  	}
-  );
-
-  // responsiveness
-  ds.responsive(d3.select("#barchart-container svg")).start();
-}
-
-
 /**************** details: 'summary' ******************/
+
+function formatChf(d) {
+  console.log(d);
+  console.log(d3.format(" >10,f")(d));
+  return "CHF" + d3.format(" >10,f")(d).replace(/,/g," ");
+}
 
 function updateSummary(d) {
   var known = getChildrenAmountKnown(d), unknown = d.chf - known;
-  d3.select("#details-total").text(ds.formatNumber(d.chf));
+  d3.select("#details-total").text(formatChf(d.chf));
   d3.select("#details-known").text(ds.formatNumber(known));
   d3.select("#details-unknown").text(ds.formatNumber(unknown));
   d3.select("#details-known-percent").text(Math.round(100*known/d.chf) + "%");
@@ -465,8 +440,8 @@ function updateSummary(d) {
 
 /**************** details: sparklines ******************/
 
-function updateSparklines(filtereddata) {
-  // clean sparkline
+function updateSparklines(filtereddata,name) {
+  // clean sparklines
   var div = d3.select("#sparkline-container");
   div.selectAll("*").remove();
   
@@ -482,13 +457,18 @@ function updateSparklines(filtereddata) {
   // group by category, compute total over category, and store in array
   var cats = d3.nest()
     .key(function(d) { return d.fullCategory; })
-    .rollup(function(values) { return d3.sum(values, function(d) {return +d.amount; }) })
+    .rollup(function(values) { return d3.sum(values.filter(function(d) { return +d.year == globals.currentYear; }), 
+          function(d) {return +d.amount; }) })
     .entries(filtereddata);
-  // sort by descending total over category
+  // sort by descending total over category // FIXME : should be sorted by this year's value...
+  //console.log(cats);
   cats = cats.sort(function(a,b) {return d3.descending(a.values,b.values)});
+  //compute total amount (for proportion later on)
+  var tot = d3.sum(filtereddata.filter(function(d) { return +d.year == globals.currentYear; }), 
+      function(d) { return +d.amount; });
   // create a sparkline for each category
   cats.forEach(function(c) {
-    spark.Sparkline(div, filtereddata.filter(function(dd) { return dd.fullCategory === c.key; }));
+    spark.Sparkline(div, filtereddata.filter(function(dd) { return dd.fullCategory === c.key; }), tot, name);
   }); 
 //*/
 }

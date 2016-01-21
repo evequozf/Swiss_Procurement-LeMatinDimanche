@@ -17,3 +17,11 @@ src/js/bar.js
 src/viz.js
 
 src/import/fake.csv
+
+src/import/EDA-2014-merge.csv
+
+src/import/EDA-UVEK-merge.csv
+
+src/import/eda-uvek-11-14.csv
+
+src/import/master_export.csv
