@@ -9,6 +9,7 @@ var SUPPLIER_AMOUNT = 40; // show only xx most important suppliers in chart
 var currentYear = 2011; //year currently being displayed
 var currentColor = null; //year currently being displayed
 
+var currentDataKey = ""  // key value of current data (based on sunburst data format)
 
 // Prepare multilingual
 var fr = {
@@ -30,5 +31,6 @@ module.exports = {
 	SUPPLIER_LABEL_MAX: SUPPLIER_LABEL_MAX,
 	SUPPLIER_AMOUNT: SUPPLIER_AMOUNT,
 	currentYear: currentYear,
-	currentColor: currentColor
+	currentColor: currentColor, 
+	currentDataKey: currentDataKey
 }

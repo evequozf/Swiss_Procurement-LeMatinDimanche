@@ -34,8 +34,8 @@ X - label sunburst : mettre % en + sur les plus gros (si place)
 
 MIDDLE
 - Meilleur passage des années (pas reconstruire le SVG...)
-- "polissage" par Inventaire ?
 - garder "état de la visualisation" quand on change d'année ? (= actuel filter, je pense, garder le datum actuel...)
+- "polissage" par Inventaire ?
 - pym.js
 
 
@@ -118,11 +118,34 @@ function updateYear(year) {
   var sbData = load.prepareDataSunburst(fullData, globals.currentYear);
   buildSunburst(sbData);
 
-  //show the details pane for root node of sunburst
-  showDetail(sbData);
+  // if data key is not set (first execution) set it to root
+  if(globals.currentDataKey == "")
+    globals.currentDataKey = getKey(sbData);
 
+  //show the details pane for selected node of sunburst with no transition (false)
+  var currentData = getSbData(sbData, globals.currentDataKey);
+  currentData = currentData != null ? currentData : sbData; // current data might be null if department is not present that year
+  showDetail(currentData, false);
+  
   // fire resize event to update responsive svgs
   window.dispatchEvent(new Event('resize'));
+}
+
+// Look for data corresponding to currently selected data (i.e. key)
+function getSbData(node, key) {
+  //console.log(node);
+  if(getKey(node) === key) 
+    return node;
+  else if(typeof node.children !== 'undefined')
+      for(var i = 0; i < node.children.length; i++) {
+        var n = getSbData(node.children[i], key);
+        if(n !== null) return n;
+      }
+  return null;
+}
+
+function getKey(d) {
+  return d.depth + d.nameFull;
 }
 
 /**************** sunburst building *****************/
@@ -199,10 +222,19 @@ function inSubTree(n,p) {
   }
 }
 
-//g's with data associated in sunburst
-var sunburstG; 
+// svg elements with data associated in sunburst
+var sunburstG, paths, texts; 
 
-//var responsiveSunburst;
+// TOOD : put someplace else...
+svg = d3.select("#sunburst-container").append("svg")
+    .attr("width", width+margin.left+margin.right)
+    .attr("height", height+margin.top+margin.bottom)
+    .append("g")
+      .attr("transform","translate("+margin.left+","+margin.top+")")
+    .append("g")
+      .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
+// init responsiveness of svgs
+ds.responsive(d3.select("#sunburst-container svg")).start();
 
 function buildSunburst(data) {
   // Partition & Build viz
@@ -211,89 +243,83 @@ function buildSunburst(data) {
   // colorize
   color.domain(data.children.map(function(d) {return d.name} ));
   nodes.forEach(function(n,i){ setColors(n,i) });
-  //color.domain([0,2]);
 
-  // clean and create new
-  /*
-  if(typeof responsiveSunburst !== 'undefined') {
-    responsiveSunburst.stop();
-  }
-  */
-  d3.select("#sunburst-container svg").remove();
 
-  svg = d3.select("#sunburst-container").append("svg")
-    .attr("width", width+margin.left+margin.right)
-    .attr("height", height+margin.top+margin.bottom)
-    .append("g")
-      .attr("transform","translate("+margin.left+","+margin.top+")")
-    .append("g")
-      .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
-  
+////////////////
+  svg.selectAll("*").remove();
+
   sunburstG = svg.selectAll("path")
-      .data(nodes)
-    .enter().append("g");
+    .data(nodes)
+  .enter().append("g");
 
-  var paths = sunburstG.append("path")
+  paths = sunburstG.append("path")
       .attr("d", arc)
       .style("fill", function(d) { return d.color; })
-	  .on("click touchend", function(d) { return showDetail(d); })
-	  .on("mouseover", mouseOver)
-	  .on("mouseout", mouseOut)
-	  //.on("touchstart", function(d) { console.log("touchstart"); console.log(d); mouseOver(d); })
-	  //.on("touchmove", function(d) { console.log("touchmove"); console.log(d); mouseOver(d); })
-	  //.on("mouseout", mouseOut)
+    .on("click touchend", function(d) { return showDetail(d); })
+    .on("mouseover", mouseOver)
+    .on("mouseout", mouseOut)
+    //.on("touchstart", function(d) { console.log("touchstart"); console.log(d); mouseOver(d); })
+    //.on("touchmove", function(d) { console.log("touchmove"); console.log(d); mouseOver(d); })
+    //.on("mouseout", mouseOut)
       //.style("fill", "#ccc")//function(d) { return color((d.children ? d : d.parent).name); })
-	  //.style("fill", function(d) { return color(d.depth) });
+    //.style("fill", function(d) { return color(d.depth) });
       
-  var text = sunburstG.append("text")
-  	.text(function(d) { return d.name; })
+  texts = sunburstG.append("text")
+    .text(function(d) { return d.name; })
     .attr("text-anchor", textAnchor)
     .attr("transform", textTransform)
     .style("opacity", textOpacity)
     .attr("dy", ".35em"); // vertical-align
-    
-  // moving tooltip with chf / value
-  /*
-  sunburstG.append("title")
-        .text(function(d) { return d.name + "\n" + "CHF " + ds.formatNumber(d.value); });
-  */
-/*
-  var tt = ds.ttip(sunburstG);
-  tt.html(function(d) { 
-  		return "<h4>"+d.name+"</h4>"+
-  			"<p>CHF  "+ds.formatNumber(d.value)+"</p>"
-  	}
-  );
-*/ 
+//////////////////    
+  
+  // does not update correctly with years change -> delete
 
-  // init responsiveness of svgs
   /*
-  responsiveSunburst = ds.responsive(d3.select("#sunburst-container svg"));
-  responsiveSunburst.start();
-  //console.log("sunburst responsive start...");
+  // data binding
+  sunburstG = svg.selectAll("g")
+      .data(nodes, function(d) { return getKey(d); });
+
+  // enter
+  var gEnter = sunburstG.enter().append("g");
+  gEnter.append("path");
+  gEnter.append("text");
+
+  // update
+  paths = sunburstG.selectAll("g path")
+        .attr("d", arc)
+        .style("fill", function(d) { return d.color; })
+        .on("click touchend", function(d) { return showDetail(d); })
+        .on("mouseover", mouseOver)
+        .on("mouseout", mouseOut);
+
+  texts = sunburstG.selectAll("g text")
+        .text(function(d) { return d.name; })
+        .attr("dy", ".35em") // vertical-align
+      	.attr("text-anchor", textAnchor)
+        .attr("transform", textTransform)
+        .style("opacity", textOpacity);
+
+  // exit
+  sunburstG.exit().remove();
   */
-  ds.responsive(d3.select("#sunburst-container svg")).start();
+
 }
 
 /**************** interaction *****************/
 
 function mouseOver(d) {
-	sunburstG
-      	.style("opacity", ".33")
-        .filter(function(dd) { return inSubTree(dd,d); })
-        .style("opacity", "1");
-  	// Fixed tooltip on sunburst
-  	d3.select("#fixed-tooltip-dept").text(d.nameFull);
-  	d3.select("#fixed-tooltip-chf").text("CHF " + ds.formatNumber(d.value));
-  	d3.select("#fixed-tooltip-percent").text( 
-      (typeof d.parent !== 'undefined' ?  //root node -> no text
-        (d.percent < 1 ? "< 1" : d.percent)  + " % " + globals.lang.of + " " + d.parent.name 
-        : "")); 
+	paths.style("opacity", function(dd) { return inSubTree(dd,d) ? "1" : ".33" });
+	// Fixed tooltip on sunburst
+	d3.select("#fixed-tooltip-dept").text(d.nameFull);
+	d3.select("#fixed-tooltip-chf").text("CHF " + ds.formatNumber(d.value));
+	d3.select("#fixed-tooltip-percent").text( 
+    (typeof d.parent !== 'undefined' ?  //root node -> no text
+      (d.percent < 1 ? "< 1" : d.percent)  + " % " + globals.lang.of + " " + d.parent.name 
+      : "")); 
 }
 
 function mouseOut(d) {
-	sunburstG
-	    .style("opacity", "1");
+	paths.style("opacity", "1");
 	d3.selectAll("#fixed-tooltip *").text(null);
 }
 
@@ -311,14 +337,20 @@ function getChildrenAmountKnown(d) {
 }
 
 // show extended details pane for a selected / clicked element (given data)
-function showDetail(d) {
+function showDetail(d, transition) {
 	
+  //default param
+  if(typeof transition === 'undefined') transition = true;
+
+  // global data key to be this data key
+  globals.currentDataKey = getKey(d);
+
    // global color to be this color
   globals.currentColor = d.color;
 
 	// update sunburst
 	var trans = sunburstG.transition()
-      .duration(750)
+      .duration(transition ? 750 : 0)
       .tween("scale", function() {
         var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
             yd = d3.interpolate(y.domain(), [d.y, 1]),
@@ -453,14 +485,14 @@ function updateSparklines(filtereddata,name) {
   var div = d3.select("#sparkline-container");
   div.selectAll("*").remove();
   
-  // group by category, compute total over category, and store in array
+  // create list of categories with total over category for this year and store in array
   var cats = d3.nest()
     .key(function(d) { return d.fullCategory; })
     .rollup(function(values) { return d3.sum(values.filter(function(d) { return +d.year == globals.currentYear; }), 
           function(d) {return +d.amount; }) })
     .entries(filtereddata);
   
-  // sort by descending total over category // FIXME : should be sorted by this year's value...
+  // sort by descending total over category this year
   //console.log(cats);
   cats = cats.sort(function(a,b) {return d3.descending(a.values,b.values)});
   
