@@ -27,6 +27,7 @@ X - label sunburst : mettre % en + sur les plus gros (si place)
 
 
 MIDDLE
+- Meilleur passage des années (pas reconstruire le SVG...)
 - "polissage" par Inventaire ?
 - garder "état de la visualisation" quand on change d'année ? (= actuel filter, je pense, garder le datum actuel...)
 - pym.js
@@ -35,6 +36,7 @@ MIDDLE
 LOW
 X - Breadcrumb sur mobile (pas d'overlap)
 - transition pour bar chart
+- object persistence (bars + pies)
 - vraies données
 - use breadcrumb from bootstrap
 - interaction continue sur mobile pour sunburst (y.c. fixed tooltip -> différencier avec media queries ?)
@@ -67,8 +69,8 @@ function addField(d, name) {
 var fullData; // full data
 var thisYearData; //only this year 
 //d3.dsv(";")("import/fake2.csv", function(error, data) {
-//d3.dsv(",")("https://dl.dropboxusercontent.com/s/36k9pc7ll8yhhe3/master_export.csv?dl=1", function(error, data) {
-d3.dsv(",")("import/master_export.csv", function(error, data) { 
+d3.dsv(",")("https://dl.dropboxusercontent.com/s/36k9pc7ll8yhhe3/master_export.csv?dl=1", function(error, data) {
+//d3.dsv(",")("import/master_export.csv", function(error, data) { 
 
   //create global fields depending on language, and store as full data
   fullData = data.map(function(d) {
@@ -94,7 +96,6 @@ d3.dsv(",")("import/master_export.csv", function(error, data) {
       });
 
    updateYear(2014);
-   d3.selectAll("#years .year").classed("selected", function(d) { return d == 2014; })
 });
 
 /**************** main update function: based on year ******************/
@@ -105,6 +106,7 @@ function updateYear(year) {
   globals.currentYear = year; 
   thisYearData = fullData.filter(function(d) { return +d.year == globals.currentYear; });
   d3.select("#year").text(globals.currentYear);
+  d3.selectAll("#years .year").classed("selected", function(d) { return d == globals.currentYear; })
 
   // create sunburst
   var sbData = load.prepareDataSunburst(fullData, globals.currentYear);
@@ -413,7 +415,7 @@ function textTransform(d) {
 	var flip = shouldFlipText(angle);
 	nAngle = flip ? angle - 180 : angle;  // if flip -> - 180 degrees
 	var transY = flip ? -margin - y(d.y) : margin + y(d.y); // fix position if flipped
-    return "rotate(" + nAngle + ")translate(" + transY + ",0)";
+  return "rotate(" + nAngle + ")translate(" + transY + ",0)";
 }
 
 function textAnchor(d) {

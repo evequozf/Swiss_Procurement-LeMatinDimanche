@@ -2,6 +2,8 @@
   Creates a sparkline in element. Arguments:
 	element : d3 element (i.e. produced by d3.select(element))
 	data : data to show (filtered, just the item considered, along years)
+	totalParent : total amount of the parent (including this)
+	parentName : name of parent (for label)
 */
 
 var globals = require("./globals.js");
