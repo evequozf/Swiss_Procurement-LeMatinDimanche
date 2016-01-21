@@ -423,16 +423,15 @@ function textAnchor(d) {
 /**************** details: 'summary' ******************/
 
 function formatChf(d) {
-  console.log(d);
-  console.log(d3.format(" >10,f")(d));
-  return "CHF" + d3.format(" >10,f")(d).replace(/,/g," ");
+  // Pad with spaces -> requires in css to have 'white-space: pre' (otherwise must pad with nbsp which is '\xa0')
+  return "CHF" + d3.format("19,f")(d).replace(/,/g," ");
 }
 
 function updateSummary(d) {
   var known = getChildrenAmountKnown(d), unknown = d.chf - known;
   d3.select("#details-total").text(formatChf(d.chf));
-  d3.select("#details-known").text(ds.formatNumber(known));
-  d3.select("#details-unknown").text(ds.formatNumber(unknown));
+  d3.select("#details-known").text(formatChf(known));
+  d3.select("#details-unknown").text(formatChf(unknown));
   d3.select("#details-known-percent").text(Math.round(100*known/d.chf) + "%");
   d3.select("#details-unknown-percent").text(Math.round(100*unknown/d.chf) + "%");
   d3.select(".total").style("background-color", globals.currentColor);
@@ -445,15 +444,6 @@ function updateSparklines(filtereddata,name) {
   var div = d3.select("#sparkline-container");
   div.selectAll("*").remove();
   
-  //with fake data
-  /*
-  for(var i=0; i<3; i++) {
-    var sparkdata = fullData.filter(function(d) {return d.office === "BBL" && d.category === "Bureautique"});
-    spark.Sparkline(div,sparkdata);
-  }
-  */
-  ///*
-  // with real data
   // group by category, compute total over category, and store in array
   var cats = d3.nest()
     .key(function(d) { return d.fullCategory; })
@@ -470,5 +460,4 @@ function updateSparklines(filtereddata,name) {
   cats.forEach(function(c) {
     spark.Sparkline(div, filtereddata.filter(function(dd) { return dd.fullCategory === c.key; }), tot, name);
   }); 
-//*/
 }
