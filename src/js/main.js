@@ -20,9 +20,9 @@ CONVENU CAFE DE GRANCY
 √ - intégrer données Alex
 √ - refactor données pour calculer la valeur des 'Unknown'
 - basic tracking analytics
-- tooltip sur entreprise: table avec catégories de dépenses (reprendre icônes ?)
+0- tooltip sur entreprise: table avec catégories de dépenses (reprendre icônes ?)
 X - label sunburst : mettre % en + sur les plus gros (si place)
-- dernier niveau (seulement) -> ajouter le type de prestation, par ex. avec icône ? 
+0- dernier niveau (seulement) -> ajouter le type de prestation, par ex. avec icône ? 
 - show more ? cf. http://jsfiddle.net/KyleMit/MD2FP/
 
 
@@ -84,7 +84,7 @@ d3.dsv(",")("https://dl.dropboxusercontent.com/s/36k9pc7ll8yhhe3/master_export.c
 
   //console.log(fullData);
 
-  /*********** create buttons years ***********/
+  /*********** create buttons for chosing years ***********/
   d3.select("#years").selectAll("span.year")
     .data([2011, 2012, 2013, 2014])
       .enter()
@@ -422,7 +422,7 @@ function textAnchor(d) {
 	return shouldFlipText(getAngle(d)) ? "end" : "start";
 }
 
-/**************** details: 'summary' ******************/
+/**************** update details: 'summary' ******************/
 
 function formatChf(d) {
   // Pad with spaces -> requires in css to have 'white-space: pre' (otherwise must pad with nbsp which is '\xa0')
@@ -439,9 +439,10 @@ function updateSummary(d) {
   d3.select(".total").style("background-color", globals.currentColor);
 }
 
-/**************** details: sparklines ******************/
+/**************** update details: sparklines ******************/
 
 function updateSparklines(filtereddata,name) {
+  
   // clean sparklines
   var div = d3.select("#sparkline-container");
   div.selectAll("*").remove();
@@ -452,12 +453,15 @@ function updateSparklines(filtereddata,name) {
     .rollup(function(values) { return d3.sum(values.filter(function(d) { return +d.year == globals.currentYear; }), 
           function(d) {return +d.amount; }) })
     .entries(filtereddata);
+  
   // sort by descending total over category // FIXME : should be sorted by this year's value...
   //console.log(cats);
   cats = cats.sort(function(a,b) {return d3.descending(a.values,b.values)});
+  
   //compute total amount (for proportion later on)
   var tot = d3.sum(filtereddata.filter(function(d) { return +d.year == globals.currentYear; }), 
       function(d) { return +d.amount; });
+  
   // create a sparkline for each category
   cats.forEach(function(c) {
     spark.Sparkline(div, filtereddata.filter(function(dd) { return dd.fullCategory === c.key; }), tot, name);
