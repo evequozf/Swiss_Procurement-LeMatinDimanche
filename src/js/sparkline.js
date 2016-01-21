@@ -25,7 +25,7 @@ function Sparkline(element, data) {
 		.entries(data);
 
 	var margin = {top: 8, right: 10, bottom: 20, left: (LEGEND ? 80 : 10)},
-    	width = 180 - margin.left - margin.right,
+    	width = 130 - margin.left - margin.right,   // FIXME: hardcode 130 si bootstrap "container", 180 si "container-fluid"
     	height = 60 - margin.top - margin.bottom;
 
 	var x = d3.scale.ordinal()
@@ -93,7 +93,8 @@ function Sparkline(element, data) {
 	  leftdiv.append("p").text("CHF " + ds.formatNumber(amountThisYear) /*+ " (" + globals.currentYear + ")"*/);
 	//}
 
-	  //ds.responsive(rightdiv.select("svg")).start();
+	  // responsiveness
+	  //ds.responsive(rightdiv.select("svg")).start(); // does not work
 	
 	//return my;
 }

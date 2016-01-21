@@ -75,7 +75,6 @@ d3.dsv(",")("import/EDA-UVEK-merge.csv", function(error, data) {
 
 	// init responsiveness of svgs
 	ds.responsive(d3.select("#sunburst-container svg")).start();
-	ds.responsive(d3.select("#barchart-container svg")).start();
 
 });
 
@@ -302,6 +301,7 @@ function breadCrumb(d) {
 		var n = bc.insert("span", ":first-child")
       .datum(p) // attach current data to breadcrumb button
 			.attr("class","btn btn-default")
+      .style("background-color", p.color)
 			.on("click", function(dd) { showDetail(dd) })
       .on("mouseover", mouseOver) // show tooltip on hover of breadcrumb
       .on("mouseout", mouseOut);   // hide tooltip on hover of breadcrumb
@@ -445,6 +445,9 @@ function buildBar(data) {
   			"<p>CHF  "+ds.formatNumber(d.amount)+"</p>"
   	}
   );
+
+  // responsiveness
+  ds.responsive(d3.select("#barchart-container svg")).start();
 }
 
 
@@ -455,8 +458,8 @@ function updateSummary(d) {
   d3.select("#details-total").text(ds.formatNumber(d.chf));
   d3.select("#details-known").text(ds.formatNumber(known));
   d3.select("#details-unknown").text(ds.formatNumber(unknown));
-  d3.select("#details-known-percent").text(Math.round(100*known/d.chf));
-  d3.select("#details-unknown-percent").text(Math.round(100*unknown/d.chf));
+  d3.select("#details-known-percent").text(Math.round(100*known/d.chf) + "%");
+  d3.select("#details-unknown-percent").text(Math.round(100*unknown/d.chf) + "%");
   d3.select(".total").style("background-color", globals.currentColor);
 }
 

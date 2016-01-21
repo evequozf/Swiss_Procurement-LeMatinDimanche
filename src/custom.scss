@@ -22,6 +22,7 @@ h1 {
 
 h2 {
 	font-family: $serif;
+	font-size: 180%;
 }
 
 h3, h4 {
@@ -92,33 +93,43 @@ svg {
 			//font-size: 120%;
 			padding: 1em 0;
 
-/***************************** Table summary *********************/
-			table {
+/***************************** Table summary - bootstrap *********************/
+			/*table {
 				border-collapse: collapse;
+				margin-bottom: 0;
+			}
+			*/
+
+			.total, .known, .unknown {
+				padding: 0.2em 0;
 			}
 
-			tr.total {
+			.total {
 				font-weight: bold;
 				font-size: 110%;
 				border: 1px solid lightgray;
 			}
 
+			/*
 			td {
 				padding: 0.2em 1em;
 				border: 0;
 			}
+			*/
 
-			td.number, td.percent {
+			.number, .percent {
 				text-align: right;
 			}
 
-			td.percent {
+			.percent {
 				padding-right: 0;
 			}
 
+			/*
 			td.percent-sign {
 				padding-left: 0;
 			}
+			*/
 
 
 		}
@@ -227,8 +238,12 @@ svg {
 	}
 	div.left h5 {
 		font-weight: bold;
+		height: 50px;
 		//vertical-align: bottom;
 		//margin-right: 5em;
+	}
+	div.left p {
+		font-size: 75%;
 	}
 	div.right {
 		position: absolute;

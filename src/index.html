@@ -41,8 +41,8 @@
 	<div class="col-sm-12 col-md-6" id="right-column">
 		<div id="details-pane">
 			<h2>Mandats <span id="year"></span> de <span id="officename"></span></h2>
+			<!--
 			<div class="details table-responsive">
-				<!-- <h4>Résumé</h4> -->
 				<table class="table">
 				<tr class="total">
 					<td colspan="2">Total des mandats</td><td>CHF</td><td class="number" id="details-total"></td><td class="percent"></td><td></td>
@@ -54,11 +54,30 @@
 					<td></td><td>dont mandataires inconnus</td><td>CHF</td><td class="number" id="details-unknown"></td><td id="details-unknown-percent" class="percent"></td><td class="percent-sign">%</td>
 				</tr>
 				</table>
-				<!--
-				<div>
-					&nbsp;&nbsp;&nbsp;dont mandataires connus : CHF 45'000'0000.- (xx% du total)<br/>
-					&nbsp;&nbsp;&nbsp;dont mandataires inconnus : CHF 45'000'0000.- (xx% du total)</p>
-				</div>-->
+			</div>
+			-->
+			<div class="details summary">
+				<div class="row total">
+					<div class="col-xs-12 col-sm-4">Total des mandats</div>
+					<div class="col-xs-1">CHF</div>
+					<div class="col-xs-4 col-sm-5 number" id="details-total"></div>
+					<div class="col-xs-1 percent"></div>
+					
+				</div>
+				<div class="row known">
+					<div class="col-xs-12 col-sm-4">dont mandataires connus</div>
+					<div class="col-xs-1">CHF</div>
+					<div class="col-xs-4 col-sm-5 number" id="details-known"></div>
+					<div class="col-xs-1 percent" id="details-known-percent" ></div>
+					
+				</div>
+				<div class="row unknown">
+					<div class="col-xs-12 col-sm-4">dont mandataires inconnus</div>
+					<div class="col-xs-1">CHF</div>
+					<div class="col-xs-4 col-sm-5 number" id="details-unknown"></div>
+					<div class="col-xs-1 percent" id="details-unknown-percent" ></div>
+					
+				</div>
 			</div>
 			<div class="details">
 				<h4>Mandataires principaux</h4>
