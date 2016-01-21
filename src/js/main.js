@@ -1,6 +1,12 @@
 /************
 TODO :
 
+TEL ALEXANDRE 21.01.2016
+- tooltip entreprise: quel département paie ? quelle catégorie de services ?
+- catégories: nettoyer données pour n'avoir que les 22 catégories principales
+- prévoir chargement des données avec un fichier par année / langue
+
+
 A DISCUTER
 ~ - quoi afficher dans détails
 √ - comment faire figurer montant connus / inconnus (ma suggestion: pas dans sunburst)
