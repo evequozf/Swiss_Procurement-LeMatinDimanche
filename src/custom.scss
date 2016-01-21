@@ -77,8 +77,8 @@ svg {
 	}
 	& #right-column {
 		border: 1px solid #ddd;
-		//background: #fafafa;
-		background: #f0f0f0;
+		background: #f6f6f6;
+		//background: #f0f0f0;
 		//background: #eee;
 		
 		& #details-pane {
@@ -96,7 +96,7 @@ svg {
 
 /***************************** Table summary - bootstrap *********************/
 			.row {
-				//margin: 0;
+				margin: 0; // prevents "total" from being to wide and touch border of container
 			}
 
 			.total {
