@@ -255,7 +255,7 @@ function buildSunburst(data) {
   paths = sunburstG.append("path")
       .attr("d", arc)
       .style("fill", function(d) { return d.color; })
-    .on("click touchend", function(d) { return showDetail(d); })
+    .on("click", function(d) { return showDetail(d); })
     .on("mouseover", mouseOver)
     .on("mouseout", mouseOut)
     //.on("touchstart", function(d) { console.log("touchstart"); console.log(d); mouseOver(d); })
