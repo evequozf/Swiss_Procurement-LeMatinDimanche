@@ -10,11 +10,8 @@ module.exports = {
 
 // Prepare data format for sunburst: should look like import/fake-sunburst.json
 // + added fields e.g. fullDept, fullOffice, percentages, ...
-function prepareDataSunburst(fulldata,year) {
+function prepareDataSunburst(filtereddata) {
 	
-	//sunburst shows only one year -> keep only current year
-	filtereddata = fulldata.filter(function(d) { return +d.year == year; });
-
 	//console.log(data);
 	var nest = d3.nest()
 		.key(function(d) {return d.dept;})

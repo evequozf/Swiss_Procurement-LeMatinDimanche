@@ -63,7 +63,7 @@ function updateYear(year) {
   d3.selectAll("#years .year").classed("selected", function(d) { return d == globals.currentYear; })
 
   // create sunburst
-  var sbData = load.prepareDataSunburst(fullData, globals.currentYear);
+  var sbData = load.prepareDataSunburst(thisYearData);
   buildSunburst(sbData);
 
   // if data key is not set (first execution) set it to root
