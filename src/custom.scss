@@ -151,7 +151,8 @@ svg {
 		// ALTERNATIVE -> SET UP DIFFERENT INTERACTIONS FOR MOBILE & DESKTOP !!
 		& span {
 			padding: .25em;
-			margin-top: .25em;
+			margin-top: .125em;
+			margin-bottom: .125em;
 			&:hover {
 				//text-decoration: underline;
 			}
