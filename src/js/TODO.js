@@ -22,29 +22,28 @@ CONVENU CAFE DE GRANCY
 ~ - catégories : sparkline similaire NY times pour vue détaillée, fonction qui le fait (+ icônes?) -> refactor disposition
 √ - détails, comme dans carnet
 √ - résumé dans structures bootstrap plutôt que table
-~ - switch années au-dessous sunburst "Année: 2011 2012 2013 etc."
+√ - switch années au-dessous sunburst "Année: 2011 2012 2013 etc."
 √ - intégrer données Alex
 √ - refactor données pour calculer la valeur des 'Unknown'
 - basic tracking analytics
-0- tooltip sur entreprise: table avec catégories de dépenses (reprendre icônes ?)
-X - label sunburst : mettre % en + sur les plus gros (si place)
-0- dernier niveau (seulement) -> ajouter le type de prestation, par ex. avec icône ? 
 - show more ? cf. http://jsfiddle.net/KyleMit/MD2FP/
+0- tooltip sur entreprise: table avec catégories de dépenses (reprendre icônes ?)
+0- dernier niveau (seulement) -> ajouter le type de prestation, par ex. avec icône ? 
+X - label sunburst : mettre % en + sur les plus gros (si place)
 
 
 MIDDLE
-~- Meilleur passage des années (pas reconstruire le SVG...)
 √ garder "état de la visualisation" quand on change d'année ? (= actuel filter, je pense, garder le datum actuel...)
-- "polissage" par Inventaire ?
+~- Meilleur passage des années (pas reconstruire le SVG...)
 - pym.js
-
+X - "polissage" par Inventaire ?
 
 LOW
 √ - Breadcrumb sur mobile (pas d'overlap)
-- transition pour bar chart
 ~ - object persistence (bars + pies)
 ~ - vraies données
 √ - use breadcrumb from bootstrap
+- transition pour bar chart
 0- interaction continue sur mobile pour sunburst (y.c. fixed tooltip -> différencier avec media queries ?)
   => voir aussi http://bl.ocks.org/mbostock/770ae19ca830a4ce87f5 -> listener ailleurs ? laisser tomber ?
 
