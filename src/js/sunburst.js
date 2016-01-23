@@ -14,52 +14,32 @@ module.exports = {
 }
 
 /*************************************/
-// Tryout...
 
 var root, nodes, newData;
 
-d3.selectAll("input").on("change", function change() {
-
-	var value = this.value === "count"
-	    ? function() { return 1; }
-	    : function(d) { return d.chf; };
-
-	sunburstG.data(partition.value(value).nodes(root));
-
-	var trans = sunburstG.transition().duration(750);
-
-	trans.selectAll("path")
-	    .attrTween("d", arcTweenData)
-
-	trans.selectAll("text")
-	  	.attr("transform", textTransform)
-	  	.attr("text-anchor", textAnchor)
-	  	.style("opacity", textOpacity);
-
-});
-
-
+// recursively change fields chf and percent in children to match current year
 function recChangeYear(node, year) {
 	node.chf =  node["chf_"+year];
 	node.percent = node["percent_"+year];
 	if(node.children) {
-		node.children = node.children.map(function(n) {
-		return recChangeYear(n, year);
+  		node.children = node.children.map(function(n) {
+  		return recChangeYear(n, year);
 		});
 	}
 	return node;
 }
 
+// Selects the relevant parts of data and set them to chf and percent + reassign new data to visual elements, and return new data
 function changeYear(year) {
 
-  	var newData = recChangeYear(root, year);
+  var newData = recChangeYear(root, year);
 
-  	// Partition & Build viz
-  	nodes = partition.nodes(newData);
+  // Partition & Build viz
+  nodes = partition.nodes(newData);
 
-  	// colorize
-  	color.domain(newData.children.map(function(d) {return d.name} ));
-  	nodes.forEach(function(n,i){ setColors(n,i) });
+  // colorize (needed ?)
+  color.domain(newData.children.map(function(d) {return d.name} ));
+  nodes.forEach(function(n,i){ setColors(n,i) });
 
 	nodes.map(function(d) {
 		d.chf = d["chf_"+year],
@@ -67,16 +47,6 @@ function changeYear(year) {
 	});
 
 	sunburstG.data(nodes);
-
-	var trans = sunburstG.transition().duration(750);
-
-	trans.selectAll("path")
-	    .attrTween("d", arcTweenData)
-
-	trans.selectAll("text")
-	  	.attr("transform", textTransform)
-	  	.attr("text-anchor", textAnchor)
-	  	.style("opacity", textOpacity);
 
 	return newData;
 }
@@ -86,31 +56,6 @@ function stash(d) {
   d.x0 = d.x;
   d.dx0 = d.dx;
 }
-
-// When switching data: interpolate the arcs in data space.
-function arcTweenData(a, i) {
-  var oi = d3.interpolate({x: a.x0, dx: a.dx0}, a);
-  function tween(t) {
-    var b = oi(t);
-    a.x0 = b.x;
-    a.dx0 = b.dx;
-    return arc(b);
-  }
-  if (i == 0) {
-   // If we are on the first arc, adjust the x domain to match the root node
-   // at the current zoom level. (We only need to do this once.)
-    var xd = d3.interpolate(x.domain(), [root.x, root.x + root.dx]);
-    return function(t) {
-      x.domain(xd(t));
-      return tween(t);
-    };
-  } else {
-    return tween;
-  }
-}
-
-
-
 
 
 /*****************/
@@ -229,14 +174,13 @@ function mouseOut(d) {
 
 
 // update when showDetails is called
-function updateSunburst(d, transition) {
+function updateSunburst(d, changeData) {
 	
 	//default param
-	if(typeof transition === 'undefined') transition = true;
+	if(typeof changeData === 'undefined') changeData = false;
 
 	// update sunburst
 	var trans = sunburstG.transition()
-	  .delay(transition ? 0 : 750)
 	  .duration(750)
 	  .tween("scale", function() {
 	    var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
@@ -245,14 +189,29 @@ function updateSunburst(d, transition) {
 	    return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
 	  });
 	trans.selectAll("path")
-	      .attrTween("d", function(d) { return function() { return arc(d); }; });
-	trans.selectAll("text")
-	  	  .attrTween("transform", function(d) { return function() { return textTransform(d); } })
-	  	  .attrTween("text-anchor", function(d) { return function() { return textAnchor(d); } })
-	  	  .styleTween("opacity", function(d) { return function() { return textOpacity(d); }; });
+	      .attrTween("d", function(d) { return tweenDataZoom(d, arc, changeData) });
+
+  trans.selectAll("text")
+        .attrTween("transform", function(d) { return tweenDataZoom(d, textTransform, changeData) })
+        .attrTween("text-anchor", function(d) { return tweenDataZoom(d, textAnchor, changeData) })
+        .styleTween("opacity", function(d) { return tweenDataZoom(d, textOpacity, changeData) });
 
 	// update breadcrumb trail
   	breadCrumb(d);
+}
+
+// Returns tween function applying func, in case of data change (i.e. year change) or not (i.e. just zooming in/out)
+function tweenDataZoom(d, func, dataChange) {
+  if(dataChange) {
+    var i = d3.interpolate({x: d.x0, dx: d.dx0}, d);
+    return function(t) {
+      var b = i(t);
+      d.x0 = b.x;
+      d.dx0 = b.dx;
+      return func(b);
+    };
+  }
+  else return function() { return func(d); }
 }
 
 

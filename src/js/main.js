@@ -84,7 +84,7 @@ function updateYear(year) {
   //show the details pane for selected node of sunburst with no transition (false)
   var currentData = getSbData(sbData, globals.currentDataKey);
   currentData = currentData != null ? currentData : sbData; // current data might be null if department is not present that year
-  showDetail(currentData, false);
+  showDetail(currentData, true);
 }
 
 // Look for data corresponding to currently selected data (i.e. key)
