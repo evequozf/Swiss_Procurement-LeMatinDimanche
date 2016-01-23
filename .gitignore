@@ -10,8 +10,6 @@ src/Makefile 2
 
 src/js/viz.js
 
-src/js/sunburst.js
-
 src/viz.js
 
 src/import/fake.csv
