@@ -86,6 +86,6 @@ function buildBar(data) {
   	}
   );
 
-  // responsiveness
-  ds.responsive(d3.select("#barchart-container svg")).start();
+  // responsiveness // -> removed from here, should depend from higher level, i.e. main.js
+  //ds.responsive(d3.select("#barchart-container svg")).start();
 }

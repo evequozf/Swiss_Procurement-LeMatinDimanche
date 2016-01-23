@@ -364,7 +364,7 @@ of svg upon creation of the ds.responsive() :
 The update(event) function can also be called directly to force an update
 outside of regular updates triggered by 'resize' and 'load' events.
 
-This function automatically registers following listeners:
+Upon creation of the responsive object, it is automatically registered as event listener as follows:
 	window.addEventListener('resize', ...);
 	window.addEventListener('load', ...);
 
