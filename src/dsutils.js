@@ -473,6 +473,28 @@ Minimal use case with callback :
 // using code from Gregor Aisch http://bl.ocks.org/gka/17ee676dc59aa752b4e6
 // http://vis4.net/blog/posts/making-html-tables-in-d3-doesnt-need-to-be-a-pain/
 
+EXAMPLE USE (todo: update with more generic and different uses)
+
+var columsSpec = [
+    //{head: 'No', cl: '', html: ƒ('No')},
+    {head: 'Id', cl: 'id', html: function(d) {
+      return ('<a id="anchor' + d.No + '">' + d.Id +'</a>');
+    }}, // internal anchor : onclick on circle -> transport in table
+    {head: 'Libellé', cl: 'text', html: ƒ('Type')},
+    {head: 'Charges 2015', cl: 'num', html: ƒ('Charges2015')},
+    //{head: 'Revenus 2015', cl: 'num', html: ƒ('Revenus2015')},
+    {head: 'Charges 2016', cl: 'num', html: ƒ('Charges2016')},
+    //{head: 'Revenus 2016', cl: 'num', html: ƒ('Revenus2016')},
+    {head: 'Charges 2017', cl: 'num', html: ƒ('Charges2017')},
+    //{head: 'Revenus 2017', cl: 'num', html: ƒ('Revenus2017')},
+    {head: 'Charges 2018', cl: 'num', html: ƒ('Charges2018')},
+    //{head: 'Revenus 2018', cl: 'num', html: ƒ('Revenus2018')},
+    {head: 'Total Charges', cl: 'num totalcharges', html: ƒ('TotalCharges')},
+    //{head: 'Total Revenus', cl: 'num totalrevenus', html: ƒ('TotalRevenus')}
+  ];
+  
+  ds.table(finances, d3.select("#table")).columnsSpecs(columsSpec).create();
+
 */
 
 	function table(_data, _container) {
