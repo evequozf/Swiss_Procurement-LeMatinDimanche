@@ -40,11 +40,11 @@ MIDDLE
 
 
 LOW
-X - Breadcrumb sur mobile (pas d'overlap)
+√ - Breadcrumb sur mobile (pas d'overlap)
 - transition pour bar chart
 ~ - object persistence (bars + pies)
 ~ - vraies données
-- use breadcrumb from bootstrap
+√ - use breadcrumb from bootstrap
 0- interaction continue sur mobile pour sunburst (y.c. fixed tooltip -> différencier avec media queries ?)
   => voir aussi http://bl.ocks.org/mbostock/770ae19ca830a4ce87f5 -> listener ailleurs ? laisser tomber ?
 

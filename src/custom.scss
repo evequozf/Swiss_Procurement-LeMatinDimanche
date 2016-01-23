@@ -141,6 +141,8 @@ svg {
 	//border: 1px solid yellow;
 }
 
+/************ Breadcrumbs *************/
+
 #breadcrumb {
 		//top: 0;
 		//left: 0;
@@ -149,6 +151,7 @@ svg {
 		// ALTERNATIVE -> SET UP DIFFERENT INTERACTIONS FOR MOBILE & DESKTOP !!
 		& span {
 			padding: .25em;
+			margin-top: .25em;
 			&:hover {
 				//text-decoration: underline;
 			}
@@ -160,11 +163,22 @@ svg {
 		//border: 1px solid yellow;
 	} 
 
+// update bootstrap defaults
+.breadcrumb > li + li:before {
+    //content: "> ";
+    //color: "#666";
+}
+.breadcrumb {
+	margin-left: 0;
+	margin-right: 0;
+	background-color: transparent;
+}
+
+/********************* Sunburst tooltip ********************/
+
 #over-sunburst {
 	width: 100%;
 	//position: relative;
-
-	
 
 	#fixed-tooltip {
 		top: 0;

@@ -342,28 +342,25 @@ function showDetail(d, transition) {
 function breadCrumb(d) {
 	var p = d, bc = d3.select("#breadcrumb");
 	bc.selectAll("*").remove();
-	while ( typeof p !== 'undefined' ) {
-		// separator >
-		bc.insert("span", ":first-child")
-			.attr("class","separator")
-			.text(">");
-		var n = bc.insert("span", ":first-child")
+  bc = bc.append("ol").attr("class","breadcrumb");
+  while ( typeof p !== 'undefined' ) {
+    var n = bc.insert("li", ":first-child");
+    n = n.append("span")
       .datum(p) // attach current data to breadcrumb button
-			.attr("class","btn btn-default")
+      .attr("class","btn btn-default")
       .style("background-color", p.color)
-			.on("click", function(dd) { showDetail(dd) })
+      .on("click", function(dd) { showDetail(dd) })
       .on("mouseover", mouseOver) // show tooltip on hover of breadcrumb
       .on("mouseout", mouseOut);   // hide tooltip on hover of breadcrumb
-		// home icon for root
-		if(p.name == globals.lang.root) {
-			n.append("i").attr("class", "fa fa-home");
-		}
-		// text of breadcrumb trail
-		n.append("span").text(p.name);
-		// iteratively get up in hierarchy
-		p = p.parent;
-	}
-	bc.select("span.separator:last-child").remove(); // remove last ' > ';
+    // home icon for root
+    if(p.name == globals.lang.root) {
+      n.append("i").attr("class", "fa fa-home");
+    }
+    // text of breadcrumb trail
+    n.append("span").text(p.name);
+    // iteratively get up in hierarchy
+    p = p.parent;
+  }
 }
 
 
