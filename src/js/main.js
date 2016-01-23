@@ -2,7 +2,7 @@
 
 Main application file. 
 
-Loads the others. Also include code that manages the sunburst view.
+Loads the others. Manages global thread of control and interaction flow.
 
 ********************/
 
@@ -23,7 +23,6 @@ function addField(d, name) {
   return d;
 }
 
-//d3.dsv(";")("import/fake2.csv", function(error, data) {
 d3.dsv(",")("https://dl.dropboxusercontent.com/s/36k9pc7ll8yhhe3/master_export.csv?dl=1", function(error, data) {
 //d3.dsv(",")("import/master_export.csv", function(error, data) { 
 
@@ -54,8 +53,8 @@ d3.dsv(",")("https://dl.dropboxusercontent.com/s/36k9pc7ll8yhhe3/master_export.c
       });
 
 // Trying out !............
-  //var sbData = load.prepareDataSunburst(fullData);
-  //buildSunburst(sbData);
+  var sbData = load.prepareDataSunburst(fullData);
+  sunburst.build(sbData);
 
   updateYear(2014);
 
@@ -74,8 +73,9 @@ function updateYear(year) {
   d3.selectAll("#years .year").classed("selected", function(d) { return d == globals.currentYear; })
 
   // create sunburst
-  var sbData = load.prepareDataSunburst(thisYearData);
-  sunburst.build(sbData);
+  //var sbData = load.prepareDataSunburst(thisYearData);
+  //sunburst.build(sbData);
+  var sbData = sunburst.changeYear(year);
 
   // if data key is not set (first execution) set it to root
   if(globals.currentDataKey == "")
@@ -109,7 +109,7 @@ function getKey(d) {
 // show extended details pane for a selected / clicked element (given data)
 function showDetail(d, transition) {
   
-  //default param
+  // default param
   if(typeof transition === 'undefined') transition = true;
 
   // global data key to be this data key

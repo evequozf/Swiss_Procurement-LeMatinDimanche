@@ -9,10 +9,114 @@ var globals = require("./globals.js");
 
 module.exports = {
 	build: buildSunburst,
-	update: updateSunburst
+	update: updateSunburst,
+	changeYear: changeYear
 }
 
+/*************************************/
+// Tryout...
+
+var root, nodes, newData;
+
+d3.selectAll("input").on("change", function change() {
+
+	var value = this.value === "count"
+	    ? function() { return 1; }
+	    : function(d) { return d.chf; };
+
+	sunburstG.data(partition.value(value).nodes(root));
+
+	var trans = sunburstG.transition().duration(750);
+
+	trans.selectAll("path")
+	    .attrTween("d", arcTweenData)
+
+	trans.selectAll("text")
+	  	.attr("transform", textTransform)
+	  	.attr("text-anchor", textAnchor)
+	  	.style("opacity", textOpacity);
+
+});
+
+
+function recChangeYear(node, year) {
+	node.chf =  node["chf_"+year];
+	node.percent = node["percent_"+year];
+	if(node.children) {
+		node.children = node.children.map(function(n) {
+		return recChangeYear(n, year);
+		});
+	}
+	return node;
+}
+
+function changeYear(year) {
+
+  	var newData = recChangeYear(root, year);
+
+  	// Partition & Build viz
+  	nodes = partition.nodes(newData);
+
+  	// colorize
+  	color.domain(newData.children.map(function(d) {return d.name} ));
+  	nodes.forEach(function(n,i){ setColors(n,i) });
+
+	nodes.map(function(d) {
+		d.chf = d["chf_"+year],
+		d.percent = d["percent_"+year]
+	});
+
+	sunburstG.data(nodes);
+
+	var trans = sunburstG.transition().duration(750);
+
+	trans.selectAll("path")
+	    .attrTween("d", arcTweenData)
+
+	trans.selectAll("text")
+	  	.attr("transform", textTransform)
+	  	.attr("text-anchor", textAnchor)
+	  	.style("opacity", textOpacity);
+
+	return newData;
+}
+
+// Setup for switching data: stash the old values for transition.
+function stash(d) {
+  d.x0 = d.x;
+  d.dx0 = d.dx;
+}
+
+// When switching data: interpolate the arcs in data space.
+function arcTweenData(a, i) {
+  var oi = d3.interpolate({x: a.x0, dx: a.dx0}, a);
+  function tween(t) {
+    var b = oi(t);
+    a.x0 = b.x;
+    a.dx0 = b.dx;
+    return arc(b);
+  }
+  if (i == 0) {
+   // If we are on the first arc, adjust the x domain to match the root node
+   // at the current zoom level. (We only need to do this once.)
+    var xd = d3.interpolate(x.domain(), [root.x, root.x + root.dx]);
+    return function(t) {
+      x.domain(xd(t));
+      return tween(t);
+    };
+  } else {
+    return tween;
+  }
+}
+
+
+
+
+
 /*****************/
+
+// svg elements with data associated in sunburst
+var sunburstG, paths, texts; 
 
 var margin = {top: 30, right: 20, bottom: 20, left: 20},
     width = 550 - margin.left - margin.right,
@@ -53,11 +157,7 @@ var color = d3.scale.ordinal()
 	.range(["#444", "#555", "#666", "#777", "#888", "#999", "#aaa", "#bbb", "#ccc", "#ddd", "#eee"]);
 */
 
-
-// svg elements with data associated in sunburst
-var sunburstG, paths, texts; 
-
-// TOOD : put someplace else, in own sunburst file e.g...
+// create SVG with transforms
 svg = d3.select("#sunburst-container").append("svg")
     .attr("width", width+margin.left+margin.right)
     .attr("height", height+margin.top+margin.bottom)
@@ -69,72 +169,43 @@ svg = d3.select("#sunburst-container").append("svg")
 // init responsiveness of svg on load and resize events
 ds.responsive(d3.select("#sunburst-container svg")).start();
 
+
+// Main function : build sunburst
 function buildSunburst(data) {
   
+  // set root
+  root = data;
+
   // Partition & Build viz
-  var nodes = partition.nodes(data);
+  nodes = partition.nodes(data);
 
   // colorize
   color.domain(data.children.map(function(d) {return d.name} ));
   nodes.forEach(function(n,i){ setColors(n,i) });
 
-////////////////
-  svg.selectAll("*").remove();
+  //svg.selectAll("*").remove(); //////////////// to update !!!
 
-  sunburstG = svg.selectAll("path")
+  sunburstG = svg.selectAll("g")
     .data(nodes)
   .enter().append("g");
 
-  paths = sunburstG.append("path")
-      .attr("d", arc)
-      .style("fill", function(d) { return d.color; })
+  paths = sunburstG.append("path");
+  texts = sunburstG.append("text");
+  
+  paths
+    .attr("d", arc)
+    .style("fill", function(d) { return d.color; })
     .on("click", function(d) { return globals.showDetail(d); })
     .on("mouseover", mouseOver)
     .on("mouseout", mouseOut)
-    //.on("touchstart", function(d) { console.log("touchstart"); console.log(d); mouseOver(d); })
-    //.on("touchmove", function(d) { console.log("touchmove"); console.log(d); mouseOver(d); })
-    //.on("mouseout", mouseOut)
-      //.style("fill", "#ccc")//function(d) { return color((d.children ? d : d.parent).name); })
-    //.style("fill", function(d) { return color(d.depth) });
+    .each(stash);
       
-  texts = sunburstG.append("text")
+  texts
     .text(function(d) { return d.name; })
     .attr("text-anchor", textAnchor)
     .attr("transform", textTransform)
     .style("opacity", textOpacity)
     .attr("dy", ".35em"); // vertical-align
-//////////////////    
-  
-  // does not update correctly with years change -> delete
-
-  /*
-  // data binding
-  sunburstG = svg.selectAll("g")
-      .data(nodes, function(d) { return getKey(d); });
-
-  // enter
-  var gEnter = sunburstG.enter().append("g");
-  gEnter.append("path");
-  gEnter.append("text");
-
-  // update
-  paths = sunburstG.selectAll("g path")
-        .attr("d", arc)
-        .style("fill", function(d) { return d.color; })
-        .on("click touchend", function(d) { return showDetail(d); })
-        .on("mouseover", mouseOver)
-        .on("mouseout", mouseOut);
-
-  texts = sunburstG.selectAll("g text")
-        .text(function(d) { return d.name; })
-        .attr("dy", ".35em") // vertical-align
-      	.attr("text-anchor", textAnchor)
-        .attr("transform", textTransform)
-        .style("opacity", textOpacity);
-
-  // exit
-  sunburstG.exit().remove();
-  */
 
 }
 
@@ -165,7 +236,8 @@ function updateSunburst(d, transition) {
 
 	// update sunburst
 	var trans = sunburstG.transition()
-	  .duration(transition ? 750 : 0)
+	  .delay(transition ? 0 : 750)
+	  .duration(750)
 	  .tween("scale", function() {
 	    var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
 	        yd = d3.interpolate(y.domain(), [d.y, 1]),

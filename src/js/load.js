@@ -8,57 +8,117 @@ module.exports = {
 
 /**************** data preparation sunburst ******************/
 
+var years = globals.years;
+
 // Prepare data format for sunburst: should look like import/fake-sunburst.json
 // + added fields e.g. fullDept, fullOffice, percentages, ...
+// + added years
 function prepareDataSunburst(filtereddata) {
 	
 	//console.log(data);
 	var nest = d3.nest()
 		.key(function(d) {return d.dept;})
 		.key(function(d) {return d.office;})
-		.rollup(function(values) {return {
-			"fullDept": values[0].fullDept,     // store additional params
-			"fullOffice": values[0].fullOffice, // store additional params
-			"chf":d3.sum(values, function(dd) {return +dd.amount;})
-		}})
+		.rollup(function(values) {
+			// v will be {fullDept: ..., fullOffice: ..., chf_all: ..., chf_2011: ..., chf_2012: ......, chf: ...}
+			var v =  {
+				"fullDept": values[0].fullDept,     // store additional params
+				"fullOffice": values[0].fullOffice, // store additional params
+				"chf_all":d3.sum(values, function(dd) {return +dd.amount;})
+			}
+			v.chf = v.chf_all; // default chf value is total over all years
+			// constructs chf_2014: xxxx, chf_2013: yyyy, etc. for each value
+			years.forEach(function(year) {
+				v["chf_"+year] = d3.sum(values.filter(function(dd){ return +dd.year === year}), 
+					function(dd) {return +dd.amount;})
+			});
+			return v;
+		})
 		.map(filtereddata,d3.map);
 	//console.log(nest);
 
 	// construct sunburst data (aka fake.json format) from nested data above
-	var depts = [], sumdepts = 0;
+	var depts = [], sumdepts = {all: 0};
 	nest.forEach(function(key,value) {
-		// level 1 : dept
-		var offices = [], sumoffices = 0, fullDept = '';
-		// level 2 : offices
+		// level 1 : we are here inside a dept
+		var offices = [], sumoffices = {all: 0}, fullDept = '';
+		// level 2 : we go inside each office of the dept
 		value.forEach(function(key,value) {
-			offices.push( {
-					"name": key,
-					"nameFull": value.fullOffice,
-					"chf": +value.chf
-				});
-			sumoffices += +value.chf;
+			var v = {
+				"name": key,
+				"nameFull": value.fullOffice,
+				"chf": value.chf,
+				"chf_all": value.chf_all
+			};
+			// constructs chf_yyyy value with yyyy = year, & sumoffices per year
+			years.forEach(function(year) {
+				v["chf_"+year] = value["chf_"+year];
+				if(!sumoffices[year]) sumoffices[year] = 0;
+				sumoffices[year] += value["chf_"+year];
+			});
+			sumoffices.all += value.chf_all;
+			offices.push(v);
 			fullDept = value.fullDept;  // parameters are stored at the leaf level, i.e. here
 		});
-		// level 2 : insert proportion of each office
+		// level 2 : insert proportion of each office for each year
 		offices = offices.map(function(d) {
-			d.percent = Math.round(100 * d.chf / sumoffices); 
+			d.percent_all = Math.round(100 * d.chf_all / sumoffices.all); 
+			years.forEach(function(year) {
+				d["percent_"+year] = Math.round(100 * d["chf_"+year] / sumoffices[year]);
+			});
+			d.percent = d.percent_all;
 			return d;
 		});
+
+		//console.log(offices);
+
 		// level 1 : dept create
-		depts.push( {
+		var d = {
 				"name": key,
 				"nameFull": fullDept,
-				"chf": sumoffices,
+				"chf": sumoffices.all,
+				"chf_all": sumoffices.all,
 				"children": offices
-			});
-		sumdepts += sumoffices;
-		// level 1 : insert proportion of each dept
-		depts = depts.map(function(d) {
-			d.percent = Math.round(100 * d.chf / sumdepts); 
-			return d;
-		})
+		};
+		// constructs chf_yyyy value with yyyy = year, & sumdepts per year & percentage
+		years.forEach(function(year) {
+			d["chf_"+year] = sumoffices[year];
+			if(!sumdepts[year]) sumdepts[year] = 0;
+			sumdepts[year] += sumoffices[year];
+		});
+		sumdepts.all += sumoffices.all;
+		depts.push(d);
 	});
-	return {"name":globals.lang.root, "nameFull":globals.lang.root, "children": depts, "chf": sumdepts, "percent": 100};
+
+	// level 1 : insert proportion of each dept
+	depts = depts.map(function(d) {
+		d.percent_all = Math.round(100 * d.chf_all / sumdepts.all); 
+		years.forEach(function(year) {
+			d["percent_"+year] = Math.round(100 * d["chf_"+year] / sumdepts[year]);
+		});
+		d.percent = d.percent_all;
+		return d;
+	});
+
+	//console.log(depts);
+
+	return {
+		"name":globals.lang.root, 
+		"nameFull":globals.lang.root, 
+		"children": depts, 
+		"chf": sumdepts.all, 
+		"chf_all": sumdepts.all, 
+		"chf_2011": sumdepts[2011], 
+		"chf_2012": sumdepts[2012], 
+		"chf_2013": sumdepts[2013], 
+		"chf_2014": sumdepts[2014], 
+		"percent": 100,
+		"percent_all": 100,
+		"percent_2011": 100,
+		"percent_2012": 100,
+		"percent_2013": 100,
+		"percent_2014": 100
+	};
 }
 
 /**************** data preparation bar ******************/
