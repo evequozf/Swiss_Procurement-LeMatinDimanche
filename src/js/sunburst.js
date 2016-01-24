@@ -9,10 +9,60 @@ var globals = require("./globals.js");
 
 module.exports = {
 	build: buildSunburst,
-	update: updateSunburst
+	update: updateSunburst,
+	changeYear: changeYear
 }
 
+/*************************************/
+
+var root, 
+    currentNode; // node currently in the center
+
+// recursively change fields chf and percent in children to match current year
+function recChangeYear(node, year) {
+	node.chf =  node["chf_"+year];
+	node.percent = node["percent_"+year];
+	if(node.children) {
+  		node.children = node.children.map(function(n) {
+  		return recChangeYear(n, year);
+		});
+	}
+	return node;
+}
+
+// Selects the relevant parts of data and set them to chf and percent + reassign new data to visual elements, and return new data
+function changeYear(year) {
+
+  var newData = recChangeYear(root, year);
+
+  // Partition & Build viz
+  var nodes = partition.nodes(newData);
+
+  // colorize (needed ?)
+  color.domain(newData.children.map(function(d) {return d.name} ));
+  nodes.forEach(function(n,i){ setColors(n,i) });
+
+	nodes.map(function(d) {
+		d.chf = d["chf_"+year],
+		d.percent = d["percent_"+year]
+	});
+
+	sunburstG.data(nodes);
+
+	return newData;
+}
+
+// Setup for switching data: stash the old values for transition.
+function stash(d) {
+  d.x0 = d.x;
+  d.dx0 = d.dx;
+}
+
+
 /*****************/
+
+// svg elements with data associated in sunburst
+var sunburstG, paths, texts; 
 
 var margin = {top: 30, right: 20, bottom: 20, left: 20},
     width = 550 - margin.left - margin.right,
@@ -53,24 +103,25 @@ var color = d3.scale.ordinal()
 	.range(["#444", "#555", "#666", "#777", "#888", "#999", "#aaa", "#bbb", "#ccc", "#ddd", "#eee"]);
 */
 
-
-// svg elements with data associated in sunburst
-var sunburstG, paths, texts; 
-
-// TOOD : put someplace else, in own sunburst file e.g...
+// create SVG with transforms
 svg = d3.select("#sunburst-container").append("svg")
     .attr("width", width+margin.left+margin.right)
     .attr("height", height+margin.top+margin.bottom)
     .append("g")
       .attr("transform","translate("+margin.left+","+margin.top+")")
     .append("g")
-      .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
+      .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")" + "rotate(90)"); //rotate(90) = origin at 3 o'clock 
 
 // init responsiveness of svg on load and resize events
 ds.responsive(d3.select("#sunburst-container svg")).start();
 
+
+// Main function : build sunburst
 function buildSunburst(data) {
   
+  // set root
+  root = data;
+
   // Partition & Build viz
   var nodes = partition.nodes(data);
 
@@ -78,63 +129,29 @@ function buildSunburst(data) {
   color.domain(data.children.map(function(d) {return d.name} ));
   nodes.forEach(function(n,i){ setColors(n,i) });
 
-////////////////
-  svg.selectAll("*").remove();
+  //svg.selectAll("*").remove(); //////////////// to update !!!
 
-  sunburstG = svg.selectAll("path")
+  sunburstG = svg.selectAll("g")
     .data(nodes)
   .enter().append("g");
 
-  paths = sunburstG.append("path")
-      .attr("d", arc)
-      .style("fill", function(d) { return d.color; })
+  paths = sunburstG.append("path");
+  texts = sunburstG.append("text");
+  
+  paths
+    .attr("d", arc)
+    .style("fill", function(d) { return d.color; })
     .on("click", function(d) { return globals.showDetail(d); })
     .on("mouseover", mouseOver)
     .on("mouseout", mouseOut)
-    //.on("touchstart", function(d) { console.log("touchstart"); console.log(d); mouseOver(d); })
-    //.on("touchmove", function(d) { console.log("touchmove"); console.log(d); mouseOver(d); })
-    //.on("mouseout", mouseOut)
-      //.style("fill", "#ccc")//function(d) { return color((d.children ? d : d.parent).name); })
-    //.style("fill", function(d) { return color(d.depth) });
+    .each(stash);
       
-  texts = sunburstG.append("text")
+  texts
     .text(function(d) { return d.name; })
     .attr("text-anchor", textAnchor)
     .attr("transform", textTransform)
     .style("opacity", textOpacity)
     .attr("dy", ".35em"); // vertical-align
-//////////////////    
-  
-  // does not update correctly with years change -> delete
-
-  /*
-  // data binding
-  sunburstG = svg.selectAll("g")
-      .data(nodes, function(d) { return getKey(d); });
-
-  // enter
-  var gEnter = sunburstG.enter().append("g");
-  gEnter.append("path");
-  gEnter.append("text");
-
-  // update
-  paths = sunburstG.selectAll("g path")
-        .attr("d", arc)
-        .style("fill", function(d) { return d.color; })
-        .on("click touchend", function(d) { return showDetail(d); })
-        .on("mouseover", mouseOver)
-        .on("mouseout", mouseOut);
-
-  texts = sunburstG.selectAll("g text")
-        .text(function(d) { return d.name; })
-        .attr("dy", ".35em") // vertical-align
-      	.attr("text-anchor", textAnchor)
-        .attr("transform", textTransform)
-        .style("opacity", textOpacity);
-
-  // exit
-  sunburstG.exit().remove();
-  */
 
 }
 
@@ -142,6 +159,8 @@ function buildSunburst(data) {
 
 function mouseOver(d) {
 	paths.style("opacity", function(dd) { return inSubTree(dd,d) ? "1" : ".33" });
+  paths.classed("highlighted", function(dd) { return inSubTree(dd,d); });
+  paths.classed("dehighlighted", function(dd) { return !inSubTree(dd,d); });
 	// Fixed tooltip on sunburst
 	d3.select("#fixed-tooltip-dept").text(d.nameFull);
 	d3.select("#fixed-tooltip-chf").text("CHF " + ds.formatNumber(d.value));
@@ -153,34 +172,49 @@ function mouseOver(d) {
 
 function mouseOut(d) {
 	paths.style("opacity", "1");
+  paths.classed("highlighted",false);
+  paths.classed("dehighlighted",false);
 	d3.selectAll("#fixed-tooltip *").text(null);
 }
 
 
 // update when showDetails is called
-function updateSunburst(d, transition) {
+function updateSunburst(d) {
 	
-	//default param
-	if(typeof transition === 'undefined') transition = true;
+  //set current node
+  currentNode = d;
 
-	// update sunburst
+	// update sunburst / zoom in on specific d
 	var trans = sunburstG.transition()
-	  .duration(transition ? 750 : 0)
+	  .duration(750)
 	  .tween("scale", function() {
 	    var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
 	        yd = d3.interpolate(y.domain(), [d.y, 1]),
-	        yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
+	        yr = d3.interpolate(y.range(), [d.y ? 20 : 0, d.depth == 2 ? 130 : radius]);   // FIXME : de-harcode max depth = 2
 	    return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
 	  });
+
 	trans.selectAll("path")
-	      .attrTween("d", function(d) { return function() { return arc(d); }; });
-	trans.selectAll("text")
-	  	  .attrTween("transform", function(d) { return function() { return textTransform(d); } })
-	  	  .attrTween("text-anchor", function(d) { return function() { return textAnchor(d); } })
-	  	  .styleTween("opacity", function(d) { return function() { return textOpacity(d); }; });
+	      .attrTween("d", function(d) { return tweenDataZoom(d, arc) });
+
+  trans.selectAll("text")
+        .attrTween("transform", function(d) { return tweenDataZoom(d, textTransform) })
+        .attrTween("text-anchor", function(d) { return tweenDataZoom(d, textAnchor) })
+        .styleTween("opacity", function(d) { return tweenDataZoom(d, textOpacity) });
 
 	// update breadcrumb trail
   	breadCrumb(d);
+}
+
+// Returns tween function applying func, in case of data change (i.e. year change) or not (i.e. just zooming in/out)
+function tweenDataZoom(d, func) {
+  var i = d3.interpolate({x: d.x0, dx: d.dx0}, d);
+    return function(t) {
+      var b = i(t);
+      d.x0 = b.x;
+      d.dx0 = b.dx;
+      return func(b);
+  };
 }
 
 
@@ -237,7 +271,8 @@ function getAngle(d) {
 
 // text should be flipped if between 90 and 270
 function shouldFlipText(angle) {
-	return ((angle > 90) && (angle < 270));
+	//return ((angle > 90) && (angle < 270)); // if origin at 12 o'clock (see above svg creation)
+  return ((angle > 0) && (angle < 180));    // if origin at 3 o'clock (see above svg creation)
 }
 
 // returns text transform for labels in sunburst
@@ -283,8 +318,6 @@ function inSubTree(n,p) {
     return true
   } else if(typeof n.parent === 'undefined') {
     return false;
-  } else if(n.parent == p) {
-    return true
   } else {
     return inSubTree(n.parent, p);
   }

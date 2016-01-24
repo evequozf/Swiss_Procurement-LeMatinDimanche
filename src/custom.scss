@@ -59,9 +59,15 @@ svg {
 			cursor: pointer;
 		}
 		& path {
-			stroke: white;
+			stroke: #ccc;
 			stroke-width:1;
 			fill: white;
+		}
+		& path.highlighted {
+			//stroke: white;
+		}
+		& path.dehighlighted {
+			stroke: white;
 		}
 		& text {
 			// make text non-selectable / non-highlitable
@@ -189,7 +195,7 @@ svg {
 		position: absolute;
 		//float:right  //uncomment to try
 		text-align: right;
-		background-color: rgba(255,255,255,0.65);
+		background-color: rgba(255,255,255,0.8);
 		pointer-events: none;
 
 		padding: .8em;

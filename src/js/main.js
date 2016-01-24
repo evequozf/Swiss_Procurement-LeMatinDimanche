@@ -2,7 +2,7 @@
 
 Main application file. 
 
-Loads the others. Also include code that manages the sunburst view.
+Loads the others. Manages global thread of control and interaction flow.
 
 ********************/
 
@@ -23,7 +23,6 @@ function addField(d, name) {
   return d;
 }
 
-//d3.dsv(";")("import/fake2.csv", function(error, data) {
 d3.dsv(",")("https://dl.dropboxusercontent.com/s/36k9pc7ll8yhhe3/master_export.csv?dl=1", function(error, data) {
 //d3.dsv(",")("import/master_export.csv", function(error, data) { 
 
@@ -53,13 +52,14 @@ d3.dsv(",")("https://dl.dropboxusercontent.com/s/36k9pc7ll8yhhe3/master_export.c
         return updateYear(d); 
       });
 
-// Trying out !............
-  //var sbData = load.prepareDataSunburst(fullData);
-  //buildSunburst(sbData);
+  // configure fade in
+  ds.fadeInDuration = 200;
+
+  // transform data and build visualizations
+  var sbData = load.prepareDataSunburst(fullData);
+  sunburst.build(sbData);
 
   updateYear(2014);
-
-// Trying out !............
 
 });
 
@@ -70,12 +70,13 @@ function updateYear(year) {
   // set year
   globals.currentYear = year; 
   thisYearData = fullData.filter(function(d) { return +d.year == globals.currentYear; });
-  d3.select("#year").text(globals.currentYear);
+  ds.fadeIn(d3.select("#year").text(globals.currentYear));
   d3.selectAll("#years .year").classed("selected", function(d) { return d == globals.currentYear; })
 
   // create sunburst
-  var sbData = load.prepareDataSunburst(thisYearData);
-  sunburst.build(sbData);
+  //var sbData = load.prepareDataSunburst(thisYearData);
+  //sunburst.build(sbData);
+  var sbData = sunburst.changeYear(year);
 
   // if data key is not set (first execution) set it to root
   if(globals.currentDataKey == "")
@@ -84,7 +85,7 @@ function updateYear(year) {
   //show the details pane for selected node of sunburst with no transition (false)
   var currentData = getSbData(sbData, globals.currentDataKey);
   currentData = currentData != null ? currentData : sbData; // current data might be null if department is not present that year
-  showDetail(currentData, false);
+  showDetail(currentData);
 }
 
 // Look for data corresponding to currently selected data (i.e. key)
@@ -107,11 +108,8 @@ function getKey(d) {
 /**************** show details and update all viz *****************/
 
 // show extended details pane for a selected / clicked element (given data)
-function showDetail(d, transition) {
+function showDetail(d) {
   
-  //default param
-  if(typeof transition === 'undefined') transition = true;
-
   // global data key to be this data key
   globals.currentDataKey = getKey(d);
 
@@ -119,7 +117,7 @@ function showDetail(d, transition) {
   globals.currentColor = d.color;
 
   // update sunburst & associated breadcrumbs
-  sunburst.update(d, transition)
+  sunburst.update(d)
 
   // update detail summary text
   updateSummary(d);
@@ -143,7 +141,7 @@ function showDetail(d, transition) {
   resp.update(); // ... and force a responsive update now
   
   // update bar chart title
-  d3.select("#officename").text(d.nameFull);
+  ds.fadeIn(d3.select("#officename").text(d.nameFull));
 }
 
 /**************** update details: 'summary' ******************/
@@ -169,11 +167,11 @@ function getChildrenAmountKnown(d) {
 
 function updateSummary(d) {
   var known = getChildrenAmountKnown(d), unknown = d.chf - known;
-  d3.select("#details-total").text(formatChf(d.chf));
-  d3.select("#details-known").text(formatChf(known));
-  d3.select("#details-unknown").text(formatChf(unknown));
-  d3.select("#details-known-percent").text(Math.round(100*known/d.chf) + "%");
-  d3.select("#details-unknown-percent").text(Math.round(100*unknown/d.chf) + "%");
+  ds.fadeIn(d3.select("#details-total").text(formatChf(d.chf)));
+  ds.fadeIn(d3.select("#details-known").text(formatChf(known)));
+  ds.fadeIn(d3.select("#details-unknown").text(formatChf(unknown)));
+  ds.fadeIn(d3.select("#details-known-percent").text(Math.round(100*known/d.chf) + "%"));
+  ds.fadeIn(d3.select("#details-unknown-percent").text(Math.round(100*unknown/d.chf) + "%"));
   d3.select(".total").style("background-color", globals.currentColor);
 }
 

@@ -109,6 +109,11 @@ function Sparkline(element, data, totalParent, parentName) {
 	  		+ " : CHF " + ds.formatNumber(amount));
 	  leftdiv.append("p").text(globals.lang.part + " " + globals.currentYear
 	  		+ " : " + prop + "% " + globals.lang.of + " " + parentName);
+
+
+	  // fade-in : is it necessary ? because sparklines not visible on most screens
+	  ds.fadeIn(_element);
+
 	//}
 
 	  // responsiveness
