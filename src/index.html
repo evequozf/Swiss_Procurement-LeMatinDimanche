@@ -9,13 +9,23 @@
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <!--<link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700|Raleway:400,700' rel='stylesheet' type='text/css'>-->
 <link href='https://fonts.googleapis.com/css?family=Lora:400,700|Source+Sans+Pro:700,300' rel='stylesheet' type='text/css'>
-<link href='./custom.css' rel='stylesheet' type='text/css'>
+<link href='custom.css' rel='stylesheet' type='text/css'>
 <body>
 
 <div class="container">
 
 <div class="row">
 	<h1 class="col-xs-12">Mandats de la Confédération</h1>
+</div>
+<div class="row">
+	<form class="form-inline col-xs-12">
+		<label for="search">Choisir département / office </label>
+		<div class="form-group">
+	  		<!--<input type="text" class="form-control" id="search">-->
+	  		<select class="form-control" id="search">
+		    </select>
+		</div>
+	</form>
 </div>
 <div class="row">
 	<div class="col-xs-12" id="years"></div>
@@ -90,10 +100,10 @@
 
 </div> <!-- end container fluid -->
 
-<script src="./d3.v3.min.js"></script>
-<script src="./d3-jetpack.js"></script>
-<script src="./dsutils.js"></script>
-<script src="./viz.js"></script>
+<script src="d3.v3.min.js"></script>
+<script src="d3-jetpack.js"></script>
+<script src="dsutils.js"></script>
+<script src="viz.js"></script>
 <!-- PYM specifics -->
 <script src="pym.js"></script>
 <script>

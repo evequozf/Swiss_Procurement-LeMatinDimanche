@@ -17,6 +17,8 @@ var sunburst = require('./sunburst.js');
 var fullData; // full data
 var thisYearData; //only this year 
 
+var sbData; // data created by last sunburst.build()
+
 // used to create global fields, e.g. 'd.fullCategory' from 'd.fullCategoryFr')
 function addField(d, name) {
   d[name] = d[name + globals.lang.dataSuffix];
@@ -56,9 +58,22 @@ d3.dsv(",")("https://dl.dropboxusercontent.com/s/36k9pc7ll8yhhe3/master_export.c
   ds.fadeInDuration = 200;
 
   // transform data and build visualizations
-  var sbData = load.prepareDataSunburst(fullData);
-  sunburst.build(sbData);
+  sbData = load.prepareDataSunburst(fullData);
+  var nodes = sunburst.build(sbData);
 
+  // prepare select field
+  d3.select("#search").selectAll("option")
+    .data(nodes.map(function(d) { return { name: d.nameFull, key: getKey(d) } } ))
+      .enter()
+      .append("option")
+      .attr("key", function(d) { return d.key })
+      .text(function(d) { return d.name; });
+  d3.select("#search").on("change", function() {
+    var key = this.options[this.selectedIndex].getAttribute("key");
+    showDetail(getSbData(sbData, key));
+  });
+
+  // update all viz
   updateYear(2014);
 
 });
@@ -76,7 +91,7 @@ function updateYear(year) {
   // create sunburst
   //var sbData = load.prepareDataSunburst(thisYearData);
   //sunburst.build(sbData);
-  var sbData = sunburst.changeYear(year);
+  sbData = sunburst.changeYear(year);
 
   // if data key is not set (first execution) set it to root
   if(globals.currentDataKey == "")
@@ -142,6 +157,9 @@ function showDetail(d) {
   
   // update bar chart title
   ds.fadeIn(d3.select("#officename").text(d.nameFull));
+
+  // update select box
+  d3.select('#search').node().value = d.nameFull;
 }
 
 /**************** update details: 'summary' ******************/
@@ -170,8 +188,12 @@ function updateSummary(d) {
   ds.fadeIn(d3.select("#details-total").text(formatChf(d.chf)));
   ds.fadeIn(d3.select("#details-known").text(formatChf(known)));
   ds.fadeIn(d3.select("#details-unknown").text(formatChf(unknown)));
-  ds.fadeIn(d3.select("#details-known-percent").text(Math.round(100*known/d.chf) + "%"));
-  ds.fadeIn(d3.select("#details-unknown-percent").text(Math.round(100*unknown/d.chf) + "%"));
+
+  var pk = Math.round(100*known/d.chf), pu = Math.round(100*unknown/d.chf);
+  pk = isNaN(pk) ? 0 : pk; pu = isNaN(pu) ? 0 : pu;
+  ds.fadeIn(d3.select("#details-known-percent").text(pk + "%"));
+  ds.fadeIn(d3.select("#details-unknown-percent").text(pu + "%"));
+    
   d3.select(".total").style("background-color", globals.currentColor);
 }
 
@@ -203,3 +225,9 @@ function updateSparklines(filtereddata,name) {
     spark.Sparkline(div, filtereddata.filter(function(dd) { return dd.fullCategory === c.key; }), tot, name);
   }); 
 }
+
+
+/**************** search box ******************/
+
+
+

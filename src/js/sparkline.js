@@ -104,7 +104,8 @@ function Sparkline(element, data, totalParent, parentName) {
 	  var dataThisYear = _data.filter(function(d){ return d.key == globals.currentYear; });
 	  var amount = dataThisYear.length == 0 ? 0 : dataThisYear[0].values;
 	  var prop = Math.round(100 * (amount/totalParent));
-	  if(prop == 0) prop = "<1";
+	  if(prop < 1) prop = "<1";
+	  if(isNaN(prop)) prop = "0";
 	  leftdiv.append("p").text(globals.lang.mandates + " " + globals.currentYear 
 	  		+ " : CHF " + ds.formatNumber(amount));
 	  leftdiv.append("p").text(globals.lang.part + " " + globals.currentYear

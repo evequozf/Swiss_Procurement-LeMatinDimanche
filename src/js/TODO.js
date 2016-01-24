@@ -34,7 +34,7 @@ X - label sunburst : mettre % en + sur les plus gros (si place)
 
 MIDDLE
 √ garder "état de la visualisation" quand on change d'année ? (= actuel filter, je pense, garder le datum actuel...)
-~- Meilleur passage des années (pas reconstruire le SVG...)
+√- Meilleur passage des années (pas reconstruire le SVG...)
 - pym.js
 X - "polissage" par Inventaire ?
 
@@ -43,7 +43,7 @@ LOW
 ~ - object persistence (bars + pies)
 ~ - vraies données
 √ - use breadcrumb from bootstrap
-- transition pour bar chart
+X- transition pour bar chart
 0- interaction continue sur mobile pour sunburst (y.c. fixed tooltip -> différencier avec media queries ?)
   => voir aussi http://bl.ocks.org/mbostock/770ae19ca830a4ce87f5 -> listener ailleurs ? laisser tomber ?
 

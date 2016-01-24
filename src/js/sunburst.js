@@ -153,6 +153,7 @@ function buildSunburst(data) {
     .style("opacity", textOpacity)
     .attr("dy", ".35em"); // vertical-align
 
+  return nodes;
 }
 
 /**************** interaction *****************/

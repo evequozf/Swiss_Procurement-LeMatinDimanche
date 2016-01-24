@@ -328,4 +328,12 @@ svg {
 
 }
 
+/*********** Form *************/
+form {
+	text-align: center;
+	padding: 15px;
+	& label {
+		padding-right: 0.5em;
+	}
+}
 
