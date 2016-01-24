@@ -593,6 +593,26 @@ var columsSpec = [
 	ds.table = table;
 
 
+/***************** Fade in / out *********************//*
+
+argument is a d3 selection
+
+FIXME: not very d3 like -> should be a new method to selection...
+
+*/
+
+	function fadeIn(selection, duration) {
+		return selection.style("opacity",0).transition().duration(ds.fadeInDuration).style("opacity",1);	
+	}
+
+	function fadeOut(selection, duration) {
+		return selection.style("opacity",1).transition().duration(ds.fadeOutDuration).style("opacity",0);	
+	}
+
+	ds.fadeIn = fadeIn;
+	ds.fadeOut = fadeOut;
+	ds.fadeInDuration = 100;
+	ds.fadeOutDuration = 100;
 
 
 /***************** Number formatting *********************//*

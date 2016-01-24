@@ -179,13 +179,10 @@ function mouseOut(d) {
 
 
 // update when showDetails is called
-function updateSunburst(d, changeData) {
+function updateSunburst(d) {
 	
   //set current node
   currentNode = d;
-
-	//default param
-	if(typeof changeData === 'undefined') changeData = false;
 
 	// update sunburst / zoom in on specific d
 	var trans = sunburstG.transition()
@@ -198,29 +195,26 @@ function updateSunburst(d, changeData) {
 	  });
 
 	trans.selectAll("path")
-	      .attrTween("d", function(d) { return tweenDataZoom(d, arc, changeData) });
+	      .attrTween("d", function(d) { return tweenDataZoom(d, arc) });
 
   trans.selectAll("text")
-        .attrTween("transform", function(d) { return tweenDataZoom(d, textTransform, changeData) })
-        .attrTween("text-anchor", function(d) { return tweenDataZoom(d, textAnchor, changeData) })
-        .styleTween("opacity", function(d) { return tweenDataZoom(d, textOpacity, changeData) });
+        .attrTween("transform", function(d) { return tweenDataZoom(d, textTransform) })
+        .attrTween("text-anchor", function(d) { return tweenDataZoom(d, textAnchor) })
+        .styleTween("opacity", function(d) { return tweenDataZoom(d, textOpacity) });
 
 	// update breadcrumb trail
   	breadCrumb(d);
 }
 
 // Returns tween function applying func, in case of data change (i.e. year change) or not (i.e. just zooming in/out)
-function tweenDataZoom(d, func, dataChange) {
-  if(dataChange) {
-    var i = d3.interpolate({x: d.x0, dx: d.dx0}, d);
+function tweenDataZoom(d, func) {
+  var i = d3.interpolate({x: d.x0, dx: d.dx0}, d);
     return function(t) {
       var b = i(t);
       d.x0 = b.x;
       d.dx0 = b.dx;
       return func(b);
-    };
-  }
-  else return function() { return func(d); }
+  };
 }
 
 
