@@ -160,6 +160,7 @@ function buildSunburst(data) {
 function mouseOver(d) {
 	paths.style("opacity", function(dd) { return inSubTree(dd,d) ? "1" : ".33" });
   paths.classed("highlighted", function(dd) { return inSubTree(dd,d); });
+  paths.classed("dehighlighted", function(dd) { return !inSubTree(dd,d); });
 	// Fixed tooltip on sunburst
 	d3.select("#fixed-tooltip-dept").text(d.nameFull);
 	d3.select("#fixed-tooltip-chf").text("CHF " + ds.formatNumber(d.value));
@@ -172,6 +173,7 @@ function mouseOver(d) {
 function mouseOut(d) {
 	paths.style("opacity", "1");
   paths.classed("highlighted",false);
+  paths.classed("dehighlighted",false);
 	d3.selectAll("#fixed-tooltip *").text(null);
 }
 
@@ -322,8 +324,6 @@ function inSubTree(n,p) {
     return true
   } else if(typeof n.parent === 'undefined') {
     return false;
-  } else if(n.parent == p) {
-    return true
   } else {
     return inSubTree(n.parent, p);
   }
