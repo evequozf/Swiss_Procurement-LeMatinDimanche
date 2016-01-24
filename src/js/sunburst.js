@@ -15,7 +15,8 @@ module.exports = {
 
 /*************************************/
 
-var root, nodes, newData;
+var root, 
+    currentNode; // node currently in the center
 
 // recursively change fields chf and percent in children to match current year
 function recChangeYear(node, year) {
@@ -35,7 +36,7 @@ function changeYear(year) {
   var newData = recChangeYear(root, year);
 
   // Partition & Build viz
-  nodes = partition.nodes(newData);
+  var nodes = partition.nodes(newData);
 
   // colorize (needed ?)
   color.domain(newData.children.map(function(d) {return d.name} ));
@@ -109,7 +110,7 @@ svg = d3.select("#sunburst-container").append("svg")
     .append("g")
       .attr("transform","translate("+margin.left+","+margin.top+")")
     .append("g")
-      .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
+      .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")" + "rotate(90)"); //rotate(90) = origin at 3 o'clock 
 
 // init responsiveness of svg on load and resize events
 ds.responsive(d3.select("#sunburst-container svg")).start();
@@ -122,7 +123,7 @@ function buildSunburst(data) {
   root = data;
 
   // Partition & Build viz
-  nodes = partition.nodes(data);
+  var nodes = partition.nodes(data);
 
   // colorize
   color.domain(data.children.map(function(d) {return d.name} ));
@@ -158,6 +159,7 @@ function buildSunburst(data) {
 
 function mouseOver(d) {
 	paths.style("opacity", function(dd) { return inSubTree(dd,d) ? "1" : ".33" });
+  paths.classed("highlighted", function(dd) { return inSubTree(dd,d); });
 	// Fixed tooltip on sunburst
 	d3.select("#fixed-tooltip-dept").text(d.nameFull);
 	d3.select("#fixed-tooltip-chf").text("CHF " + ds.formatNumber(d.value));
@@ -169,6 +171,7 @@ function mouseOver(d) {
 
 function mouseOut(d) {
 	paths.style("opacity", "1");
+  paths.classed("highlighted",false);
 	d3.selectAll("#fixed-tooltip *").text(null);
 }
 
@@ -176,18 +179,22 @@ function mouseOut(d) {
 // update when showDetails is called
 function updateSunburst(d, changeData) {
 	
+  //set current node
+  currentNode = d;
+
 	//default param
 	if(typeof changeData === 'undefined') changeData = false;
 
-	// update sunburst
+	// update sunburst / zoom in on specific d
 	var trans = sunburstG.transition()
 	  .duration(750)
 	  .tween("scale", function() {
 	    var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
 	        yd = d3.interpolate(y.domain(), [d.y, 1]),
-	        yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
+	        yr = d3.interpolate(y.range(), [d.y ? 20 : 0, d.depth == 2 ? 130 : radius]);   // FIXME : de-harcode max depth = 2
 	    return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
 	  });
+
 	trans.selectAll("path")
 	      .attrTween("d", function(d) { return tweenDataZoom(d, arc, changeData) });
 
@@ -268,7 +275,8 @@ function getAngle(d) {
 
 // text should be flipped if between 90 and 270
 function shouldFlipText(angle) {
-	return ((angle > 90) && (angle < 270));
+	//return ((angle > 90) && (angle < 270)); // if origin at 12 o'clock (see above svg creation)
+  return ((angle > 0) && (angle < 180));    // if origin at 3 o'clock (see above svg creation)
 }
 
 // returns text transform for labels in sunburst

@@ -59,9 +59,12 @@ svg {
 			cursor: pointer;
 		}
 		& path {
-			stroke: white;
+			stroke: #ccc;
 			stroke-width:1;
 			fill: white;
+		}
+		& path.highlighted {
+			//stroke: white;
 		}
 		& text {
 			// make text non-selectable / non-highlitable
