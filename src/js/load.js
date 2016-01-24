@@ -102,23 +102,24 @@ function prepareDataSunburst(filtereddata) {
 
 	//console.log(depts);
 
-	return {
+	// Create root
+	var root = {
 		"name":globals.lang.root, 
 		"nameFull":globals.lang.root, 
 		"children": depts, 
 		"chf": sumdepts.all, 
 		"chf_all": sumdepts.all, 
-		"chf_2011": sumdepts[2011], 
-		"chf_2012": sumdepts[2012], 
-		"chf_2013": sumdepts[2013], 
-		"chf_2014": sumdepts[2014], 
 		"percent": 100,
-		"percent_all": 100,
-		"percent_2011": 100,
-		"percent_2012": 100,
-		"percent_2013": 100,
-		"percent_2014": 100
-	};
+		"percent_all": 100
+	}
+
+	// constructs chf_yyyy and percent_yyyy value with yyyy = year
+	years.forEach(function(year) {
+		root["chf_"+year] = sumdepts[year];
+		root["percent_"+year] = 100;
+	});
+		
+	return root;
 }
 
 /**************** data preparation bar ******************/
