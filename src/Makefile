@@ -48,7 +48,7 @@ debug: $(DIST)/$(IMPORT) $(DIST)/index.html $(DIST)/custom.css viz.js
 	@rsync -upE *.js $(DIST)/
 
 # Compile the final targets and copy to DIST (minified js)
-all: $(DIST)/$(IMPORT) $(DIST)/index.html $(DIST)/custom.css viz.js $(JS_DIST) 
+all: $(DIST)/$(IMPORT) $(DIST)/index.html $(DIST)/custom.css $(DIST)/viz.js $(JS_DIST) 
 
 # Setup locations
 setup: 
