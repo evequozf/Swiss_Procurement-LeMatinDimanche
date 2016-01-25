@@ -21,3 +21,13 @@ src/import/EDA-UVEK-merge.csv
 src/import/eda-uvek-11-14.csv
 
 src/import/master_export.csv
+
+src/import/categories.csv
+
+src/import/depts.csv
+
+src/import/offices.csv
+
+src/import/suppliers.csv
+
+src/import/master_export_short.csv

@@ -23,7 +23,15 @@ var fr = {
 	mandates: "Mandats",
 	part: "Part"
 }
-var lang = fr;
+var de = {
+	dataSuffix: "De",
+	root: "Bundesverwaltung",
+	of: "von" ,                         // e.g. xx % DE administration fédérale
+	missingData: "(missing data)",
+	mandates: "Mandaten",
+	part: "Anteil"
+}
+var lang = de;
 
 /*****************/
 

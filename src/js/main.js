@@ -11,6 +11,7 @@ var load = require('./load.js');
 var bar = require('./bar.js');
 var spark = require('./sparkline.js');
 var sunburst = require('./sunburst.js');
+var preprocess = require('./preprocess.js');
 
 /**************** data loading & initialization ******************/
 
@@ -19,29 +20,28 @@ var thisYearData; //only this year
 
 var sbData; // data created by last sunburst.build()
 
-// used to create global fields, e.g. 'd.fullCategory' from 'd.fullCategoryFr')
-function addField(d, name) {
-  d[name] = d[name + globals.lang.dataSuffix];
-  return d;
-}
 
-d3.dsv(",")("https://dl.dropboxusercontent.com/s/36k9pc7ll8yhhe3/master_export.csv?dl=1", function(error, data) {
+// Load all and call main
+var dsv = d3.dsv(';');
+queue()
+    .defer(d3.csv, "import/master_export_short.csv")
+    .defer(dsv, "import/suppliers-utf8.csv")
+    .defer(dsv, "import/depts-utf8.csv")
+    .defer(dsv, "import/offices-utf8.csv")
+    .defer(dsv, "import/categories-utf8.csv")
+    .await(main);
+
+
+//d3.dsv(",")("https://dl.dropboxusercontent.com/s/36k9pc7ll8yhhe3/master_export.csv?dl=1", function(error, data) {
 //d3.dsv(",")("import/master_export.csv", function(error, data) { 
+
+function main(error, rawdata, suppliers, depts, offices, categories) {
+
+  // get full data table
+  fullData = preprocess(rawdata, suppliers, depts, offices, categories);
 
   // set global showDetails
   globals.showDetail = showDetail;
-
-  //create global fields in data, depending on current language, and store as full data
-  fullData = data.map(function(d) {
-    d = addField(d, "dept");
-    d = addField(d, "fullDept");
-    d = addField(d, "fullCategory");
-    d = addField(d, "office");
-    d = addField(d, "fullOffice");
-    return d;
-  });
-
-  //console.log(fullData);
 
   /*********** create buttons for chosing years ***********/
   d3.select("#years").selectAll("span.year")
@@ -76,7 +76,7 @@ d3.dsv(",")("https://dl.dropboxusercontent.com/s/36k9pc7ll8yhhe3/master_export.c
   // update all viz
   updateYear(2014);
 
-});
+}
 
 /**************** main update function: based on year ******************/
 
@@ -193,7 +193,7 @@ function updateSummary(d) {
   pk = isNaN(pk) ? 0 : pk; pu = isNaN(pu) ? 0 : pu;
   ds.fadeIn(d3.select("#details-known-percent").text(pk + "%"));
   ds.fadeIn(d3.select("#details-unknown-percent").text(pu + "%"));
-    
+
   d3.select(".total").style("background-color", globals.currentColor);
 }
 
