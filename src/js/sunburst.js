@@ -129,8 +129,6 @@ function buildSunburst(data) {
   color.domain(data.children.map(function(d) {return d.name} ));
   nodes.forEach(function(n,i){ setColors(n,i) });
 
-  //svg.selectAll("*").remove(); //////////////// to update !!!
-
   sunburstG = svg.selectAll("g")
     .data(nodes)
   .enter().append("g");
@@ -147,7 +145,9 @@ function buildSunburst(data) {
     .each(stash);
       
   texts
-    .text(function(d) { return d.name; })
+    //.text(function(d) { return d.name; })
+    .text(function(d) { return d.name.substring(0, globals.SUNBURST_LABEL_MAX) 
+            + (d.name.length > globals.SUNBURST_LABEL_MAX ? "..." : ""); }) // strip too long names
     .attr("text-anchor", textAnchor)
     .attr("transform", textTransform)
     .style("opacity", textOpacity)
@@ -162,7 +162,11 @@ function mouseOver(d) {
 	paths.style("opacity", function(dd) { return inSubTree(dd,d) ? "1" : ".33" });
   paths.classed("highlighted", function(dd) { return inSubTree(dd,d); });
   paths.classed("dehighlighted", function(dd) { return !inSubTree(dd,d); });
-	// Fixed tooltip on sunburst
+  // place current element on top, i.e. last in sunburstG
+  //sunburstG.sort(function(a,b) { 
+  //  return inSubTree(a,d) ? 1 : inSubTree(b,d) ? -1 : 0 
+  //});   
+  // Fixed tooltip on sunburst
 	d3.select("#fixed-tooltip-dept").text(d.nameFull);
 	d3.select("#fixed-tooltip-chf").text("CHF " + ds.formatNumber(d.value));
 	d3.select("#fixed-tooltip-percent").text( 

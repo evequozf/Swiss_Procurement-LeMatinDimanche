@@ -3,6 +3,8 @@
 var UNKNOWN = "Unknown"; // string used in CSV file, to detect unknown supplier companies
 var MINANGLE = 5; //min angle in degrees to show label in sunburst
 
+var SUNBURST_LABEL_MAX = 15; // characters shown in label of sunburst
+
 var SUPPLIER_LABEL_MAX = 25; // characters shown in label of bar charts 'supplier'
 var SUPPLIER_AMOUNT = 40; // show only xx most important suppliers in chart
 
@@ -39,6 +41,7 @@ module.exports = {
 	lang: lang,
 	UNKNOWN: UNKNOWN,
 	MINANGLE: MINANGLE,
+	SUNBURST_LABEL_MAX: SUNBURST_LABEL_MAX,
 	SUPPLIER_LABEL_MAX: SUPPLIER_LABEL_MAX,
 	SUPPLIER_AMOUNT: SUPPLIER_AMOUNT,
 	years: years,
