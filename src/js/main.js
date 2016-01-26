@@ -85,7 +85,7 @@ function updateYear(year) {
   // set year
   globals.currentYear = year; 
   thisYearData = fullData.filter(function(d) { return +d.year == globals.currentYear; });
-  ds.fadeIn(d3.select("#year").text(globals.currentYear));
+  d3.select("#year").text(globals.currentYear).fadeIn();
   d3.selectAll("#years .year").classed("selected", function(d) { return d == globals.currentYear; })
 
   // create sunburst
@@ -156,7 +156,7 @@ function showDetail(d) {
   resp.update(); // ... and force a responsive update now
   
   // update bar chart title
-  ds.fadeIn(d3.select("#officename").text(d.nameFull));
+  d3.select("#officename").text(d.nameFull).fadeIn();
 
   // update select box
   d3.select('#search').node().value = d.nameFull;
@@ -185,14 +185,14 @@ function getChildrenAmountKnown(d) {
 
 function updateSummary(d) {
   var known = getChildrenAmountKnown(d), unknown = d.chf - known;
-  ds.fadeIn(d3.select("#details-total").text(formatChf(d.chf)));
-  ds.fadeIn(d3.select("#details-known").text(formatChf(known)));
-  ds.fadeIn(d3.select("#details-unknown").text(formatChf(unknown)));
+  d3.select("#details-total").text(formatChf(d.chf)).fadeIn();
+  d3.select("#details-known").text(formatChf(known)).fadeIn();
+  d3.select("#details-unknown").text(formatChf(unknown)).fadeIn();
 
   var pk = Math.round(100*known/d.chf), pu = Math.round(100*unknown/d.chf);
   pk = isNaN(pk) ? 0 : pk; pu = isNaN(pu) ? 0 : pu;
-  ds.fadeIn(d3.select("#details-known-percent").text(pk + "%"));
-  ds.fadeIn(d3.select("#details-unknown-percent").text(pu + "%"));
+  d3.select("#details-known-percent").text(pk + "%").fadeIn();
+  d3.select("#details-unknown-percent").text(pu + "%").fadeIn();
 
   d3.select(".total").style("background-color", globals.currentColor);
 }

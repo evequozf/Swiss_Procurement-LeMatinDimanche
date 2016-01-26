@@ -164,8 +164,10 @@ function mouseOver(d) {
   paths.classed("dehighlighted", function(dd) { return !inSubTree(dd,d); });
   // place current element on top, i.e. last in sunburstG
   //sunburstG.sort(function(a,b) { 
-  //  return inSubTree(a,d) ? 1 : inSubTree(b,d) ? -1 : 0 
-  //});   
+    //return inSubTree(a,d) ? (inSubTree(b,d) ? 0 : 1) : (inSubTree(b,d) ? -1 : 0);
+    //return a == d ? (b == d ? 0 : -1) : (b == d ? 1 : 0);
+  //});
+  //console.log(sunburstG);   
   // Fixed tooltip on sunburst
 	d3.select("#fixed-tooltip-dept").text(d.nameFull);
 	d3.select("#fixed-tooltip-chf").text("CHF " + ds.formatNumber(d.value));

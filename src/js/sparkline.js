@@ -113,7 +113,7 @@ function Sparkline(element, data, totalParent, parentName) {
 
 
 	  // fade-in : is it necessary ? because sparklines not visible on most screens
-	  ds.fadeIn(_element);
+	  _element.fadeIn();
 
 	//}
 

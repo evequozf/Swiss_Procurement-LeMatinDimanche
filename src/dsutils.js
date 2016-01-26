@@ -14,7 +14,7 @@ ds = (function() {
 (function() {
 
 	//Declare version
-	ds.version = "0.2";
+	ds.version = "0.3";
 
 /************ Adding util - example prototype *****************/
 /*
@@ -595,24 +595,39 @@ var columsSpec = [
 
 /***************** Fade in / out *********************//*
 
-argument is a d3 selection
+Add fadeIn() and fadeOut() methods to d3.selection (which are just a mapping for .style("opacity",0).transition().style("opacity",1) )	
+Warning -> these methods return a TRANSITION from a given selection.
 
-FIXME: not very d3 like -> should be a new method to selection...
+Usage: 
 
-*/
+selection.fadeIn()
+selection.fadeIn(1000)
+selection.fadeOut()
+selection.fadeOut(700)
 
-	function fadeIn(selection, duration) {
-		return selection.style("opacity",0).transition().duration(ds.fadeInDuration).style("opacity",1);	
-	}
+Default durations can be set as
 
-	function fadeOut(selection, duration) {
-		return selection.style("opacity",1).transition().duration(ds.fadeOutDuration).style("opacity",0);	
-	}
+ds.fadeInDuration = 100;
+ds.fadeOutDuration = 100;
 
-	ds.fadeIn = fadeIn;
-	ds.fadeOut = fadeOut;
+*******************************************************/
+	
 	ds.fadeInDuration = 100;
 	ds.fadeOutDuration = 100;
+
+	function fade(d3) {
+		d3.selection.prototype.fadeIn = function(duration) {
+			return this.style("opacity",0).transition().duration((duration) ? duration : ds.fadeInDuration).style("opacity",1);	
+		}
+		d3.selection.prototype.fadeOut = function(duration) {
+			return this.style("opacity",1).transition().duration((duration) ? duration : ds.fadeOutDuration).style("opacity",0);	
+		}
+	}
+
+	if (typeof d3 === 'object' && d3.version) fade(d3);
+    else if (typeof define === 'function' && define.amd) {
+        define(['d3'], fade);
+    }
 
 
 /***************** Number formatting *********************//*

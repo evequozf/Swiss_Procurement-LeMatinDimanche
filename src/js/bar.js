@@ -87,7 +87,7 @@ function buildBar(data) {
   );
 
   // fade in whole svg
-  ds.fadeIn(svgbar);
+  svgbar.fadeIn();
 
   // responsiveness // -> removed from here, should depend from higher level, i.e. main.js
   //ds.responsive(d3.select("#barchart-container svg")).start();
