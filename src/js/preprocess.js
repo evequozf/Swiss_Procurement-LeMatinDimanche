@@ -9,7 +9,7 @@ module.exports = function(data, suppliers, depts, offices, categories) {
 	/* Keys = idSupplier, idCategory, deptDe, officeDe */
 	var su = d3.map(suppliers, function(d) { return d.idSupplier; }),
 		de = d3.map(depts, function(d) { return d.deptDe; }),
-		of = d3.map(offices, function(d) { return d.officeDe; }),
+		of = d3.map(offices, function(d) { return d.original; }),
 		ca = d3.map(categories, function(d) { return d.idCategory; });
 
 	/* create additional fields in main data table */
