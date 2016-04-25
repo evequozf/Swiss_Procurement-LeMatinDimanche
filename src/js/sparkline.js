@@ -29,7 +29,7 @@ function Sparkline(element, data, totalParent, parentName) {
 		})
 		.entries(data);
 
-	var margin = {top: 10, right: 10, bottom: 20, left: (LEGEND ? 80 : 10)},
+	var margin = {top: 0, right: 10, bottom: 20, left: (LEGEND ? 80 : 10)},
     	width = 130 - margin.left - margin.right,   // FIXME: hardcode 130 si bootstrap "container", 180 si "container-fluid"
     	height = 60 - margin.top - margin.bottom;
 
