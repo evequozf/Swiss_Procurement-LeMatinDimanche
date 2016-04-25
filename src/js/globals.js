@@ -33,7 +33,7 @@ var de = {
 	mandates: "Mandaten",
 	part: "Anteil"
 }
-var lang = de;
+var lang = fr;
 
 /*****************/
 

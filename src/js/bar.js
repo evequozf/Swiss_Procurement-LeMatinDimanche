@@ -59,8 +59,8 @@ function buildBar(data) {
       .attr("class", "x axis")
       .call(xAxis)
       .append("text")
-      	.attr("x", xbar.range()[1])
-      	.attr("dy", "-.71em")
+      	.attr("x", xbar.range()[1]+23)
+      	.attr("dy", "-.85em")
       	//.style("text-anchor", "end")
       	.text("CHF");
 
