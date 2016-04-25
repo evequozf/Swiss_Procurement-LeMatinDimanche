@@ -21,17 +21,7 @@ function obtenirParametre (sVar) {
   return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
 }
 
-if(obtenirParametre("lang")=="fr") {
-	var lang = {
-		dataSuffix: "Fr",
-		root: "Administration fédérale",
-		of: "de" ,                         // e.g. xx % DE administration fédérale
-		missingData: "(missing data)",
-		mandates: "Mandats",
-		part: "Part"
-	}
-}
-else {
+if(obtenirParametre("lang")=="de") {
 	var lang = {
 		dataSuffix: "De",
 		root: "Bundesverwaltung",
@@ -39,6 +29,16 @@ else {
 		missingData: "(missing data)",
 		mandates: "Mandaten",
 		part: "Anteil"
+	}
+}
+else {
+	var lang = {
+		dataSuffix: "Fr",
+		root: "Administration fédérale",
+		of: "de" ,                         // e.g. xx % DE administration fédérale
+		missingData: "(missing data)",
+		mandates: "Mandats",
+		part: "Part"
 	}
 }
 
