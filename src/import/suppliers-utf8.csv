@@ -11,7 +11,6 @@ idSupplier;supplier_orginal
 316909373;AFC Consultants International
 482207235;AirPlus International AG
 485925759;Alliance Sud
-485925759;Alliance Sud
 482935140;Allianz Suisse Versicherung
 480796663;Allreal Generalunternehmung AG
 480007319;Alpiq
@@ -22,7 +21,6 @@ idSupplier;supplier_orginal
 481410777;Arbeitsgemeinschaft Bernasconi F. et Cie SA / Bertschinger Walo SA
 480138163;Arbeitsgemeinschaft BRZ
 482485047;Arbeitsgemeinschaft Bundeshaus
-480138163;Arbeitsgemeinschaft Cityring
 485597749;Arbeitsgemeinschaft Felsenau
 482062994;Arbeitsgemeinschaft Generalplaner SLM Zürich
 480003177;Arbeitsgemeinschaft HÄWI
@@ -30,7 +28,6 @@ idSupplier;supplier_orginal
 481842552;Arbeitsgemeinschaft Marti Technik/ACP
 482525797;Arbeitsgemeinschaft N2 Kunstbauten Uri
 488460924;Arbeitsgemeinschaft N3/68
-485502327;Arbeitsgemeinschaft Pizol Sarganserland
 485502327;Arbeitsgemeinschaft Pizol Sarganserland
 483432209;Arbeitsgemeinschaft SBT Schallbergtunnel
 480048075;Arbeitsgemeinschaft SiSto Sachseln
@@ -67,7 +64,6 @@ idSupplier;supplier_orginal
 481002129;Consortium WRZ A9 Murs 2013
 480928084;Consorzio Edilstrada SA + Spalu SA
 486769235;Consorzio Felce 101
-486833973;Consorzio Galleria Roveredo
 485466259;Consorzio Lotto 7p-21
 484574731;Consorzio Valascia tracciato
 480057413;Consorzio Vigana
@@ -98,7 +94,6 @@ idSupplier;supplier_orginal
 480476258;Flughafen Zürich AG
 480405380;Frutiger AG
 483627402;Frutiger AG
-480405380;Frutiger AG
 487360646;FS Communications GmbH
 483508672;G+U Job4You GmbH
 480263334;Gasser Felstechnik AG
@@ -111,7 +106,6 @@ idSupplier;supplier_orginal
 481911931;Gross Generalunternehmung AG
 480649862;H. Wellauer AG
 481648848;Hagedorn AG
-480780782;Helvetas
 480780782;Helvetas
 481177293;Hitachi Data Systems AG
 483156464;Hochdorf Swiss Milk AG
@@ -154,7 +148,6 @@ idSupplier;supplier_orginal
 400497301;Lux-Development S.A.
 480057413;Mancini & Marti SA
 484972658;Marti AG
-480067800;Marti AG
 480067800;Marti AG
 480269000;Marti AG
 483255626;MARTI TUNNELBAU AG
@@ -216,7 +209,6 @@ idSupplier;supplier_orginal
 488025099;Strategos SA
 483021528;Sunrise Business Communications AG
 300292240;Swietelsky Baugesellschaft
-482522427;Die Schweizerische Post
 480014468;Swisscom
 481660400;Swisscom
 480486310;Swisscontact
@@ -232,7 +224,6 @@ idSupplier;supplier_orginal
 484457734;Trivadis AG
 480009158;Trüb AG
 480041532;Uniplan Switzerland AG
-480476258;Flughafen Zürich AG
 340347405;Unique forestry consultants
 480007855;Unisys (Schweiz) AG
 482392628;Université de Lausanne
@@ -296,7 +287,6 @@ idSupplier;supplier_orginal
 480849491;Stiftung Praktischer Umweltschutz Schweiz Pusch
 480877112;Bruker Daltonics GmbH
 480934694;PROSEGUR SA SOCIETÀ DI VIGILANZA
-480936165;Global IT AG
 480976575;LARGEUR. COM SA
 480994557;ISS Facility Services AG Gebäudeunterhalt und -reinigung
 481087984;Interface Politikstudien Forschung Beratung GmbH
@@ -429,19 +419,14 @@ idSupplier;supplier_orginal
 333618259;Eads Deutschland GmbH Defence & Security
 333622715;Rheinmetall Waffe Munition GmbH
 343993916;Rheinmetall Landsysteme GmbH Betriebsstätte Kassel
-480006329;Ascom (Schweiz) AG Security Communication
 480007426;Alcatel-Lucent Schweiz AG
 480007764;BP (SWITZERLAND) AG
-480007871;Siemens Schweiz AG Building Technologies
 480008622;Pneu Egger AG Aarau Gesamtleitung
-480014468;Swisscom (Schweiz) AG
 480024384;Thales-Amper-Rheinmetall-Consortium (TARC)
 480056068;Hess AG Carrosserie
 480070192;Roschi Rohde & Schwarz AG Elektronische Messtechnik
 480130335;Linde Lansing Fördertechnik AG
-480138163;ARGE Cityring c/o Anliker AG
 480213412;Mowag GmbH A General Dynamics Company
-480232263;Elca Informatique SA
 480284384;RUAG Holding
 480311596;VOGT AG Oberdiessbach
 480328939;Minerva Manuf. de Chaussures SA
@@ -456,27 +441,21 @@ idSupplier;supplier_orginal
 480628601;Mercedes-Benz Schweiz AG ein Unternehmen der Daymler AG
 480640705;Notter Armin AG Konstruktionswerkstätte
 480652494;Crypto AG
-480697783;Novo Business Consultants AG
 480936165;Global IT AG
 481007339;Key Equipment Finance (Schweiz) AG
 481020550;Pilatus Aircraft Ltd.
-481100068;BSR & Partner AG
 481189269;Schweiz. Bundesbahnen SBB Cargo AG
 481234156;Implenia Generalunternehmung AG
 481390052;Pfäffli H.R. AG Techn. Lederwaren
 481429983;PSA Finance Suisse SA
 481553381;Avesco AG Baumaschinen und -geräte
-481660400;Swisscom Broadcast AG
 481833460;Saltech AG
 481887987;BearingPoint Switzerland AG Unternehmensberatung
 481935765;Air Total (Suisse) SA
-481991560;skyguide Société Anonyme Suisse pour les Services de la Navi
 482134587;swenex - swiss energy exchange Ltd
 482386989;RUAG Ammotec AG
 482493876;Calag Carrosserie Langenthal AG
-482566312;Steiner Karl AG Generalunternehmung
 482780012;Löwen Garage AG Bern
-483248357;Atos AG
 483483855;RWM Schweiz AG
 483923962;Saab Bofors Dynamics Schweiz AG
 483981960;The Boston Consulting Group AG (Switzerland)
@@ -486,10 +465,99 @@ idSupplier;supplier_orginal
 485582589;RUAG Schweiz AG
 485584648;Siemens IT Solutions and Services AG
 487620064;Triestram und Partner AG
-487914293;Implenia Construzione SA
 487982324;Grisoni-Zaugg SA génie-civil-bâtiments
-488547563;Nitrochemie Wimmis AG
 488858598;Itelligence AG Unternehmensberatung
 508619434;Recipharm AB (publ)
 562038349;Kongsberg Defence & Aerospace SA
 600583389;ELTA Electronics Industr. Ltd. Subsidiary of IAI Ltd.
+300636193;METADAT GmbH
+342619347;BW Management: Projekte + Training
+376011354;MultiCorpora International Inc.
+400550701;legitech
+415806459;SolidSource BV
+428136576;Alma Mater Studiorum Universita di Bologna
+432091913;Universita di Bologna
+480007855;Unisys (Schweiz) AG
+480008192;IBM (Schweiz) AG
+480014468;Swisscom (Schweiz) AG
+480301576;ecmt GmbH
+480567093;comperio.ch AG
+480580922;SRG SSR idée suisse Media Services
+480683648;Schweizerische Bundesbahnen SBB
+480687024;Randstad (Schweiz) AG flexible work solutions
+480802409;Pentag Informatik AG
+480822068;Fabasoft CH Software AG
+480849392;Puzzle ITC GmbH
+480910665;Canoo Engineering AG
+480930044;IfA Gesundheitsförderung AG
+480936165;Global IT AG
+480945877;AWK Group AG
+480957302;Nexplore AG
+481051121;prospective media services pms AG Dienstleistungen Human Res
+481076537;Université de Genève
+481114986;Swiss Post Solutions AG
+481159734;Kummer Public Affairs
+481173391;Park Hotels Waldhaus AG
+481215320;Zeix AG
+481229529;Pozzi Elisabetta traduzioni
+481250900;Universal-Job AG
+481286305;MS Schmid Management
+481311145;Rexult AG Informatik, Unternehmensberatung
+481369825;Keystone
+481426823;Schweiz. Depeschenagentur AG
+481453483;Zugang für Alle, Schweizerische Stiftung zur
+481595911;SE-CURE AG
+481607575;Swisscom IT Services AG New Industry Development
+481698967;TWI AG Technisch-Wissenschaftliche Informatik
+481749117;Schweizerische Teletext AG Swiss TXT
+481838001;APP Unternehmensberatung AG
+481853559;Scheuring Project Management AG
+481906613;Decker Consulting GmbH
+482004975;Socom
+482073371;ACE Project Services AG
+482207235;AirPlus International AG
+482249182;IQ Plus AG
+482522427;Die Schweizerische Post Service Center Finanzen Mitte
+482687147;GFS.Bern Forsch.Politik Kommunikation+Gesellsch.
+482721862;POHN IT-Consulting GmbH
+482747909;Infoteam Informatique Technique SA
+482752065;Universität Zürich, Kasse Finanzabteilung
+482777500;OS Objectif Sécurité SA
+482898082;Strategic Knowledge Group GmbH
+483353053;Université de Fribourg
+483393042;Blogwerk AG
+483451902;Jeanmaire & Michel AG
+483473187;Hotel Allegro Bern AG
+483508672;G+U Job4You GmbH
+483627795;Infosignia GmbH
+483637224;Encore Pictures GmbH
+483646233;Hinderling Volkart
+483923806;Infocentric Research AG
+484075239;Wistar Informatik AG
+484105635;Eidgenössische Technische Hochschul
+484115741;Finanzverwaltung Aargau Sektion Tresorerie
+484121194;Finanzverwaltung des Kantons Graubü
+484457734;Trivadis AG
+484572792;Ubit Schweiz AG
+484633693;Elefant Studios AG
+484789594;Antistatique.net Sàrl
+484927012;Officium Consultancy GmbH
+484927327;Liquidbit Software + IT Services
+485129519;Ironforge GmbH Consulting
+485430362;Jens Lundgaard-Hansen Wort für Wort AG
+485486377;Ecoplan AG
+485553015;Notch Interactive GmbH
+486134013;bmpartner Blaser Meewes & Partner A
+486206340;UD Print AG
+486307119;MTF Thörishaus AG EDV-Produkte
+486346398;NH Hoteles Switzerland GmbH
+486620250;Leafit GmbH
+486945715;Trivadis Services AG
+487375479;Solutionpark AG
+487375479;Swisscom Event & Media Solutions AG
+487609695;Giauque Personal- und Organisations entwicklung
+487755340;Avataris AG
+488213885;Stoupa & Partners AG Beratungsgesellschaft Betriebswi
+488909037;Universität Bern, Verwaltung Verwaltung Forschungs-
+537708422;Seitenbau GmbH
+733909030;OECD

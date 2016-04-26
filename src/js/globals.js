@@ -16,12 +16,16 @@ var currentDataKey = "";  // key value of current data (based on sunburst data f
 
 var showDetail = null; // will hold global function to show detail of a selected element, set in main.js
 
+var fullData = null; 
+
 // Prepare multilingual
 function obtenirParametre (sVar) {
   return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
 }
 
-if(obtenirParametre("lang")=="de") {
+var langparam = obtenirParametre("lang");
+
+if(langparam == "de") {
 	var lang = {
 		dataSuffix: "De",
 		root: "Bundesverwaltung",
@@ -31,13 +35,23 @@ if(obtenirParametre("lang")=="de") {
 		part: "Anteil"
 	}
 }
+else if(langparam == "en") {
+	var lang = {
+		dataSuffix: "En",
+		root: "Federal administration",
+		of: "of" ,                         // e.g. xx % DE administration fédérale
+		missingData: "(missing data)",
+		mandates: "Mandates",
+		part: "Part"
+	}
+}
 else {
 	var lang = {
 		dataSuffix: "Fr",
 		root: "Administration fédérale",
 		of: "de" ,                         // e.g. xx % DE administration fédérale
 		missingData: "(missing data)",
-		mandates: "Mandats",
+		mandates: "Achats",
 		part: "Part"
 	}
 }
@@ -55,5 +69,6 @@ module.exports = {
 	currentYear: currentYear,
 	currentColor: currentColor, 
 	currentDataKey: currentDataKey,
+	fullData: fullData,
 	showDetail: showDetail
 }

@@ -20,7 +20,6 @@ var thisYearData; //only this year
 
 var sbData; // data created by last sunburst.build()
 
-
 // Load all and call main
 var dsv = d3.dsv(';');
 queue()
@@ -30,7 +29,6 @@ queue()
     .defer(dsv, "import/offices-utf8.csv")
     .defer(dsv, "import/categories-utf8.csv")
     .await(main);
-
 
 //d3.dsv(",")("https://dl.dropboxusercontent.com/s/36k9pc7ll8yhhe3/master_export.csv?dl=1", function(error, data) {
 //d3.dsv(",")("import/master_export.csv", function(error, data) { 
@@ -42,6 +40,7 @@ function main(error, rawdata, suppliers, depts, offices, categories) {
 
   // set global showDetails
   globals.showDetail = showDetail;
+  globals.fullData = fullData;
 
   /*********** create buttons for chosing years ***********/
   d3.select("#years").selectAll("span.year")
@@ -63,11 +62,15 @@ function main(error, rawdata, suppliers, depts, offices, categories) {
 
   // prepare select field
   d3.select("#search").selectAll("option")
-    .data(nodes.map(function(d) { return { name: d.nameFull, key: getKey(d) } } ))
+    .data(nodes.map(function(d) { return { name: d.nameFull, key: getKey(d), depth: d.depth } } ))
       .enter()
       .append("option")
-      .attr("key", function(d) { return d.key })
-      .text(function(d) { return d.name; });
+      .attr("key", function(d) { return d.key; })
+      .text(function(d) {
+        var s = ''; if (d.depth == 1) { s += '-\xa0'; } else if (d.depth == 2) { s += '\xa0\xa0\xa0\xa0\xa0\xa0'; }
+        //var s = '', i=0; while(i++ < d.depth) { s += '-\xa0\xa0\xa0'; }
+        return s + d.name;
+      });
   d3.select("#search").on("change", function() {
     var key = this.options[this.selectedIndex].getAttribute("key");
     showDetail(getSbData(sbData, key));
@@ -147,19 +150,32 @@ function showDetail(d) {
     fdata = fdata.filter(function(dd){return dd.office === d.name});
   }
 
-  // update sparklines (data with all years)
-  updateSparklines(fdata,d.name);
-
   // update bar chart -> just this year
   bar.updateBar(fdata.filter(function(d) { return +d.year == globals.currentYear; }));
   var resp = ds.responsive(d3.select("#barchart-container svg")).start(); // create responsive behaviour on load and resize events...
   resp.update(); // ... and force a responsive update now
+
+  // exclude category 0
+  fdata = fdata.filter(function(dd) {return dd.idCategory != "0"}); 
+
+  // update sparklines (data with all years)
+  updateSparklines(fdata,d.name);
   
   // update bar chart title
   d3.select("#officename").text(d.nameFull).fadeIn();
 
   // update select box
-  d3.select('#search').node().value = d.nameFull;
+  var newname = '';
+  if(d.depth == 0) {
+    newname = d.nameFull;
+  } else if (d.depth == 1) {
+    newname = '-\xa0'+d.nameFull;
+  } else if (d.depth == 2) {
+    newname = '\xa0\xa0\xa0\xa0\xa0\xa0'+d.nameFull;
+  }
+
+  d3.select('#search').node().value = newname;
+  
 }
 
 /**************** update details: 'summary' ******************/

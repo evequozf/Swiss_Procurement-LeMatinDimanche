@@ -80,9 +80,14 @@ function buildBar(data) {
 
   // tooltip
   var tt = ds.ttip(bars);
-  tt.html(function(d) { 
+  tt.html(function(d) {
+    var spendings = globals.fullData
+              .filter(function(e) { return +e.year == globals.currentYear })
+              .filter(function(e) { return e.supplier == d.supplier });
+    var categoryNames = spendings.map(function(e) { return e.fullCategory }).filter( function(value, index, self) { return self.indexOf(value) === index });
   		return "<h4>"+d.supplier+"</h4>"+
-  			"<p>CHF  "+ds.formatNumber(d.amount)+"</p>"
+        "<p>" + categoryNames[0] + "</p>"+
+        "<p>CHF  "+ds.formatNumber(d.amount)+"</p>"
   	}
   );
 

@@ -4,57 +4,63 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mandats de la Confédération</title>
+<meta name="robots" content="index, follow" />
+<title>Les achats de la Confédération</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" ></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="import/introjs/intro.min.js"></script>
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="import/introjs/introjs.min.css">
-<!--<link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700|Raleway:400,700' rel='stylesheet' type='text/css'>-->
 <link href='https://fonts.googleapis.com/css?family=Lora:400,700|Source+Sans+Pro:700,300' rel='stylesheet' type='text/css'>
 <link href='custom.css' rel='stylesheet' type='text/css'>
+<!--
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@matindimanche">
+<meta name="twitter:title" content="Les enquêtes du Matin Dimanche, version interactive">
+<meta name="twitter:description" content="Vidéos, photos, sons, documents et cartes: les enquêtes du Matin Dimanche revisitées sont disponibles dès maintenant sur notre site">
+<meta name="twitter:image:src" content="http://enquete.lematindimanche.ch/img/twitter.jpg">
+<meta property="og:image" content="http://enquete.lematindimanche.ch/img/twitter.jpg">
+<meta property="og:url" content="http://enquete.lematindimanche.ch">
+<meta property="og:title" content="Enquête - Le Matin Dimanche">
+<meta property="og:description" content="Découvrez les enquêtes du Matin Dimanche en version interactive">
+-->
+</head>
 <body>
 
 <div class="container">
 
 <div class="row">
-	<h1 class="col-xs-9">Mandats de la Confédération</h1>
-	<p class="col-xs-3" style="text-align:right; padding-top:10px;padding-right:10px;"><a href="index.html?lang=de">DEUTSCH</a></p>
+	<h1 class="col-xs-9">Les achats de la Confédération</h1>
+	<p class="col-xs-3" style="text-align:right; padding-top:10px;padding-right:10px;"><a href="indexde.html?lang=de">DEUTSCH</a> | <a href="indexen.html?lang=en">ENGLISH</a> |</p>
 </div>
 <div class="row">
 	<div class="col-xs-12">
-		L'application ci-dessous vous permet.... orem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse porta massa urna, ut imperdiet diam aliquam in. Vivamus tincidunt ac mauris eget suscipit. Duis pellentesque libero a lorem tempor, eget hendrerit diam dignissim. Nam et fringilla nibh, non condimentum orci. Vestibulum ornare erat sed vestibulum ornare. Cras euismod semper posuere. Nulla lacinia, nisi in condimentum rhoncus, mauris eros egestas turpis, nec mollis orci odio id ante. Aliquam eleifend semper est, eu cursus libero. Nullam luctus egestas massa, eu feugiat ligula posuere sit amet. Mauris volutpat malesuada dignissim. Fusce fermentum convallis ex, vel sollicitudin tortor. Integer velit sem, ultrices nec turpis id, dictum eleifend nisi. <a href="#" data-toggle="modal" data-target="#myModal">En savoir plus</a><br>
-		<a href="javascript:void(0);" onclick="javascript:introJs().start();">Comment fonctionne cette application?</a><br><br>
+		L'application ci-dessous vous permet.... orem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse porta massa urna, ut imperdiet diam aliquam in. Vivamus tincidunt ac mauris eget suscipit. Duis pellentesque libero a lorem tempor, eget hendrerit diam dignissim. Nam et fringilla nibh, non condimentum orci. Vestibulum ornare erat sed vestibulum ornare. Cras euismod semper posuere. Nulla lacinia, nisi in condimentum rhoncus, mauris eros egestas turpis, nec mollis orci odio id ante. Aliquam eleifend semper est, eu cursus libero. Nullam luctus egestas massa, eu feugiat ligula posuere sit amet. Mauris volutpat malesuada dignissim. Fusce fermentum convallis ex, vel sollicitudin tortor. Integer velit sem, ultrices nec turpis id, dictum eleifend nisi. <a href="#" data-toggle="modal" data-target="#myModal">En savoir plus</a><br><br>
+		<a href="javascript:void(0);" onclick="javascript:introJs().start();">
+			<div style="background-color:#f6f6f6; width:280px; padding:5px;text-align:center;border-radius:3px;border:1px solid #ddd;">
+				<img style="vertical-align: -15%;" src="import/img/help.png" alt="Aide" height="15" width="15">&nbsp;Comment fonctionne cette application?&nbsp;&nbsp;
+			</div>
+		</a><br>
 	</div>
 </div>
 <div class="row">
-	<form class="form-inline col-xs-12">
-		<div class="form-group" data-step="1" data-intro="Explorez en choississant un office..." data-position='bottom'>
-			<label for="search">Choisir un département ou un office</label>
-	  		<!--<input type="text" class="form-control" id="search">-->
-	  		<select class="form-control" id="search">
-		    </select>
+	<form class="form-horizontal col-xs-12">
+		<div class="form-group">
+			<label class="control-label col-sm-5" for="search">Choisir un département ou un office:</label>
+	  		<div class="col-sm-5"><select class="form-control" id="search" data-step="1" data-intro="Explorez en choississant un office..." data-position='bottom'></select></div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-5" for="years">Choisir une année:</label>
+			<div class="col-sm-4"><div style="text-align:left;" id="years" data-step="2" data-intro="...puis une année" data-position='bottom'></div></div>
 		</div>
 	</form>
 </div>
-<div class="row">
-	<form class="form-inline col-xs-12">
-	<label for="years">Choisir une année</label>
-		<div class="form-group" id="years" data-step="2" data-intro="...puis une année" data-position='bottom'></div>
-	</form>
-</div>
-<!--
-<div class="row">
-	<h2 class="col-md-12">Répartition par départements et offices</h2>
-</div>
--->
 <div class="row">
 	<div id="breadcrumb" class="col-xs-12"></div>
 </div>
 <div class="row" id="graph-container">
 	<div class="col-sm-12 col-md-5" id="left-column">
-		<!--<div id="breadcrumb">Niveau:</div>-->
 		<div id="over-sunburst">
 			<div id="fixed-tooltip" class="hidden-xs"> <!-- hidden on mobile -->
 				<div id="fixed-tooltip-dept"></div>
@@ -64,40 +70,26 @@
 		</div>
 		<div id="sunburst-container" data-step="3" data-intro="Ou en cliquant sur une partie du graphique" data-position='top'></div>
 	</div>
-	<!--<div class="col-lg-2"></div>-->
 	<div class="col-sm-12 col-md-7" id="right-column">
 		<div id="details-pane">
-			<h2>Mandats <span id="year"></span> de <span id="officename"></span></h2>
-			<!--
-			<div class="details table-responsive">
-				<table class="table">
-				<tr class="total">
-					<td colspan="2">Total des mandats</td><td>CHF</td><td class="number" id="details-total"></td><td class="percent"></td><td></td>
-				</tr>
-				<tr>
-					<td></td><td>dont mandataires connus</td><td>CHF</td><td class="number" id="details-known"></td><td id="details-known-percent" class="percent"></td><td class="percent-sign">%</td>
-				</tr>
-				<tr>
-					<td></td><td>dont mandataires inconnus</td><td>CHF</td><td class="number" id="details-unknown"></td><td id="details-unknown-percent" class="percent"></td><td class="percent-sign">%</td>
-				</tr>
-				</table>
-			</div>
-			-->
-			<div class="details summary" data-step="4" data-intro="Découvrez la répartition entre les mandataires rendu public et ceux que l'administration n'a pas voulu dévoiler" data-position='bottom'>
-				<div class="row total">
-					<div class="col-xs-12 col-sm-5">Total des mandats</div>
-					<div class="col-xs-4 col-sm-4 number" id="details-total"></div>
-					<div class="col-xs-4 col-sm-1 percent"></div>
-				</div>
-				<div class="row known">
-					<div class="col-xs-12 col-sm-5">dont mandataires connus</div>
-					<div class="col-xs-4 col-sm-4 number" id="details-known"></div>
-					<div class="col-xs-4 col-sm-1 percent" id="details-known-percent" ></div>
-				</div>
-				<div class="row unknown">
-					<div class="col-xs-12 col-sm-5">dont mandataires inconnus</div>
-					<div class="col-xs-4 col-sm-4 number" id="details-unknown"></div>
-					<div class="col-xs-4 col-sm-1 percent" id="details-unknown-percent" ></div>	
+			<div data-step="4" data-intro="Découvrez la répartition entre les mandataires rendu public et ceux que l'administration n'a pas voulu dévoiler" data-position='bottom'>
+				<h2>Mandats <span id="year"></span> de <span id="officename"></span></h2>
+				<div class="details summary">
+					<div class="row total">
+						<div class="col-xs-12 col-sm-5">Total des mandats</div>
+						<div class="col-xs-4 col-sm-4 number" id="details-total"></div>
+						<div class="col-xs-4 col-sm-1 percent"></div>
+					</div>
+					<div class="row known">
+						<div class="col-xs-12 col-sm-5">dont mandataires connus</div>
+						<div class="col-xs-4 col-sm-4 number" id="details-known"></div>
+						<div class="col-xs-4 col-sm-1 percent" id="details-known-percent" ></div>
+					</div>
+					<div class="row unknown">
+						<div class="col-xs-12 col-sm-5">dont mandataires inconnus</div>
+						<div class="col-xs-4 col-sm-4 number" id="details-unknown"></div>
+						<div class="col-xs-4 col-sm-1 percent" id="details-unknown-percent" ></div>	
+					</div>
 				</div>
 			</div>
 			<div class="details" data-step="5" data-intro="Vous trouverez les noms des principales entreprises qui ont obtenu des mandats" data-position='top'>
@@ -116,9 +108,9 @@
 
 <div class="row">
 	<div class="col-xs-12">
-		<div style="text-align: center; margin-top: 20px; margin-bottom: 10px; line-height: 1.5">
-			<a href="#" data-toggle="modal" data-target="#myModal">A propos de cette application</a> - <a href="#top">Retour en haut</a><br>
-			<img src="import/img/soz-lmd.jpg" height="20" style="margin-top: 10px;" alt="Logo Matin Dimanche et SonntagsZeitung" />
+		<div style="text-align: center; margin-top: 25px; margin-bottom: 0px; line-height: 1.5">
+			<a href="#top">Retour en haut</a><br>
+			<img src="import/img/logos.jpg" height="30" style="margin-top: 10px;" alt="Logo Matin Dimanche et SonntagsZeitung" />
 		</div>
 	</div>
 </div>
@@ -146,7 +138,7 @@
 				fdsfdsfdsfdsfdsfds: cellule-enquete[at]lematindimanche.ch
 				<br /><br />
 				<b>Crédits</b><br />
-				Visualisation: Florian Evéquoz (Datastory), Noele Illien, Alexandre Haederli<br />
+				Visualisation: Florian Evéquoz (<a href="http://www.datastory.ch" target="_blank">Datastory</a>), Noele Illien, Alexandre Haederli<br />
 				Recherche: Titus Plattner, Martin Stoll, Christian Brönnimann
 				</p>
 			</div>
@@ -162,9 +154,5 @@
 <script src="dsutils.js"></script>
 <script src="queue.min.js"></script>
 <script src="viz.js"></script>
-<!-- PYM specifics -->
-<script src="pym.js"></script>
-<script>
-	var pymChild = new pym.Child();	
-</script>
-<!-- end PYM specifics -->
+</body>
+</html>
