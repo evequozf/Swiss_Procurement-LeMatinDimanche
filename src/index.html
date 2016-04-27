@@ -31,8 +31,12 @@
 <div class="container">
 
 <div class="row">
-	<h1 class="col-xs-9">Les achats de la Confédération</h1>
-	<p class="col-xs-3" style="text-align:right; padding-top:10px;padding-right:10px;"><a href="indexde.html?lang=de">DEUTSCH</a> | <a href="indexen.html?lang=en">ENGLISH</a> |</p>
+	<div class="col-xs-12">
+		<p style="text-align:right; padding-top:5px;"><a href="indexde.html?lang=de">DEUTSCH</a> | <a href="indexen.html?lang=en">ENGLISH</a></p>
+	</div>
+</div>
+<div class="row">
+	<h1 class="col-xs-12">Les achats de la Confédération</h1>
 </div>
 <div class="row">
 	<div class="col-xs-12">
@@ -47,12 +51,12 @@
 <div class="row">
 	<form class="form-horizontal col-xs-12">
 		<div class="form-group">
-			<label class="control-label col-sm-5" for="search">Choisir un département ou un office:</label>
-	  		<div class="col-sm-5"><select class="form-control" id="search" data-step="1" data-intro="Explorez en choississant un office..." data-position='bottom'></select></div>
+			<label class="control-label col-sm-5 col-xs-12" for="search">Choisir un département ou un office:</label>
+	  		<div class="col-sm-5 col-xs-12"><select class="form-control" id="search" data-step="1" data-intro="Explorez en choississant un office..." data-position='top'></select></div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-5" for="years">Choisir une année:</label>
-			<div class="col-sm-4"><div style="text-align:left;" id="years" data-step="2" data-intro="...puis une année" data-position='bottom'></div></div>
+			<label class="control-label col-sm-5 col-xs-12" for="years">Choisir une année:</label>
+			<div class="col-sm-4 col-xs-12"><div style="text-align:left;" id="years" data-step="2" data-intro="...puis une année" data-position='top'></div></div>
 		</div>
 	</form>
 </div>
@@ -72,7 +76,7 @@
 	</div>
 	<div class="col-sm-12 col-md-7" id="right-column">
 		<div id="details-pane">
-			<div data-step="4" data-intro="Découvrez la répartition entre les mandataires rendu public et ceux que l'administration n'a pas voulu dévoiler" data-position='bottom'>
+			<div data-step="4" data-intro="Découvrez la répartition entre les mandataires rendu public et ceux que l'administration n'a pas voulu dévoiler" data-position='top'>
 				<h2>Mandats <span id="year"></span> de <span id="officename"></span></h2>
 				<div class="details summary">
 					<div class="row total">
@@ -104,16 +108,16 @@
 	</div>
 </div>
 
-</div> <!-- end container fluid -->
-
 <div class="row">
 	<div class="col-xs-12">
 		<div style="text-align: center; margin-top: 25px; margin-bottom: 0px; line-height: 1.5">
-			<a href="#top">Retour en haut</a><br>
-			<img src="import/img/logos.jpg" height="30" style="margin-top: 10px;" alt="Logo Matin Dimanche et SonntagsZeitung" />
+			<div style="margin-bottom:15px;"><a href="#top">Retour en haut</a></div>
+			<img src="import/img/lmd.jpg" height="32" style="margin-top:10px;margin-right:10px;margin-left:10px;" alt="Logo Matin Dimanche" /><img src="import/img/soz.jpg" height="30" style="margin-top:12px;margin-right:10px;margin-left:10px;" alt="Logo SonntagsZeitung" />
 		</div>
 	</div>
 </div>
+
+</div> <!-- end container fluid -->
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog">
