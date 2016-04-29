@@ -8,7 +8,7 @@ var SUNBURST_LABEL_MAX = 15; // characters shown in label of sunburst
 var SUPPLIER_LABEL_MAX = 25; // characters shown in label of bar charts 'supplier'
 var SUPPLIER_AMOUNT = 40; // show only xx most important suppliers in chart
 
-var years = [2011, 2012, 2013, 2014]
+var years = [2011, 2012, 2013, 2014];
 var currentYear = 2011; //year currently being displayed
 var currentColor = null; //year currently being displayed
 
@@ -32,8 +32,9 @@ if(langparam == "de") {
 		of: "von" ,                         // e.g. xx % DE administration fédérale
 		missingData: "(missing data)",
 		mandates: "Mandaten",
-		part: "Anteil"
-	}
+		part: "Anteil",
+		categorie: "Catégorie"
+	};
 }
 else if(langparam == "en") {
 	var lang = {
@@ -42,8 +43,9 @@ else if(langparam == "en") {
 		of: "of" ,                         // e.g. xx % DE administration fédérale
 		missingData: "(missing data)",
 		mandates: "Mandates",
-		part: "Part"
-	}
+		part: "Part",
+		categorie: "Category"
+	};
 }
 else {
 	var lang = {
@@ -52,8 +54,9 @@ else {
 		of: "de" ,                         // e.g. xx % DE administration fédérale
 		missingData: "(missing data)",
 		mandates: "Achats",
-		part: "Part"
-	}
+		part: "Part",
+		categorie: "Catégorie"
+	};
 }
 
 /*****************/
@@ -71,4 +74,4 @@ module.exports = {
 	currentDataKey: currentDataKey,
 	fullData: fullData,
 	showDetail: showDetail
-}
+};

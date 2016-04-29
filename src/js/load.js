@@ -4,7 +4,7 @@ var globals = require('./globals.js');
 module.exports = {
 	prepareDataSunburst: prepareDataSunburst,
 	prepareDataBar: prepareDataBar
-}
+};
 
 /**************** data preparation sunburst ******************/
 
@@ -25,12 +25,11 @@ function prepareDataSunburst(filtereddata) {
 				"fullDept": values[0].fullDept,     // store additional params
 				"fullOffice": values[0].fullOffice, // store additional params
 				"chf_all":d3.sum(values, function(dd) {return +dd.amount;})
-			}
+			};
 			v.chf = v.chf_all; // default chf value is total over all years
 			// constructs chf_2014: xxxx, chf_2013: yyyy, etc. for each value
 			years.forEach(function(year) {
-				v["chf_"+year] = d3.sum(values.filter(function(dd){ return +dd.year === year}), 
-					function(dd) {return +dd.amount;})
+				v["chf_"+year] = d3.sum(values.filter(function(dd){ return +dd.year === year}), function(dd) {return +dd.amount;})
 			});
 			return v;
 		})
@@ -111,7 +110,7 @@ function prepareDataSunburst(filtereddata) {
 		"chf_all": sumdepts.all, 
 		"percent": 100,
 		"percent_all": 100
-	}
+	};
 
 	// constructs chf_yyyy and percent_yyyy value with yyyy = year
 	years.forEach(function(year) {
@@ -124,14 +123,14 @@ function prepareDataSunburst(filtereddata) {
 
 /**************** data preparation bar ******************/
 
-// Prepare data format for bar chart: should look like import/fake-bar.tsv
+// Prepare data format for bar chart
 function prepareDataBar(filtereddata) {
 	var data = [];
 	var nest = d3.nest()
-		.key(function(d) {return d.supplier})
+		.key(function(d) {return d.supplier;})
 		.rollup(function(d) {return {
 			"chf":d3.sum(d, function(dd) {return +dd.amount;})
-		}})
+		};})
 		.map(filtereddata,d3.map);
 
 	// construct bar data from nested data above (removing "UNKNOWN")
@@ -143,5 +142,5 @@ function prepareDataBar(filtereddata) {
 				});
 		}
 	});
-	return data.sort(function(a,b) {return d3.descending(a.amount, b.amount)});
+	return data.sort(function(a,b) {return d3.descending(a.amount, b.amount);});
 }

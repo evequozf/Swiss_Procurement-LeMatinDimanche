@@ -4,7 +4,9 @@ var load = require('./load.js');
 
 module.exports = {
 	updateBar: updateBar
-}
+};
+
+var catlang = globals.lang.categorie;
 
 /**************** update bar ******************/
 
@@ -24,7 +26,7 @@ function buildBar(data) {
   barheight = data.length * HEIGHT + barmargin.top;
 
   var ybar = d3.scale.ordinal()
-      .rangeRoundBands([0, barheight], .1);
+      .rangeRoundBands([0, barheight], 0.1);
 
   var xbar = d3.scale.linear()
       .range([0, barwidth]);
@@ -33,13 +35,12 @@ function buildBar(data) {
       .scale(xbar)
       .orient("top")
       .ticks(4)
-      .tickFormat(function(d) { return ds.formatNumber(d) });
+      .tickFormat(function(d) { return ds.formatNumber(d); });
 
   var yAxis = d3.svg.axis()
       .scale(ybar)
       .orient("left")
-      .tickFormat(function(d) { return d.substring(0, globals.SUPPLIER_LABEL_MAX) 
-            + (d.length > globals.SUPPLIER_LABEL_MAX ? "..." : ""); });
+      .tickFormat(function(d) { return d.substring(0, globals.SUPPLIER_LABEL_MAX) + (d.length > globals.SUPPLIER_LABEL_MAX ? "..." : ""); });
 
   //cleanup
   d3.select("#barchart-container svg").remove();
@@ -66,7 +67,7 @@ function buildBar(data) {
 
   svgbar.append("g")
       .attr("class", "y axis")
-      .call(yAxis)
+      .call(yAxis);
 
   var bars = svgbar.selectAll(".bar")
       .data(data)
@@ -82,18 +83,20 @@ function buildBar(data) {
   var tt = ds.ttip(bars);
   tt.html(function(d) {
     var spendings = globals.fullData
-              .filter(function(e) { return +e.year == globals.currentYear })
-              .filter(function(e) { return e.supplier == d.supplier });
-    var categoryNames = spendings.map(function(e) { return e.fullCategory }).filter( function(value, index, self) { return self.indexOf(value) === index });
+      .filter(function(e) { return +e.year == globals.currentYear; })
+      .filter(function(e) { return e.supplier == d.supplier; });
+    var categoryNames = spendings.map(function(e) { return e.fullCategory; }).filter( function(value, index, self) { return self.indexOf(value) === index; });
+    var supplierDetail = spendings.map(function(e) { return e.supplierDetail; });
+    var suppDet = "";
+    if(supplierDetail[0] !== "") { suppDet += "<p>" +supplierDetail[0] + "</p>"; }
   		return "<h4>"+d.supplier+"</h4>"+
-        "<p>" + categoryNames[0] + "</p>"+
-        "<p>CHF  "+ds.formatNumber(d.amount)+"</p>"
-  	}
+        suppDet +
+        "<p>"+catlang+": " + categoryNames[0] + "</p>"+
+        "<p>CHF  "+ds.formatNumber(d.amount)+"</p>";
+    }
   );
 
   // fade in whole svg
   svgbar.fadeIn();
 
-  // responsiveness // -> removed from here, should depend from higher level, i.e. main.js
-  //ds.responsive(d3.select("#barchart-container svg")).start();
 }

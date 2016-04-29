@@ -135,7 +135,7 @@ function showDetail(d) {
   globals.currentColor = d.color;
 
   // update sunburst & associated breadcrumbs
-  sunburst.update(d)
+  sunburst.update(d);
 
   // update detail summary text
   updateSummary(d);
@@ -145,9 +145,9 @@ function showDetail(d) {
   if(d.depth == 0) {
     // nothing
   } else if (d.depth == 1) {
-    fdata = fdata.filter(function(dd){return dd.dept === d.name});
+    fdata = fdata.filter(function(dd){return dd.dept === d.name;});
   } else if (d.depth == 2) {
-    fdata = fdata.filter(function(dd){return dd.office === d.name});
+    fdata = fdata.filter(function(dd){return dd.office === d.name;});
   }
 
   // update bar chart -> just this year
@@ -156,7 +156,7 @@ function showDetail(d) {
   resp.update(); // ... and force a responsive update now
 
   // exclude category 0
-  fdata = fdata.filter(function(dd) {return dd.idCategory != "0"}); 
+  fdata = fdata.filter(function(dd) { return dd.idCategory != "0"; }); 
 
   // update sparklines (data with all years)
   updateSparklines(fdata,d.name);
@@ -190,13 +190,13 @@ function formatChf(d) {
 function getChildrenAmountKnown(d) {
   var f;
   if(d.depth == 0) {
-    f = function(dd) { return dd.supplier !== globals.UNKNOWN; }
+    f = function(dd) { return dd.supplier !== globals.UNKNOWN; };
   } else if(d.depth == 1) {
-    f = function(dd) { return (dd.supplier !== globals.UNKNOWN) && (dd.dept === d.name); }
+    f = function(dd) { return (dd.supplier !== globals.UNKNOWN) && (dd.dept === d.name); };
   } else if(d.depth == 2) {
-    f = function(dd) { return (dd.supplier !== globals.UNKNOWN) && (dd.office === d.name); }
+    f = function(dd) { return (dd.supplier !== globals.UNKNOWN) && (dd.office === d.name); };
   }
-  return d3.sum(thisYearData.filter(f), function(dd) {return +dd.amount});
+  return d3.sum(thisYearData.filter(f), function(dd) { return +dd.amount; });
 }
 
 function updateSummary(d) {
@@ -225,12 +225,12 @@ function updateSparklines(filtereddata,name) {
   var cats = d3.nest()
     .key(function(d) { return d.fullCategory; })
     .rollup(function(values) { return d3.sum(values.filter(function(d) { return +d.year == globals.currentYear; }), 
-          function(d) {return +d.amount; }) })
+          function(d) {return +d.amount; }); })
     .entries(filtereddata);
   
   // sort by descending total over category this year
   //console.log(cats);
-  cats = cats.sort(function(a,b) {return d3.descending(a.values,b.values)});
+  cats = cats.sort(function(a,b) {return d3.descending(a.values,b.values);});
   
   //compute total amount (for proportion later on)
   var tot = d3.sum(filtereddata.filter(function(d) { return +d.year == globals.currentYear; }), 
@@ -244,6 +244,4 @@ function updateSparklines(filtereddata,name) {
 
 
 /**************** search box ******************/
-
-
 
