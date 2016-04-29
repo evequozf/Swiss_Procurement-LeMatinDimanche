@@ -39,7 +39,7 @@ if(langparam == "de") {
 else if(langparam == "en") {
 	var lang = {
 		dataSuffix: "En",
-		root: "Federal administration",
+		root: "Federal Administration",
 		of: "of" ,                         // e.g. xx % DE administration fédérale
 		missingData: "(missing data)",
 		mandates: "Mandates",

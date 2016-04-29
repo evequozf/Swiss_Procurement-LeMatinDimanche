@@ -30,9 +30,6 @@ queue()
     .defer(dsv, "import/categories-utf8.csv")
     .await(main);
 
-//d3.dsv(",")("https://dl.dropboxusercontent.com/s/36k9pc7ll8yhhe3/master_export.csv?dl=1", function(error, data) {
-//d3.dsv(",")("import/master_export.csv", function(error, data) { 
-
 function main(error, rawdata, suppliers, depts, offices, categories) {
 
   // get full data table
