@@ -8,23 +8,21 @@
 <title>Les achats de la Confédération</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" ></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="introjs/intro.min.js"></script>
+<script src="introjs/introfr.min.js"></script>
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="introjs/introjs.min.css">
 <link href='https://fonts.googleapis.com/css?family=Lora:400,700|Source+Sans+Pro:700,300' rel='stylesheet' type='text/css'>
 <link href='custom.css' rel='stylesheet' type='text/css'>
-<!--
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@matindimanche">
-<meta name="twitter:title" content="Les enquêtes du Matin Dimanche, version interactive">
-<meta name="twitter:description" content="Vidéos, photos, sons, documents et cartes: les enquêtes du Matin Dimanche revisitées sont disponibles dès maintenant sur notre site">
-<meta name="twitter:image:src" content="http://enquete.lematindimanche.ch/img/twitter.jpg">
-<meta property="og:image" content="http://enquete.lematindimanche.ch/img/twitter.jpg">
-<meta property="og:url" content="http://enquete.lematindimanche.ch">
-<meta property="og:title" content="Enquête - Le Matin Dimanche">
-<meta property="og:description" content="Découvrez les enquêtes du Matin Dimanche en version interactive">
--->
+<meta name="twitter:title" content="Les achats de la Confédération">
+<meta name="twitter:description" content="Quels départements ont le plus souvent recours à des prestataires externes? Pour quels types de biens? Et quels sont les plus gros fournisseurs de l’administration?">
+<meta name="twitter:image:src" content="http://enquete.lematindimanche.ch/achats/img/screenshot.jpg">
+<meta property="og:image" content="http://enquete.lematindimanche.ch/achats/img/screenshot.jpg">
+<meta property="og:url" content="http://enquete.lematindimanche.ch/achats">
+<meta property="og:title" content="Les achats de la Confédération">
+<meta property="og:description" content="Quels départements ont le plus souvent recours à des prestataires externes? Pour quels types de biens? Et quels sont les plus gros fournisseurs de l’administration?">
 </head>
 <body>
 
@@ -40,7 +38,7 @@
 </div>
 <div class="row">
 	<div class="col-xs-12">
-		L'application ci-dessous vous permet.... orem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse porta massa urna, ut imperdiet diam aliquam in. Vivamus tincidunt ac mauris eget suscipit. Duis pellentesque libero a lorem tempor, eget hendrerit diam dignissim. Nam et fringilla nibh, non condimentum orci. Vestibulum ornare erat sed vestibulum ornare. Cras euismod semper posuere. Nulla lacinia, nisi in condimentum rhoncus, mauris eros egestas turpis, nec mollis orci odio id ante. Aliquam eleifend semper est, eu cursus libero. Nullam luctus egestas massa, eu feugiat ligula posuere sit amet. Mauris volutpat malesuada dignissim. Fusce fermentum convallis ex, vel sollicitudin tortor. Integer velit sem, ultrices nec turpis id, dictum eleifend nisi. <a href="#" data-toggle="modal" data-target="#myModal">En savoir plus</a><br><br>
+		L’administration fédérale suisse achète chaque année pour <b>plus de cinq milliards</b> de francs de biens et de services à des entreprises privées. Notre application montre quels départements et offices ont le plus souvent recours à des prestataires externes et pour quels types de biens. Elle permet aussi de voir <b>quels sont les plus gros fournisseurs</b> de l’administration. Ces chiffres inédits proviennent de l’administration elle-même et ont été obtenus par <i>Le Matin Dimanche</i> et la <i>SonntagsZeitung</i> grâce à la Loi sur la transparence, après plus de trois ans de bataille juridique. <a href="#" data-toggle="modal" data-target="#myModal">En savoir plus</a><br><br>
 		<a href="javascript:void(0);" onclick="javascript:introJs().start();">
 			<div style="background-color:#f6f6f6; width:280px; padding:5px;text-align:center;border-radius:3px;border:1px solid #ddd;">
 				<img style="vertical-align: -15%;" src="img/help.png" alt="Aide" height="15" width="15">&nbsp;Comment fonctionne cette application?&nbsp;&nbsp;
@@ -72,11 +70,11 @@
 				<div id="fixed-tooltip-percent"></div>
 			</div>
 		</div>
-		<div id="sunburst-container" data-step="3" data-intro="Ou en cliquant sur une partie du graphique" data-position='top'></div>
+		<div id="sunburst-container" data-step="3" data-intro="Ou en cliquant sur ce graphique qui représente le montant des achats de chaque office en comparaison avec les autres" data-position='top'></div>
 	</div>
 	<div class="col-sm-12 col-md-7" id="right-column">
 		<div id="details-pane">
-			<div data-step="4" data-intro="Découvrez la répartition entre les mandataires rendu public et ceux que l'administration n'a pas voulu dévoiler" data-position='top'>
+			<div data-step="4" data-intro="Découvrez la part des fournisseurs rendus publics et ceux que l'administration n'a pas voulu dévoiler" data-position='top'>
 				<h2>Achats <span id="year"></span> de <span id="officename"></span></h2>
 				<div class="details summary">
 					<div class="row total">
@@ -96,11 +94,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="details" data-step="5" data-intro="Vous trouverez les noms des principales entreprises qui ont obtenu des mandats" data-position='top'>
+			<div class="details" data-step="5" data-intro="Les noms des principaux fournisseurs de l’office que vous avez choisi" data-position='top'>
 				<h4>Fournisseurs principaux</h4>
 				<div id="barchart-container"></div>
 			</div>
-			<div class="details" data-step="6" data-intro="Explorez quels types de bien et de services l'administration fédérale a commandé" data-position='top'>
+			<div class="details" data-step="6" data-intro="Découvrez quels types de biens et de services l'administration a acheté" data-position='top'>
 				<h4>Achats par catégorie</h4>
 				<div id="sparkline-container" class="row"></div>
 			</div>
@@ -127,22 +125,27 @@
 				<h4 class="modal-title" style="border: 0px;">A PROPOS</h4>
 			</div>
 			<div class="modal-body">
-				<p>Suspendisse porta massa urna, ut imperdiet diam aliquam in. Vivamus tincidunt ac mauris eget suscipit. Duis pellentesque libero a lorem tempor, eget hendrerit diam dignissim. Nam et fringilla nibh, non condimentum orci. Vestibulum ornare erat sed vestibulum ornare. Cras euismod semper posuere. Nulla lacinia, nisi in condimentum rhoncus, mauris eros egestas turpis, nec mollis orci odio id ante. Aliquam eleifend semper est, eu cursus libero.
-				<br /><br />
-				<b>Que signifie mandataire connu et inconnu?</b><br />
-				Suspendisse porta massa urna, ut imperdiet diam aliquam in. Vivamus tincidunt ac mauris eget suscipit. Duis pellentesque libero a lorem tempor, eget hendrerit diam dignissim. Nam et fringilla nibh, non condimentum orci. Vestibulum ornare erat sed vestibulum ornare. Cras euismod semper posuere. Nulla lacinia, nisi in condimentum rhoncus, mauris eros egestas turpis, nec mollis orci odio id ante. Aliquam eleifend semper est, eu cursus libero.
-				<br /><br />
-				<b>D'où proviennent les données?</b><br />
-				Suspendisse porta massa urna, ut imperdiet diam aliquam in. Vivamus tincidunt ac mauris eget suscipit. Duis pellentesque libero a lorem tempor, eget hendrerit diam dignissim. Nam et fringilla nibh, non condimentum orci. Vestibulum ornare erat sed vestibulum ornare. Cras euismod semper posuere. Nulla lacinia, nisi in condimentum rhoncus, mauris eros egestas turpis, nec mollis orci odio id ante. Aliquam eleifend semper est, eu cursus libero.
-				<br /><br />
-				<b>Puis-je télécharger les données?</b><br />
-				Suspendisse porta massa urna, ut imperdiet diam aliquam in. Vivamus tincidunt ac mauris eget suscipit. Duis pellentesque libero a lorem tempor, eget hendrerit diam dignissim. Nam et fringilla nibh, non condimentum orci. Vestibulum ornare erat sed vestibulum ornare. Cras euismod semper posuere. Nulla lacinia, nisi in condimentum rhoncus, mauris eros egestas turpis, nec mollis orci odio id ante. Aliquam eleifend semper est, eu cursus libero.
-				<br /><br />
-				<b>Contact</b><br />
-				fdsfdsfdsfdsfdsfds: cellule-enquete[at]lematindimanche.ch
-				<br /><br />
-				<b>Crédits</b><br />
-				Visualisation: Florian Evéquoz (<a href="http://www.datastory.ch" target="_blank">Datastory</a>), Noele Illien, Alexandre Haederli<br />
+				<b>Que représente le graphique circulaire?</b><br>
+				Le graphique représente le volume des achats de l'administration fédérale sur une année. Les couleurs distinguent les différents départements.
+				Le cercle intérieur indique la réparation par département, tandis que le cercle extérieur, avec des tons plus clairs, détaille la répartition entre les différents offices au sein du département.
+				Un clic sur le graphique permet de zoomer sur un département ou un office. Le graphique des fournisseurs principaux et celui des achats par catégories se mettent alors à jour avec les informations disponibles concernant l’entité choisie. 
+				<br><br>
+				<b>Pourquoi certains fournisseurs sont inconnus?</b><br>
+				L’administration a été contraint de dévoiler uniquement le nom des quarante fournisseurs les plus importants de chaque département.
+				<br><br>
+				<b>D'où proviennent les données?</b><br>
+				Les informations ayant servi à réalsier cette application proviennent de l'administration fédérale. Le <i>Matin Dimanche</i> et la <i>SonntagsZeitung</i> ont demandé l’accès à ces données le [date] en s’appuyant sur la Loi sur la transparence. L’administration fédérale a refusé de donner le nom des fournisseurs, prétextant le secret des affaires. Le cas est remonté jusqu’au Tribunal fédéral qui a contraint, dans <a href="https://www.documentcloud.org/documents/2827266-2015-12-02-Urteil-BGer-BBL.html" target="_blank">sa décision du 2 décembre 2015</a>, l'administration fédérale à transmettreces informations.
+				<br><br>
+				<b>Puis-je télécharger les données?</b><br>
+				Le Matin Dimanche et la SonntagsZeitung mettent à disposition les informations obtenues. Cliquez <a href="">ici</a> pour télécharger les données reçues de l'administration (format PDF) ou <a href="">ici</a> pour les données au format tableur (CSV).
+				Pour savoir comment nous avons préparé ces données, vous pouvez consulter <a href="">cette page</a>.
+				Le code ayant servi à réaliser la visualisation est disponible <a href="">ici</a> sous licence MIT.
+				<br><br>
+				<b>Contact</b><br>
+				Remarques, questions, suggestions: cellule-enquete[at]lematindimanche.ch
+				<br><br>
+				<b>Crédits</b><br>
+				Visualisation: Florian Evéquoz (<a href="http://www.datastory.ch" target="_blank">Datastory</a>), Noele Illien, Alexandre Haederli<br>
 				Recherche: Titus Plattner, Martin Stoll, Christian Brönnimann
 				</p>
 			</div>

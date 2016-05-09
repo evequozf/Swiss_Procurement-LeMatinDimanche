@@ -153,7 +153,7 @@ function showDetail(d) {
   resp.update(); // ... and force a responsive update now
 
   // exclude category 0
-  fdata = fdata.filter(function(dd) { return dd.idCategory != "0"; }); 
+  fdata = fdata.filter(function(dd) { return dd.intCategory != "0"; }); 
 
   // update sparklines (data with all years)
   updateSparklines(fdata,d.name);

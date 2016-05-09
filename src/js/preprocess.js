@@ -27,7 +27,7 @@ module.exports = function(data, suppliers, depts, offices, categories) {
 		d.office = (office) ? office["office" + sfx] : d.officeDe;
 		d.fullOffice = (office) ? office["fullOffice" + sfx] : d.officeDe;
 
-		var cat = ca.get(d.idCategory);
+		var cat = ca.get(d.intCategory);
 		d.fullCategory = (cat) ? cat["fullCategory" + sfx] : d.idCategory;
 
 		return d;

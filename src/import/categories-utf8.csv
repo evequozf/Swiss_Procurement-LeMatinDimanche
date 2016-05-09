@@ -1,66 +1,24 @@
 idCategory;fullCategoryDe;fullCategoryFr;fullCategoryEn
-0;Nicht kommuniziert von VBS;Non communiquée par le DDPS;
-1;Nahrungsmittel und Getränke;Nourriture et boissons;
-2;Textilien und Bekleidung;Textile et habillement;
-2.1;Textilien;Textile;
-2.2;Bekleidung;Habillement;
-3;Heizöl, Benzin, Treibstoffe, Chemie;Carburants et produits chimiques;
-3.1;;Combustibles;
-3.2;;Produits chimiques;
-4;Maschinen, Rüstungsgüter und Verteidigungseinr. inkl. W+R;Machines et matériel militaires, armes, protection;
-4.1;;Armes, munition, explosifs;
-4.2;Maschinen und Apparate;Machines et matériel militaires;
-5;Medizinische Produkte und Pharmabereich;Produits médicaux et pharmaceutiques;
-6;Transport-DL (Güter- und Personentransporte) sowie Hotels;Transports;
-6.1;Transportdienstleistungen, Güter und Waren;Transports de biens et marchandises;
-6.2;DL im Zusammenhang mit Personentransporten, Hotels, usw.;Centrale des voyages de la Confédération (tickets de transports, hotels, etc.);
-7;Kraftfahrzeuge, Fahrzeugteile, Transportmittel inkl. W+R;Véhicules à moteur, moyens de transport;
-7.1;Fahrzeuge;Véhicules;
-7.2;;Groupes électrogènes;
-7.3;;Navires et bateaux;
-7.4;;Locomotives et matériel roulant;
-7.5;;Systèmes aéronautiques;
-8;Güter und DL im Zusammenh. mit Sport und Erholung inkl. W+R;Biens et services de sport et de détente;
-9;Publikationen, Drucksachen und Informationsträger des Bundes;Publications et imprimés;
-9.1;Bundespublikationen, Drucksachen;Publications, imprimés;
-9.2;;Imprimés de sécurité;
-10;Büromatik, inkl. Präsentationstechnik, Zubehör inkl. W+R;Bureautique, appareils de présentation;
+0;Nicht kommuniziert von VBS;Non communiquée par le DDPS;Not communicated by the DDPS
+1;Nahrungsmittel und Getränke;Nourriture et boissons;Food and drink
+2;Textilien und Bekleidung;Textile et habillement;Textiles and clothing
+3;Heizöl, Benzin, Treibstoffe, Chemie;Carburants et produits chimiques;Fuels and chemicals
+4;Maschinen, Rüstungsgüter und Verteidigungseinr. inkl. W+R;Machines et matériel militaires, armes, protection;Machines and military materials, arms, protectective equipment
+5;Medizinische Produkte und Pharmabereich;Produits médicaux et pharmaceutiques;Medical and pharmaceutical products
+6;Transport-DL (Güter- und Personentransporte) sowie Hotels;Transports;Transportation
+7;Kraftfahrzeuge, Fahrzeugteile, Transportmittel inkl. W+R;Véhicules à moteur, moyens de transport;Motor vehicles and means of transport
+8;Güter und DL im Zusammenh. mit Sport und Erholung inkl. W+R;Biens et services de sport et de détente;Good and services related to sport and relaxation
+9;Publikationen, Drucksachen und Informationsträger des Bundes;Publications et imprimés;Publications and printing materials
+10;Büromatik, inkl. Präsentationstechnik, Zubehör inkl. W+R;Bureautique, appareils de présentation;Stationary and presention materials 
 11;Kopiertechnik inkl. Wartung und Reparatur;Technique de photocopie;
 12;Büro- und Raumausstattung zivile Verwaltung inkl. W+R;Equipements de bureau et d'aménagement des locaux;
-12.1;Büro- und Raumausstattung;Equipements de bureau et d'aménagement des locaux;
 13;Bürobedarf inkl. Papier und EDV-Verbrauchsmaterial inkl. W+R;Matériel de bureau, papier et consommables IT;
 14;Postdienstleistungen und diplomatischer Kurier;Services postaux et courrier diplomatique;
-14.1;Postdienste;Services postaux;
-14.2;Diplomatischer Kurier;Courrier diplomatique;
 15;Informatik und Telekommunikationsmittel inkl. W+R;Informatique et moyens de télécommunication;
-15.1;Hardware;Matériel informatique;
-15.2;Software inkl. Lizenzen;Logiciels;
-15.3;Telekommunikation;Télécommunication;
-15.4;SW-Pflege und HW Wartung;Entretien des logiciels et maintenance du matériel informatique;
 16;IT- und Telko-Mittel für Führungs- und Einsatzsyst der Armee;IT pour la conduite de l’armée;
-16.1;Aufklärungs- und Auswertesysteme;Systèmes d'exploration et d'évaluation de l'armée;
-16.2;Führungs- und Informatiksysteme;Systèmes de conduite et d'informatique de l'armée;
-16.3;Ausbildungssysteme (Simulatoren);Simulateurs de l'armée;
 17;DL, notwendig für Bereitst., Betrieb, Unterhalt der Güter;Services de fourniture et pour l'exploitation des biens;
-17.1;DL Zivil: für Bereitst., Betrieb, Unterhalt der Güter;Services de fourniture et pour l'exploitation des biens civils;
-17.2;;Services de fourniture et pour l'exploitation des biens militaires;
-18;Dienstleistungen;Services;
-18.1;Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare;Conseils orientés vers la politique, expertises, avis de droits, etc.;
-18.2;Informatik-DL exkl. Personalverleih im Bereich IKT;Services informatiques;
-18.3;Beratungs-DL für Management und Organisation sowie Coaching;Conseils en gestion (management, organisation et coaching);
-18.4;Informationsarbeit;Relations publiques et campagnes;
-18.5;Sprach- und Übersetzungsdienstleistungen;Services linguistiques et de traduction;
-19;Zivile Bauten;Constructions civiles;
-19.1;;Constructions civiles, honoraires seuls;
-19.2;Zivile Bauten, Bauleistungen inkl. Honorare;Constructions civiles, construction y compris honoraires;
-19.3;Zivile Bauten, Miete;Location de bâtiments civils;
-19.4;Zivile Bauten, Betrieb Immobilien ;Exploitation des bâtiments civils;
-20;Militärische Bauten;Constructions militaires;
-20.1;;Constructions militaires, honoraires seuls;
-20.2;;Constructions militaires, construction y compris honoraires;
-20.3;;Location de bâtiments militaires;
-20.4;;Exploitation des constructions militaires;
-21;Bauten Nationalstrassen;Constructions de routes nationales;
-21.1;Bauten Nationalstrassen, Honorare ohne weitere Bauleistungen;Construction de routes nationales, honoraires seuls;
-21.2;Bauten Nationalstrassen, Bauleistungen inkl.Honorare;Construction de routes nationales, y compris honoraires ;
-22;Keiner Kategorie zuordenbar, inkl Wartung und Reparatur;Non classable;
+18;Dienstleistungen;Services;Services
+19;Zivile Bauten;Constructions civiles;Civil constructions
+20;Militärische Bauten;Constructions militaires;Military constructions
+21;Bauten Nationalstrassen;Constructions de routes nationales;Construction of national roads
+22;Keiner Kategorie zuordenbar, inkl Wartung und Reparatur;Non classable;Unclassifiable
