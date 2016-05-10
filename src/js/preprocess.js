@@ -16,7 +16,8 @@ module.exports = function(data, suppliers, depts, offices, categories) {
 	var fullData = data.map(function(d) {
 		
 		var s = su.get(d.idSupplier);
-		d.supplier = (s) ? s["supplier_orginal"] : globals.UNKNOWN;
+		d.supplier = (s) ? s["supplier"] : globals.UNKNOWN;
+		d.supplierDetail = (s) ? s["supplierDetail"] : d.idSupplier;
 
 		var dept = de.get(d.deptDe);
 		d.dept = (dept) ? dept["dept" + sfx] : d.deptDe;
@@ -26,19 +27,11 @@ module.exports = function(data, suppliers, depts, offices, categories) {
 		d.office = (office) ? office["office" + sfx] : d.officeDe;
 		d.fullOffice = (office) ? office["fullOffice" + sfx] : d.officeDe;
 
-		var cat = ca.get(d.idCategory);
+		var cat = ca.get(d.intCategory);
 		d.fullCategory = (cat) ? cat["fullCategory" + sfx] : d.idCategory;
 
 		return d;
 	});
 
 	return fullData;
-}
-
-/*
-// used to create global fields, e.g. 'd.fullCategory' from 'd.fullCategoryFr') // example use: d = addField(d, "dept");
-function addField(d, name) {
-  d[name] = d[name + globals.lang.dataSuffix];
-  return d;
-}
-*/
+};

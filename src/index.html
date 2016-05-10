@@ -4,43 +4,65 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mandats de la Confédération</title>
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<meta name="robots" content="index, follow" />
+<title>Les achats de la Confédération</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" ></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="introjs/introfr.min.js"></script>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<!--<link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700|Raleway:400,700' rel='stylesheet' type='text/css'>-->
+<link rel="stylesheet" href="introjs/introjs.min.css">
 <link href='https://fonts.googleapis.com/css?family=Lora:400,700|Source+Sans+Pro:700,300' rel='stylesheet' type='text/css'>
 <link href='custom.css' rel='stylesheet' type='text/css'>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@matindimanche">
+<meta name="twitter:title" content="Les achats de la Confédération">
+<meta name="twitter:description" content="Quels départements ont le plus souvent recours à des prestataires externes? Pour quels types de biens? Et quels sont les plus gros fournisseurs de l’administration?">
+<meta name="twitter:image:src" content="http://enquete.lematindimanche.ch/achats/img/screenshot.jpg">
+<meta property="og:image" content="http://enquete.lematindimanche.ch/achats/img/screenshot.jpg">
+<meta property="og:url" content="http://enquete.lematindimanche.ch/achats">
+<meta property="og:title" content="Les achats de la Confédération">
+<meta property="og:description" content="Quels départements ont le plus souvent recours à des prestataires externes? Pour quels types de biens? Et quels sont les plus gros fournisseurs de l’administration?">
+</head>
 <body>
 
 <div class="container">
 
 <div class="row">
-	<h1 class="col-xs-12">Mandats de la Confédération</h1>
+	<div class="col-xs-12">
+		<p style="text-align:right; padding-top:5px;"><a href="indexde.html?lang=de">DEUTSCH</a> | <a href="indexen.html?lang=en">ENGLISH</a></p>
+	</div>
 </div>
 <div class="row">
-	<form class="form-inline col-xs-12">
-		<label for="search">Choisir département / office </label>
+	<h1 class="col-xs-12">Les achats de la Confédération</h1>
+</div>
+<div class="row">
+	<div class="col-xs-12">
+		L’administration fédérale suisse achète chaque année pour <b>plus de cinq milliards</b> de francs de biens et de services à des entreprises privées. Notre application montre quels départements et offices ont le plus souvent recours à des prestataires externes et pour quels types de biens. Elle permet aussi de voir <b>quels sont les plus gros fournisseurs</b> de l’administration. Ces chiffres inédits proviennent de l’administration elle-même et ont été obtenus par <i>Le Matin Dimanche</i> et la <i>SonntagsZeitung</i> grâce à la Loi sur la transparence, après plus de trois ans de bataille juridique. <a href="#" data-toggle="modal" data-target="#myModal">En savoir plus</a><br><br>
+		<a href="javascript:void(0);" onclick="javascript:introJs().start();">
+			<div style="background-color:#f6f6f6; width:280px; padding:5px;text-align:center;border-radius:3px;border:1px solid #ddd;">
+				<img style="vertical-align: -15%;" src="img/help.png" alt="Aide" height="15" width="15">&nbsp;Comment fonctionne cette application?&nbsp;&nbsp;
+			</div>
+		</a><br>
+	</div>
+</div>
+<div class="row">
+	<form class="form-horizontal col-xs-12">
 		<div class="form-group">
-	  		<!--<input type="text" class="form-control" id="search">-->
-	  		<select class="form-control" id="search">
-		    </select>
+			<label class="control-label col-sm-5 col-xs-12" for="search">Choisir un département ou un office:</label>
+	  		<div class="col-sm-5 col-xs-12"><select class="form-control" id="search" data-step="1" data-intro="Explorez en choississant un office..." data-position='top'></select></div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-5 col-xs-12" for="years">Choisir une année:</label>
+			<div class="col-sm-4 col-xs-12"><div style="text-align:left;" id="years" data-step="2" data-intro="...puis une année" data-position='top'></div></div>
 		</div>
 	</form>
 </div>
-<div class="row">
-	<div class="col-xs-12" id="years"></div>
-</div>
-<!--
-<div class="row">
-	<h2 class="col-md-12">Répartition par départements et offices</h2>
-</div>
--->
 <div class="row">
 	<div id="breadcrumb" class="col-xs-12"></div>
 </div>
 <div class="row" id="graph-container">
 	<div class="col-sm-12 col-md-5" id="left-column">
-		<!--<div id="breadcrumb">Niveau:</div>-->
 		<div id="over-sunburst">
 			<div id="fixed-tooltip" class="hidden-xs"> <!-- hidden on mobile -->
 				<div id="fixed-tooltip-dept"></div>
@@ -48,66 +70,96 @@
 				<div id="fixed-tooltip-percent"></div>
 			</div>
 		</div>
-		<div id="sunburst-container"></div>
+		<div id="sunburst-container" data-step="3" data-intro="Ou en cliquant sur ce graphique qui représente le montant des achats de chaque office en comparaison avec les autres" data-position='top'></div>
 	</div>
-	<!--<div class="col-lg-2"></div>-->
 	<div class="col-sm-12 col-md-7" id="right-column">
 		<div id="details-pane">
-			<h2>Mandats <span id="year"></span> de <span id="officename"></span></h2>
-			<!--
-			<div class="details table-responsive">
-				<table class="table">
-				<tr class="total">
-					<td colspan="2">Total des mandats</td><td>CHF</td><td class="number" id="details-total"></td><td class="percent"></td><td></td>
-				</tr>
-				<tr>
-					<td></td><td>dont mandataires connus</td><td>CHF</td><td class="number" id="details-known"></td><td id="details-known-percent" class="percent"></td><td class="percent-sign">%</td>
-				</tr>
-				<tr>
-					<td></td><td>dont mandataires inconnus</td><td>CHF</td><td class="number" id="details-unknown"></td><td id="details-unknown-percent" class="percent"></td><td class="percent-sign">%</td>
-				</tr>
-				</table>
-			</div>
-			-->
-			<div class="details summary">
-				<div class="row total">
-					<div class="col-xs-12 col-sm-5">Total des mandats</div>
-					<div class="col-xs-4 col-sm-4 number" id="details-total"></div>
-					<div class="col-xs-4 col-sm-1 percent"></div>
-				</div>
-				<div class="row known">
-					<div class="col-xs-12 col-sm-5">dont mandataires connus</div>
-					<div class="col-xs-4 col-sm-4 number" id="details-known"></div>
-					<div class="col-xs-4 col-sm-1 percent" id="details-known-percent" ></div>
-				</div>
-				<div class="row unknown">
-					<div class="col-xs-12 col-sm-5">dont mandataires inconnus</div>
-					<div class="col-xs-4 col-sm-4 number" id="details-unknown"></div>
-					<div class="col-xs-4 col-sm-1 percent" id="details-unknown-percent" ></div>	
+			<div data-step="4" data-intro="Découvrez la part des fournisseurs rendus publics et ceux que l'administration n'a pas voulu dévoiler" data-position='top'>
+				<h2>Achats <span id="year"></span> de <span id="officename"></span></h2>
+				<div class="details summary">
+					<div class="row total">
+						<div class="col-xs-12 col-sm-5">Total des achats</div>
+						<div class="col-xs-4 col-sm-4 number" id="details-total"></div>
+						<div class="col-xs-4 col-sm-1 percent"></div>
+					</div>
+					<div class="row known">
+						<div class="col-xs-12 col-sm-5">dont fournisseurs connus</div>
+						<div class="col-xs-4 col-sm-4 number" id="details-known"></div>
+						<div class="col-xs-4 col-sm-1 percent" id="details-known-percent" ></div>
+					</div>
+					<div class="row unknown">
+						<div class="col-xs-12 col-sm-5">dont fournisseurs inconnus</div>
+						<div class="col-xs-4 col-sm-4 number" id="details-unknown"></div>
+						<div class="col-xs-4 col-sm-1 percent" id="details-unknown-percent" ></div>	
+					</div>
 				</div>
 			</div>
-			<div class="details">
-				<h4>Mandataires principaux</h4>
+			<div class="details" data-step="5" data-intro="Les noms des principaux fournisseurs de l’office que vous avez choisi" data-position='top'>
+				<h4>Fournisseurs principaux</h4>
 				<div id="barchart-container"></div>
 			</div>
-			<div class="details">
-				<h4>Mandats par catégorie</h4>
+			<div class="details" data-step="6" data-intro="Découvrez quels types de biens et de services l'administration a acheté" data-position='top'>
+				<h4>Achats par catégorie</h4>
 				<div id="sparkline-container" class="row"></div>
 			</div>
 		</div>
 	</div>
 </div>
 
+<div class="row">
+	<div class="col-xs-12">
+		<div style="text-align: center; margin-top: 25px; margin-bottom: 0px; line-height: 1.5">
+			<div style="margin-bottom:15px;"><a href="#top">Retour en haut</a></div>
+			<img src="img/lmd.jpg" height="32" style="margin-top:10px;margin-right:10px;margin-left:10px;" alt="Logo Matin Dimanche"><img src="img/soz.jpg" height="30" style="margin-top:12px;margin-right:10px;margin-left:10px;" alt="Logo SonntagsZeitung">
+		</div>
+	</div>
+</div>
+
 </div> <!-- end container fluid -->
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" style="border: 0px;">A PROPOS</h4>
+			</div>
+			<div class="modal-body">
+				<b>Que représente le graphique circulaire?</b><br>
+				Le graphique représente le volume des achats de l'administration fédérale sur une année. Les couleurs distinguent les différents départements.
+				Le cercle intérieur indique la réparation par département, tandis que le cercle extérieur, avec des tons plus clairs, détaille la répartition entre les différents offices au sein du département.
+				Un clic sur le graphique permet de zoomer sur un département ou un office. Le graphique des fournisseurs principaux et celui des achats par catégories se mettent alors à jour avec les informations disponibles concernant l’entité choisie. 
+				<br><br>
+				<b>Pourquoi certains fournisseurs sont inconnus?</b><br>
+				L’administration a été contraint de dévoiler uniquement le nom des quarante fournisseurs les plus importants de chaque département.
+				<br><br>
+				<b>D'où proviennent les données?</b><br>
+				Les informations ayant servi à réalsier cette application proviennent de l'administration fédérale. Le <i>Matin Dimanche</i> et la <i>SonntagsZeitung</i> ont demandé l’accès à ces données le [date] en s’appuyant sur la Loi sur la transparence. L’administration fédérale a refusé de donner le nom des fournisseurs, prétextant le secret des affaires. Le cas est remonté jusqu’au Tribunal fédéral qui a contraint, dans <a href="https://www.documentcloud.org/documents/2827266-2015-12-02-Urteil-BGer-BBL.html" target="_blank">sa décision du 2 décembre 2015</a>, l'administration fédérale à transmettreces informations.
+				<br><br>
+				<b>Puis-je télécharger les données?</b><br>
+				Le Matin Dimanche et la SonntagsZeitung mettent à disposition les informations obtenues. Cliquez <a href="">ici</a> pour télécharger les données reçues de l'administration (format PDF) ou <a href="">ici</a> pour les données au format tableur (CSV).
+				Pour savoir comment nous avons préparé ces données, vous pouvez consulter <a href="">cette page</a>.
+				Le code ayant servi à réaliser la visualisation est disponible <a href="">ici</a> sous licence MIT.
+				<br><br>
+				<b>Contact</b><br>
+				Remarques, questions, suggestions: cellule-enquete[at]lematindimanche.ch
+				<br><br>
+				<b>Crédits</b><br>
+				Visualisation: Florian Evéquoz (<a href="http://www.datastory.ch" target="_blank">Datastory</a>), Noele Illien, Alexandre Haederli<br>
+				Recherche: Titus Plattner, Martin Stoll, Christian Brönnimann
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+			</div>
+		</div>
+	</div>
+</div> 
 
 <script src="d3.v3.min.js"></script>
 <script src="d3-jetpack.js"></script>
 <script src="dsutils.js"></script>
 <script src="queue.min.js"></script>
 <script src="viz.js"></script>
-<!-- PYM specifics -->
-<script src="pym.js"></script>
-<script>
-	var pymChild = new pym.Child();	
-</script>
-<!-- end PYM specifics -->
+</body>
+</html>

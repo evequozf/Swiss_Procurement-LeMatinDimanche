@@ -48,7 +48,7 @@ debug: $(DIST)/$(IMPORT) $(DIST)/index.html $(DIST)/custom.css viz.js
 	@rsync -upE *.js $(DIST)/
 
 # Compile the final targets and copy to DIST (minified js)
-all: $(DIST)/$(IMPORT) $(DIST)/index.html $(DIST)/custom.css $(DIST)/viz.js $(JS_DIST) 
+all: $(DIST)/$(IMPORT) $(DIST)/img $(DIST)/introjs $(DIST)/index.html $(DIST)/indexde.html $(DIST)/indexen.html $(DIST)/custom.css $(DIST)/viz.js $(JS_DIST) 
 
 # Setup locations
 setup: 
@@ -82,6 +82,22 @@ $(DIST)/custom.css: custom.scss setup
 $(DIST)/index.html: index.html setup
 	@rm -f $@
 	@cp $< $@
+
+# Copies indexde.html
+$(DIST)/indexde.html: indexde.html setup
+	@rm -f $@
+	@cp $< $@
+
+# Copies indexen.html
+$(DIST)/indexen.html: indexen.html setup
+	@rm -f $@
+	@cp $< $@
+
+$(DIST)/img: img setup
+	@rsync -rupE --delete $< $(DIST)
+
+$(DIST)/introjs: introjs setup
+	@rsync -rupE --delete $< $(DIST)
 
 # Minifies *.js in src 
 $(DIST)/%.js: $(MINIFY)/%.js 

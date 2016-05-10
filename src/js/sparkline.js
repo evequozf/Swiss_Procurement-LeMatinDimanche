@@ -29,7 +29,7 @@ function Sparkline(element, data, totalParent, parentName) {
 		})
 		.entries(data);
 
-	var margin = {top: 10, right: 10, bottom: 20, left: (LEGEND ? 80 : 10)},
+	var margin = {top: 5, right: 10, bottom: 20, left: (LEGEND ? 80 : 10)},
     	width = 130 - margin.left - margin.right,   // FIXME: hardcode 130 si bootstrap "container", 180 si "container-fluid"
     	height = 60 - margin.top - margin.bottom;
 
@@ -106,10 +106,10 @@ function Sparkline(element, data, totalParent, parentName) {
 	  var prop = Math.round(100 * (amount/totalParent));
 	  if(prop < 1) prop = "<1";
 	  if(isNaN(prop)) prop = "0";
-	  leftdiv.append("p").text(globals.lang.mandates + " " + globals.currentYear 
-	  		+ " : CHF " + ds.formatNumber(amount));
+	  leftdiv.append("p").text(globals.currentYear 
+	  		+ ": CHF " + ds.formatNumber(amount));
 	  leftdiv.append("p").text(globals.lang.part + " " + globals.currentYear
-	  		+ " : " + prop + "% " + globals.lang.of + " " + parentName);
+	  		+ ": " + prop + "% " + globals.lang.of + " " + parentName);
 
 
 	  // fade-in : is it necessary ? because sparklines not visible on most screens

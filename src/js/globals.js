@@ -8,7 +8,7 @@ var SUNBURST_LABEL_MAX = 15; // characters shown in label of sunburst
 var SUPPLIER_LABEL_MAX = 25; // characters shown in label of bar charts 'supplier'
 var SUPPLIER_AMOUNT = 40; // show only xx most important suppliers in chart
 
-var years = [2011, 2012, 2013, 2014]
+var years = [2011, 2012, 2013, 2014];
 var currentYear = 2011; //year currently being displayed
 var currentColor = null; //year currently being displayed
 
@@ -16,24 +16,48 @@ var currentDataKey = "";  // key value of current data (based on sunburst data f
 
 var showDetail = null; // will hold global function to show detail of a selected element, set in main.js
 
+var fullData = null; 
+
 // Prepare multilingual
-var fr = {
-	dataSuffix: "Fr",
-	root: "Administration fédérale",
-	of: "de" ,                         // e.g. xx % DE administration fédérale
-	missingData: "(missing data)",
-	mandates: "Mandats",
-	part: "Part"
+function obtenirParametre (sVar) {
+  return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
 }
-var de = {
-	dataSuffix: "De",
-	root: "Bundesverwaltung",
-	of: "von" ,                         // e.g. xx % DE administration fédérale
-	missingData: "(missing data)",
-	mandates: "Mandaten",
-	part: "Anteil"
+
+var langparam = obtenirParametre("lang");
+
+if(langparam == "de") {
+	var lang = {
+		dataSuffix: "De",
+		root: "Bundesverwaltung",
+		of: "von" ,                         // e.g. xx % DE administration fédérale
+		missingData: "(missing data)",
+		mandates: "Mandaten",
+		part: "Anteil",
+		categorie: "Catégorie"
+	};
 }
-var lang = de;
+else if(langparam == "en") {
+	var lang = {
+		dataSuffix: "En",
+		root: "Federal Administration",
+		of: "of" ,                         // e.g. xx % DE administration fédérale
+		missingData: "(missing data)",
+		mandates: "Mandates",
+		part: "Part",
+		categorie: "Category"
+	};
+}
+else {
+	var lang = {
+		dataSuffix: "Fr",
+		root: "Administration fédérale",
+		of: "de" ,                         // e.g. xx % DE administration fédérale
+		missingData: "(missing data)",
+		mandates: "Achats",
+		part: "Part",
+		categorie: "Catégorie"
+	};
+}
 
 /*****************/
 
@@ -48,5 +72,6 @@ module.exports = {
 	currentYear: currentYear,
 	currentColor: currentColor, 
 	currentDataKey: currentDataKey,
+	fullData: fullData,
 	showDetail: showDetail
-}
+};

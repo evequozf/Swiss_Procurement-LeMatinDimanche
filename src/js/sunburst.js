@@ -39,8 +39,8 @@ function changeYear(year) {
   var nodes = partition.nodes(newData);
 
   // colorize (needed ?)
-  color.domain(newData.children.map(function(d) {return d.name} ));
-  nodes.forEach(function(n,i){ setColors(n,i) });
+  // color.domain(newData.children.map(function(d) {return d.name} ));
+  // nodes.forEach(function(n,i){ setColors(n,i) });
 
 	nodes.map(function(d) {
 		d.chf = d["chf_"+year],

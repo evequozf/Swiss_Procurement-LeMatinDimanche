@@ -20,7 +20,6 @@ var thisYearData; //only this year
 
 var sbData; // data created by last sunburst.build()
 
-
 // Load all and call main
 var dsv = d3.dsv(';');
 queue()
@@ -31,10 +30,6 @@ queue()
     .defer(dsv, "import/categories-utf8.csv")
     .await(main);
 
-
-//d3.dsv(",")("https://dl.dropboxusercontent.com/s/36k9pc7ll8yhhe3/master_export.csv?dl=1", function(error, data) {
-//d3.dsv(",")("import/master_export.csv", function(error, data) { 
-
 function main(error, rawdata, suppliers, depts, offices, categories) {
 
   // get full data table
@@ -42,6 +37,7 @@ function main(error, rawdata, suppliers, depts, offices, categories) {
 
   // set global showDetails
   globals.showDetail = showDetail;
+  globals.fullData = fullData;
 
   /*********** create buttons for chosing years ***********/
   d3.select("#years").selectAll("span.year")
@@ -63,11 +59,15 @@ function main(error, rawdata, suppliers, depts, offices, categories) {
 
   // prepare select field
   d3.select("#search").selectAll("option")
-    .data(nodes.map(function(d) { return { name: d.nameFull, key: getKey(d) } } ))
+    .data(nodes.map(function(d) { return { name: d.nameFull, key: getKey(d), depth: d.depth } } ))
       .enter()
       .append("option")
-      .attr("key", function(d) { return d.key })
-      .text(function(d) { return d.name; });
+      .attr("key", function(d) { return d.key; })
+      .text(function(d) {
+        var s = ''; if (d.depth == 1) { s += '-\xa0'; } else if (d.depth == 2) { s += '\xa0\xa0\xa0\xa0\xa0\xa0'; }
+        //var s = '', i=0; while(i++ < d.depth) { s += '-\xa0\xa0\xa0'; }
+        return s + d.name;
+      });
   d3.select("#search").on("change", function() {
     var key = this.options[this.selectedIndex].getAttribute("key");
     showDetail(getSbData(sbData, key));
@@ -132,7 +132,7 @@ function showDetail(d) {
   globals.currentColor = d.color;
 
   // update sunburst & associated breadcrumbs
-  sunburst.update(d)
+  sunburst.update(d);
 
   // update detail summary text
   updateSummary(d);
@@ -142,24 +142,37 @@ function showDetail(d) {
   if(d.depth == 0) {
     // nothing
   } else if (d.depth == 1) {
-    fdata = fdata.filter(function(dd){return dd.dept === d.name});
+    fdata = fdata.filter(function(dd){return dd.dept === d.name;});
   } else if (d.depth == 2) {
-    fdata = fdata.filter(function(dd){return dd.office === d.name});
+    fdata = fdata.filter(function(dd){return dd.office === d.name;});
   }
-
-  // update sparklines (data with all years)
-  updateSparklines(fdata,d.name);
 
   // update bar chart -> just this year
   bar.updateBar(fdata.filter(function(d) { return +d.year == globals.currentYear; }));
   var resp = ds.responsive(d3.select("#barchart-container svg")).start(); // create responsive behaviour on load and resize events...
   resp.update(); // ... and force a responsive update now
+
+  // exclude category 0
+  fdata = fdata.filter(function(dd) { return dd.intCategory != "0"; }); 
+
+  // update sparklines (data with all years)
+  updateSparklines(fdata,d.name);
   
   // update bar chart title
   d3.select("#officename").text(d.nameFull).fadeIn();
 
   // update select box
-  d3.select('#search').node().value = d.nameFull;
+  var newname = '';
+  if(d.depth == 0) {
+    newname = d.nameFull;
+  } else if (d.depth == 1) {
+    newname = '-\xa0'+d.nameFull;
+  } else if (d.depth == 2) {
+    newname = '\xa0\xa0\xa0\xa0\xa0\xa0'+d.nameFull;
+  }
+
+  d3.select('#search').node().value = newname;
+  
 }
 
 /**************** update details: 'summary' ******************/
@@ -174,13 +187,13 @@ function formatChf(d) {
 function getChildrenAmountKnown(d) {
   var f;
   if(d.depth == 0) {
-    f = function(dd) { return dd.supplier !== globals.UNKNOWN; }
+    f = function(dd) { return dd.supplier !== globals.UNKNOWN; };
   } else if(d.depth == 1) {
-    f = function(dd) { return (dd.supplier !== globals.UNKNOWN) && (dd.dept === d.name); }
+    f = function(dd) { return (dd.supplier !== globals.UNKNOWN) && (dd.dept === d.name); };
   } else if(d.depth == 2) {
-    f = function(dd) { return (dd.supplier !== globals.UNKNOWN) && (dd.office === d.name); }
+    f = function(dd) { return (dd.supplier !== globals.UNKNOWN) && (dd.office === d.name); };
   }
-  return d3.sum(thisYearData.filter(f), function(dd) {return +dd.amount});
+  return d3.sum(thisYearData.filter(f), function(dd) { return +dd.amount; });
 }
 
 function updateSummary(d) {
@@ -209,12 +222,12 @@ function updateSparklines(filtereddata,name) {
   var cats = d3.nest()
     .key(function(d) { return d.fullCategory; })
     .rollup(function(values) { return d3.sum(values.filter(function(d) { return +d.year == globals.currentYear; }), 
-          function(d) {return +d.amount; }) })
+          function(d) {return +d.amount; }); })
     .entries(filtereddata);
   
   // sort by descending total over category this year
   //console.log(cats);
-  cats = cats.sort(function(a,b) {return d3.descending(a.values,b.values)});
+  cats = cats.sort(function(a,b) {return d3.descending(a.values,b.values);});
   
   //compute total amount (for proportion later on)
   var tot = d3.sum(filtereddata.filter(function(d) { return +d.year == globals.currentYear; }), 
@@ -228,6 +241,4 @@ function updateSparklines(filtereddata,name) {
 
 
 /**************** search box ******************/
-
-
 
