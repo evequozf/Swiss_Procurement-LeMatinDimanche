@@ -60,6 +60,11 @@ svg {
 	text-align: justify;
 }
 
+.lang {
+	text-align: right;
+	padding-top:5px;
+}
+
 .footer {
 	text-align: center;
 	margin-top: 25px;
@@ -72,6 +77,10 @@ svg {
 		margin-right:10px;
 		margin-left:10px;
 	}
+}
+
+.title {
+	margin-top: -5px;
 }
 
 #graph-container {
@@ -117,6 +126,7 @@ svg {
 	}
 	& #right-column {
 		border: 1px solid #ddd;
+		border-radius: 3px;
 		background: #f6f6f6;
 		//background: #f0f0f0;
 		//background: #eee;
