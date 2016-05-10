@@ -40,6 +40,40 @@ svg {
 	//border: 1px solid #ccc;
 }
 
+.helper {
+	margin: auto;
+	margin-top: 30px;
+	background-color: #f6f6f6;
+	width: 280px;
+	padding: 5px;
+	text-align: center;
+	border-radius: 3px;
+	border: 1px solid #ddd;
+	cursor: pointer;
+	&:hover {
+		border: 1px solid #b3b3b3;
+	}
+}
+
+.texteintro {
+	font-size: 110%;
+	text-align: justify;
+}
+
+.footer {
+	text-align: center;
+	margin-top: 25px;
+	margin-bottom: 10px;
+}
+
+.logos {
+	text-align: center;
+	& img {
+		margin-right:10px;
+		margin-left:10px;
+	}
+}
+
 #graph-container {
 	//padding-top: 2em;
 	& #left-column, & #right-column {
@@ -168,6 +202,9 @@ svg {
 			cursor: pointer;
 		}
 		//border: 1px solid yellow;
+		margin-top: -12px;
+		margin-left: -14px;
+		width: auto;
 	} 
 
 // update bootstrap defaults
@@ -188,7 +225,7 @@ svg {
 	//position: relative;
 
 	#fixed-tooltip {
-		top: 0;
+		top: 30px;
 		right: 0;
 		//height: 40px;
 		z-index: 999;
@@ -332,6 +369,7 @@ svg {
 form {
 	text-align: center;
 	padding: 15px;
+	margin-top: 30px;
 	& label {
 		padding-right: 0.5em;
 	}
