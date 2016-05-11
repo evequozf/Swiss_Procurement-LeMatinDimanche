@@ -23,6 +23,11 @@
 <meta property="og:url" content="http://enquete.lematindimanche.ch/interactif/achats">
 <meta property="og:title" content="Les achats de la Confédération">
 <meta property="og:description" content="Quels départements ont le plus souvent recours à des prestataires externes? Pour quels types de biens? Et quels sont les plus gros fournisseurs de l’administration?">
+<script type="text/javascript">
+function hideMe() {
+	document.getElementById('tapinteract').style.display = 'none';
+}
+</script>
 </head>
 <body>
 <div class="container">
@@ -68,7 +73,18 @@
 				<div id="fixed-tooltip-percent"></div>
 			</div>
 		</div>
-		<div id="sunburst-container" data-step="3" data-intro="Ou en cliquant sur ce graphique qui représente le montant des achats de chaque office en comparaison avec les autres" data-position='top'></div>
+		<div id="sunburst-container" data-step="3" data-intro="Ou en cliquant sur ce graphique qui représente le montant des achats de chaque office en comparaison avec les autres" data-position='top'>
+		</div>
+		<div>
+			<a href="javascript:void(0);" onclick="javascript:hideMe();">
+			<div id="tapinteract" class="visible-sm visible-xs">
+				<div id="interacttext">
+					<img src="img/click.png" width="50"><br>
+					<b>Cliquez sur le graphique<br>pour interagir</b>
+				</div>
+			</div>
+			</a>
+		</div>
 	</div>
 	<div class="col-sm-12 col-md-7" id="right-column">
 		<div id="details-pane">

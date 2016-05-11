@@ -9,7 +9,6 @@ $sans     : 'Source Sans Pro','Raleway', arial, sans-serif;
 
 $spark_col_decoration: gray;
 
-
 body {
   font-family: $sans;
   font-weight: 300;
@@ -92,8 +91,29 @@ svg {
 		& #sunburst-container {
 			z-index: 1;
 			text-align: center;
-			//border: 1px solid yellow;
+			position:relative;
+			margin-bottom: 10px;
 		}
+		& #tapinteract {
+			margin-bottom: 10px;
+			background-color: lightgrey;
+			width: 94%;
+			height: 84%;
+			position:absolute;
+			top: 67px;
+			z-index: 1000;
+			opacity: 0.8;
+			text-align: center;
+			padding: 15px;
+			border-radius: 3px;
+			border: 1px solid #b3b3b3;
+		}
+		& #interacttext {
+			width: 70%;
+			margin-top: 33%;
+			margin-left: 15%;
+		}
+
 		& svg {
 			//text-align: center;
 			//border: 1px solid red;
