@@ -24,6 +24,11 @@
 <meta property="og:title" content="Die Beschaffungen der Bundesverwaltung">
 <meta property="og:description" content="Welche Amtsstelle wie viel Geld für welche Güter und Dienstleistungen ausgibt? Und welches sind die grössten Auftragnehmer?">
 </head>
+<script type="text/javascript">
+function hideMe() {
+	document.getElementById('tapinteract').style.display = 'none';
+}
+</script>
 <body>
 <div class="container">
 <div class="row">
@@ -69,6 +74,16 @@
 			</div>
 		</div>
 		<div id="sunburst-container" data-step="3" data-intro="Oder indem Sie auf diese Grafik klicken, die den Umfang der Beschaffungen jeder Amtsstelle im Vergleich zu den anderen zeigt" data-position='top'></div>
+		<div class="visible-sm visible-xs">
+			<a href="javascript:void(0);" onclick="javascript:hideMe();">
+			<div id="tapinteract">
+				<div id="interacttext">
+					<img src="img/click.png" width="50"><br>
+					<b>Klicken Sie auf diese Grafik</b>
+				</div>
+			</div>
+			</a>
+		</div>
 	</div>
 	<div class="col-sm-12 col-md-7" id="right-column">
 		<div id="details-pane">
