@@ -15,7 +15,7 @@ The code was developed by Florian Evéquoz for [Datastory](http://www.datastory.
 ## Get in touch
 For the whole process: cellule-enquete[at]lematindimanche.ch
 
-For the visualization: florian[at]datastory.ch or on twitter (@flooeve)
+For the visualization: florian[at]datastory.ch or on [twitter](https://twitter.com/flooeve)
 
 ## Licence
 [BSD](https://opensource.org/licenses/BSD-3-Clause)
