@@ -79,22 +79,26 @@ function buildBar(data) {
       .attr("width", function(d) { return xbar(d.amount); })
       .style("fill", globals.currentColor);
 
-  // tooltip
   var tt = ds.ttip(bars);
   tt.html(function(d) {
-    var spendings = globals.fullData
-      .filter(function(e) { return +e.year == globals.currentYear; })
-      .filter(function(e) { return e.supplier == d.supplier; });
-    var categoryNames = spendings.map(function(e) { return e.fullCategory; }).filter( function(value, index, self) { return self.indexOf(value) === index; });
-    var supplierDetail = spendings.map(function(e) { return e.supplierDetail; });
-    var suppDet = "";
-    if(supplierDetail[0] !== "") { suppDet += "<p>" +supplierDetail[0] + "</p>"; }
-  		return "<h4>"+d.supplier+"</h4>"+
-        suppDet +
-        "<p>"+catlang+": " + categoryNames[0] + "</p>"+
-        "<p>CHF  "+ds.formatNumber(d.amount)+"</p>";
-    }
-  );
+        var spendings = globals.fullData
+          .filter(function(e) { return +e.year == globals.currentYear; })
+          .filter(function(e) { return e.supplier == d.supplier; });
+        var sortedCategories = d3.nest()
+          .key(function(d) { return d.fullCategory; })
+          .rollup(function(spending) { return d3.sum(spending, function(d) {return +d.amount;}) } )
+          .entries(spendings)
+          .sort(function(a,b) { return (d3.descending(a.values, b.values)); });
+        console.log(sortedCategories);
+        var supplierDetail = spendings.map(function(e) { return e.supplierDetail; });
+        var suppDet = "";
+        if(supplierDetail[0] !== "") { suppDet += "<p>" +supplierDetail[0] + "</p>"; }
+    return "<h4>"+d.supplier+"</h4>"+
+          suppDet +
+          "<p>"+catlang+":<br>" + sortedCategories[0].key + "</p>"+
+          "<p>CHF  "+ds.formatNumber(d.amount)+"</p>";
+      }
+    );
 
   // fade in whole svg
   svgbar.fadeIn();

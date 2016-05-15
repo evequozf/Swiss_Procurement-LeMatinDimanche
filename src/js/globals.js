@@ -33,7 +33,7 @@ if(langparam == "de") {
 		missingData: "(missing data)",
 		mandates: "Mandaten",
 		part: "Anteil",
-		categorie: "Catégorie"
+		categorie: "Haupt Kategorie"
 	};
 }
 else if(langparam == "en") {
@@ -44,7 +44,7 @@ else if(langparam == "en") {
 		missingData: "(missing data)",
 		mandates: "Mandates",
 		part: "Part",
-		categorie: "Category"
+		categorie: "Main category"
 	};
 }
 else {
@@ -55,7 +55,7 @@ else {
 		missingData: "(missing data)",
 		mandates: "Achats",
 		part: "Part",
-		categorie: "Catégorie"
+		categorie: "Catégorie principale"
 	};
 }
 
