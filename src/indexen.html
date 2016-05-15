@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow" />
-<title>Procurement</title>
+<title>Swiss Administration Procurements - Le Matin Dimanche</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" ></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="introjs/introen.min.js"></script>
@@ -14,57 +14,59 @@
 <link rel="stylesheet" href="introjs/introjs.min.css">
 <link href='https://fonts.googleapis.com/css?family=Lora:400,700|Source+Sans+Pro:700,300' rel='stylesheet' type='text/css'>
 <link href='custom.css' rel='stylesheet' type='text/css'>
-<!--
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@matindimanche">
-<meta name="twitter:title" content="Les enquêtes du Matin Dimanche, version interactive">
-<meta name="twitter:description" content="Vidéos, photos, sons, documents et cartes: les enquêtes du Matin Dimanche revisitées sont disponibles dès maintenant sur notre site">
-<meta name="twitter:image:src" content="http://enquete.lematindimanche.ch/img/twitter.jpg">
-<meta property="og:image" content="http://enquete.lematindimanche.ch/img/twitter.jpg">
-<meta property="og:url" content="http://enquete.lematindimanche.ch">
-<meta property="og:title" content="Enquête - Le Matin Dimanche">
-<meta property="og:description" content="Découvrez les enquêtes du Matin Dimanche en version interactive">
--->
+<meta name="twitter:title" content="Swiss Administration Procurements">
+<meta name="twitter:description" content="What type of goods and services each department and office spends its budget on? Who are the administration’s biggest suppliers?">
+<meta name="twitter:image:src" content="http://enquete.lematindimanche.ch/interactif/achats/img/screenshot_fr.jpg">
+<meta property="fb:app_id" content="417101858477088">
+<meta property="og:image" content="http://enquete.lematindimanche.ch/interactif/achats/img/screenshot_fr.jpg">
+<meta property="og:url" content="http://enquete.lematindimanche.ch/interactif/achats/indexen.html?lang=en">
+<meta property="og:title" content="Swiss Administration Procurements">
+<meta property="og:description" content="What type of goods and services each department and office spends its budget on? Who are the administration’s biggest suppliers?">
+<script type="text/javascript">
+function hideMe() {
+	document.getElementById('tapinteract').style.display = 'none';
+}
+</script>
 </head>
 <body>
-
 <div class="container">
-
 <div class="row">
 	<div class="col-xs-12">
-		<p style="text-align:right; padding-top:5px;"><a href="indexde.html?lang=de">DEUTSCH</a> | <a href="index.html?lang=fr">FRANCAIS</a></p>
+		<p class="lang"><a href="http://dok.sonntagszeitung.ch/interaktiv/beschaffungen/indexde.html?lang=de">DEUTSCH</a> | <a href="http://enquete.lematindimanche.ch/interactif/achats/index.html?lang=fr">FRANCAIS</a></p>
 	</div>
 </div>
 <div class="row">
-	<h1 class="col-xs-12">Procurement</h1>
+	<h1 class="col-xs-12 title">Swiss Administration Procurements</h1>
 </div>
 <div class="row">
-	<div class="col-xs-12">
-		L'application ci-dessous vous permet.... orem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse porta massa urna, ut imperdiet diam aliquam in. Vivamus tincidunt ac mauris eget suscipit. Duis pellentesque libero a lorem tempor, eget hendrerit diam dignissim. Nam et fringilla nibh, non condimentum orci. Vestibulum ornare erat sed vestibulum ornare. Cras euismod semper posuere. Nulla lacinia, nisi in condimentum rhoncus, mauris eros egestas turpis, nec mollis orci odio id ante. Aliquam eleifend semper est, eu cursus libero. Nullam luctus egestas massa, eu feugiat ligula posuere sit amet. Mauris volutpat malesuada dignissim. Fusce fermentum convallis ex, vel sollicitudin tortor. Integer velit sem, ultrices nec turpis id, dictum eleifend nisi. <a href="#" data-toggle="modal" data-target="#myModal">En savoir plus</a><br><br>
-		<a href="javascript:void(0);" onclick="javascript:introJs().start();">
-			<div style="background-color:#f6f6f6; width:280px; padding:5px;text-align:center;border-radius:3px;border:1px solid #ddd;">
-				<img style="vertical-align: -15%;" src="img/help.png" alt="Aide" height="15" width="15">&nbsp;Comment fonctionne cette application?&nbsp;&nbsp;
+	<div class="col-xs-12 col-sm-7 texteintro">
+		Each year the Swiss federal administration purchases <b>more than five billion francs</b> worth of goods and services from private companies. This application shows what type of goods and services each department and office spends its budget on. It also reveals <b>who the administration’s biggest suppliers are</b>. The raw data comes from the government. Swiss newspapers <i>SonntagsZeitung</i> and <i>Le Matin Dimanche</i> obtained the figures trough the Freedom of Information Act, after more than three years of litigation. <a href="#" data-toggle="modal" data-target="#myModal">More&nbsp;information</a>
+	</div>
+	<div class="col-xs-12 col-sm-5">
+		<a href="javascript:void(0);" style="text-decoration: none;" onclick="javascript:introJs().start();">
+			<div class="helper">
+				<img style="vertical-align: -15%;" src="img/help.png" alt="Help" height="15" width="15">&nbsp;How does this application work?&nbsp;&nbsp;
 			</div>
-		</a><br>
+		</a>
 	</div>
 </div>
 <div class="row">
 	<form class="form-horizontal col-xs-12">
 		<div class="form-group">
-			<label class="control-label col-sm-5 col-xs-12" for="search">Choisir un département ou un office:</label>
-	  		<div class="col-sm-5 col-xs-12"><select class="form-control" id="search" data-step="1" data-intro="Explorez en choississant un office..." data-position='top'></select></div>
+			<label class="control-label col-sm-5 col-xs-12" for="search">Choose a department or a federal office:</label>
+	  		<div class="col-sm-5 col-xs-12"><select class="form-control" id="search" data-step="1" data-intro="Start exploring by choosing an office..." data-position='top'></select></div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-5 col-xs-12" for="years">Choisir une année:</label>
-			<div class="col-sm-4 col-xs-12"><div style="text-align:left;" id="years" data-step="2" data-intro="...puis une année" data-position='top'></div></div>
+			<label class="control-label col-sm-5 col-xs-12" for="years">Choose a year:</label>
+			<div class="col-sm-4 col-xs-12"><div style="text-align:left;" id="years" data-step="2" data-intro="...and a year" data-position='top'></div></div>
 		</div>
 	</form>
 </div>
-<div class="row">
-	<div id="breadcrumb" class="col-xs-12"></div>
-</div>
 <div class="row" id="graph-container">
 	<div class="col-sm-12 col-md-5" id="left-column">
+		<div id="breadcrumb"></div>
 		<div id="over-sunburst">
 			<div id="fixed-tooltip" class="hidden-xs"> <!-- hidden on mobile -->
 				<div id="fixed-tooltip-dept"></div>
@@ -72,36 +74,46 @@
 				<div id="fixed-tooltip-percent"></div>
 			</div>
 		</div>
-		<div id="sunburst-container" data-step="3" data-intro="Ou en cliquant sur une partie du graphique" data-position='top'></div>
+		<div id="sunburst-container" data-step="3" data-intro="Or by clicking on this graphic, which shows the volume of purchases made by each office" data-position='top'></div>
+		<div class="visible-sm visible-xs">
+			<a href="javascript:void(0);" onclick="javascript:hideMe();">
+			<div id="tapinteract">
+				<div id="interacttext">
+					<img src="img/click.png" width="50"><br>
+					<b>Click on the graphic<br>to interact</b>
+				</div>
+			</div>
+			</a>
+		</div>
 	</div>
 	<div class="col-sm-12 col-md-7" id="right-column">
 		<div id="details-pane">
-			<div data-step="4" data-intro="Découvrez la répartition entre les mandataires rendu public et ceux que l'administration n'a pas voulu dévoiler" data-position='top'>
-				<h2>Mandats <span id="year"></span> de <span id="officename"></span></h2>
+			<div data-step="4" data-intro="Discover what proportion of contractors the administration made public and how much remains secret" data-position='top'>
+				<h2>Purchases <span id="year"></span> from <span id="officename"></span></h2>
 				<div class="details summary">
 					<div class="row total">
-						<div class="col-xs-12 col-sm-5">Total des mandats</div>
+						<div class="col-xs-12 col-sm-5">Total purchases</div>
 						<div class="col-xs-4 col-sm-4 number" id="details-total"></div>
 						<div class="col-xs-4 col-sm-1 percent"></div>
 					</div>
 					<div class="row known">
-						<div class="col-xs-12 col-sm-5">dont mandataires connus</div>
+						<div class="col-xs-12 col-sm-5">of which the suppliers are known</div>
 						<div class="col-xs-4 col-sm-4 number" id="details-known"></div>
 						<div class="col-xs-4 col-sm-1 percent" id="details-known-percent" ></div>
 					</div>
 					<div class="row unknown">
-						<div class="col-xs-12 col-sm-5">dont mandataires inconnus</div>
+						<div class="col-xs-12 col-sm-5">of which the suppliers are unknow</div>
 						<div class="col-xs-4 col-sm-4 number" id="details-unknown"></div>
 						<div class="col-xs-4 col-sm-1 percent" id="details-unknown-percent" ></div>	
 					</div>
 				</div>
 			</div>
-			<div class="details" data-step="5" data-intro="Vous trouverez les noms des principales entreprises qui ont obtenu des mandats" data-position='top'>
-				<h4>Mandataires principaux</h4>
+			<div class="details" data-step="5" data-intro="The names of the main suppliers of the office you have chosen" data-position='top'>
+				<h4>The main suppliers</h4>
 				<div id="barchart-container"></div>
 			</div>
-			<div class="details" data-step="6" data-intro="Explorez quels types de bien et de services l'administration fédérale a commandé" data-position='top'>
-				<h4>Mandats par catégorie</h4>
+			<div class="details" data-step="6" data-intro="Discover what types of goods and services are purchased by the administration" data-position='top'>
+				<h4>Purchases by category</h4>
 				<div id="sparkline-container" class="row"></div>
 			</div>
 		</div>
@@ -110,9 +122,11 @@
 
 <div class="row">
 	<div class="col-xs-12">
-		<div style="text-align: center; margin-top: 25px; margin-bottom: 0px; line-height: 1.5">
-			<div style="margin-bottom:15px;"><a href="#top">Retour en haut</a></div>
-			<img src="img/lmd.jpg" height="32" style="margin-top:10px;margin-right:10px;margin-left:10px;" alt="Logo Matin Dimanche"><img src="img/soz.jpg" height="30" style="margin-top:12px;margin-right:10px;margin-left:10px;" alt="Logo SonntagsZeitung">
+		<div class="footer">
+			<a href="#top">Back&nbsp;to&nbsp;top</a>&nbsp;| <a href="#" data-toggle="modal" data-target="#myModal">About</a>&nbsp;| <a href="https://github.com/alexhaed/Swiss_Procurement_Methodology">Methodology</a>&nbsp;| <a href="https://github.com/alexhaed/Swiss_Procurement_Methodology/tree/master/pdf">Data&nbsp;source</a>
+		</div>
+		<div class="logos">
+			<a href="http://enquete.lematindimanche.ch"><img src="img/lmd.jpg" height="27" style="margin-top:10px" alt="Logo Matin Dimanche"></a><a href="http://dok.sonntagszeitung.ch"><img src="img/soz.jpg" height="25" style="margin-top:12px" alt="Logo SonntagsZeitung"></a>
 		</div>
 	</div>
 </div>
@@ -124,39 +138,72 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" style="border: 0px;">A PROPOS</h4>
+				<h4 class="modal-title" style="border: 0px;">About</h4>
 			</div>
 			<div class="modal-body">
-				<p>Suspendisse porta massa urna, ut imperdiet diam aliquam in. Vivamus tincidunt ac mauris eget suscipit. Duis pellentesque libero a lorem tempor, eget hendrerit diam dignissim. Nam et fringilla nibh, non condimentum orci. Vestibulum ornare erat sed vestibulum ornare. Cras euismod semper posuere. Nulla lacinia, nisi in condimentum rhoncus, mauris eros egestas turpis, nec mollis orci odio id ante. Aliquam eleifend semper est, eu cursus libero.
-				<br /><br />
-				<b>Que signifie mandataire connu et inconnu?</b><br />
-				Suspendisse porta massa urna, ut imperdiet diam aliquam in. Vivamus tincidunt ac mauris eget suscipit. Duis pellentesque libero a lorem tempor, eget hendrerit diam dignissim. Nam et fringilla nibh, non condimentum orci. Vestibulum ornare erat sed vestibulum ornare. Cras euismod semper posuere. Nulla lacinia, nisi in condimentum rhoncus, mauris eros egestas turpis, nec mollis orci odio id ante. Aliquam eleifend semper est, eu cursus libero.
-				<br /><br />
-				<b>D'où proviennent les données?</b><br />
-				Suspendisse porta massa urna, ut imperdiet diam aliquam in. Vivamus tincidunt ac mauris eget suscipit. Duis pellentesque libero a lorem tempor, eget hendrerit diam dignissim. Nam et fringilla nibh, non condimentum orci. Vestibulum ornare erat sed vestibulum ornare. Cras euismod semper posuere. Nulla lacinia, nisi in condimentum rhoncus, mauris eros egestas turpis, nec mollis orci odio id ante. Aliquam eleifend semper est, eu cursus libero.
-				<br /><br />
-				<b>Puis-je télécharger les données?</b><br />
-				Suspendisse porta massa urna, ut imperdiet diam aliquam in. Vivamus tincidunt ac mauris eget suscipit. Duis pellentesque libero a lorem tempor, eget hendrerit diam dignissim. Nam et fringilla nibh, non condimentum orci. Vestibulum ornare erat sed vestibulum ornare. Cras euismod semper posuere. Nulla lacinia, nisi in condimentum rhoncus, mauris eros egestas turpis, nec mollis orci odio id ante. Aliquam eleifend semper est, eu cursus libero.
-				<br /><br />
-				<b>Contact</b><br />
-				fdsfdsfdsfdsfdsfds: cellule-enquete[at]lematindimanche.ch
-				<br /><br />
-				<b>Crédits</b><br />
-				Visualisation: Florian Evéquoz (<a href="http://www.datastory.ch" target="_blank">Datastory</a>), Noele Illien, Alexandre Haederli<br />
-				Recherche: Titus Plattner, Martin Stoll, Christian Brönnimann
+				<b>What does the circular graphic show?</b><br>
+				The graphic shows the volume of purchases made by the federal government in one year. The colors represent the different departments. The inner circle indicates the division among the departments, while the outer circle with lighter shades details the distribution among the different offices within the department. A click on the graph zooms in on a department or office. The list of main suppliers and the purchases by category then update with information on the chosen entity. 
+				<br><br>
+				<b>Why are some of the suppliers unknown?</b><br>
+				The administration was only compelled to disclose the names of the forty largest suppliers in each department. This means it is possible that some suppliers, important to a federal office but not among the forty largest suppliers of a department, do not appear in the data. 
+				<br><br>
+				<b>Where does the data come from?</b><br>
+				The data used in this application comes from the federal administration. <i>SonntagsZeitung</i> and <i>Le Matin Dimanche</i> requested access to the data in accordance with the Freedom of Information Act. At first the government refused to name the suppliers, citing business confidentiality. The case was then brought before the Federal Court which on the 2 December 2015, <a href="https://www.documentcloud.org/documents/2827266-2015-12-02-Urteil-BGer-BBL.html" target="_blank">decided</a>that the goverment must make the information public.
+				<br><br>
+				<b>Can I download the data?</b><br>
+				<i>Le Matin Dimanche</i> and <i>SonntagsZeitung</i> make the data available. Click <a href="https://github.com/alexhaed/Swiss_Procurement_Methodology/tree/master/pdf">here</a> to download the original data (PDF) and click <a href="https://github.com/alexhaed/Swiss_Procurement_Methodology/tree/master/csv">here</a> to download the data as CSV files. To find out more about how we prepared the data, click <a href="https://github.com/alexhaed/Swiss_Procurement_Methodology">here</a>.
+				The code that was developed for the application is available <a href="https://github.com/evequozf/Swiss_Procurement-LeMatinDimanche">here</a>, under BSD license.
+				<br><br>
+				<b>Contact</b><br>
+				Questions, comments, suggestions: cellule-enquete[at]lematindimanche.ch
+				<br><br>
+				<b>Credits</b><br>
+				Visualization: Florian Evéquoz (<a href="http://www.datastory.ch" target="_blank">Datastory</a>), Noele Illien, Alexandre Haederli (Le Matin Dimanche / SonntagsZeitung)<br>
+				Research: Titus Plattner, Martin Stoll, Christian Brönnimann
 				</p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
-</div> 
+</div>
 
 <script src="d3.v3.min.js"></script>
 <script src="d3-jetpack.js"></script>
 <script src="dsutils.js"></script>
 <script src="queue.min.js"></script>
 <script src="viz.js"></script>
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MWBQ7Z"
+height="0" width="0"
+style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var
+f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j
+,f);
+})(window,document,'script','dataLayer','GTM-MWBQ7Z');</script>
+<!-- End Google Tag Manager -->
+<!-- NET-Metrix-Audit -->
+<script language="JavaScript" src="http://enquete.lematindimanche.ch/js/verge.min.js" type="text/JavaScript">
+</script>
+<!-- NET-Metrix-Audit version="1.5" -->
+<script language="JavaScript" type="text/javascript"> <!--
+if(verge.viewportW() > 755){
+var NETMX="http://lemadi.wemfbox.ch/cgi-bin/ivw/CP/home";
+}else{
+var NETMX="http://lemadi.wemfbox.ch/cgi-bin/ivw/CP/mobilesite/home";
+}
+document.write("<img src=\""+NETMX+"?r="+escape(document.referrer)+"&d="+(Math.random()*100000)+"&x="+screen.width+"x"+screen.height+"\" width=\"1\" height=\"1\" alt=\"\" />");
+// -->
+</script>
+<noscript>
+<img src="http://lemadi.wemfbox.ch/cgi-bin/ivw/CP/home" width="1" height="1" alt="" />
+</noscript>
+<!-- /NET-Metrix-Audit -->
+
 </body>
 </html>

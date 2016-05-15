@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow" />
-<title>Les achats de la Confédération</title>
+<title>Les achats de la Confédération - Le Matin Dimanche</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" ></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="introjs/introfr.min.js"></script>
@@ -17,33 +17,39 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@matindimanche">
 <meta name="twitter:title" content="Les achats de la Confédération">
-<meta name="twitter:description" content="Quels départements ont le plus souvent recours à des prestataires externes? Pour quels types de biens? Et quels sont les plus gros fournisseurs de l’administration?">
-<meta name="twitter:image:src" content="http://enquete.lematindimanche.ch/achats/img/screenshot.jpg">
-<meta property="og:image" content="http://enquete.lematindimanche.ch/achats/img/screenshot.jpg">
-<meta property="og:url" content="http://enquete.lematindimanche.ch/achats">
+<meta name="twitter:description" content="Quels départements ont le plus souvent recours à des prestataires externes? Quels sont les plus gros fournisseurs?">
+<meta name="twitter:image:src" content="http://enquete.lematindimanche.ch/interactif/achats/img/screenshot_fr.jpg?12">
+<meta property="fb:app_id" content="417101858477088">
+<meta property="og:image" content="http://enquete.lematindimanche.ch/interactif/achats/img/screenshot_fr.jpg">
+<meta property="og:url" content="http://enquete.lematindimanche.ch/interactif/achats/">
 <meta property="og:title" content="Les achats de la Confédération">
 <meta property="og:description" content="Quels départements ont le plus souvent recours à des prestataires externes? Pour quels types de biens? Et quels sont les plus gros fournisseurs de l’administration?">
+<script type="text/javascript">
+function hideMe() {
+	document.getElementById('tapinteract').style.display = 'none';
+}
+</script>
 </head>
 <body>
-
 <div class="container">
-
 <div class="row">
 	<div class="col-xs-12">
-		<p style="text-align:right; padding-top:5px;"><a href="indexde.html?lang=de">DEUTSCH</a> | <a href="indexen.html?lang=en">ENGLISH</a></p>
+		<p class="lang"><a href="http://dok.sonntagszeitung.ch/interaktiv/beschaffungen/indexde.html?lang=de">DEUTSCH</a> | <a href="http://enquete.lematindimanche.ch/interactif/achats/indexen.html?lang=en">ENGLISH</a></p>
 	</div>
 </div>
 <div class="row">
-	<h1 class="col-xs-12">Les achats de la Confédération</h1>
+	<h1 class="col-xs-12 title">Les achats de la Confédération</h1>
 </div>
 <div class="row">
-	<div class="col-xs-12">
-		L’administration fédérale suisse achète chaque année pour <b>plus de cinq milliards</b> de francs de biens et de services à des entreprises privées. Notre application montre quels départements et offices ont le plus souvent recours à des prestataires externes et pour quels types de biens. Elle permet aussi de voir <b>quels sont les plus gros fournisseurs</b> de l’administration. Ces chiffres inédits proviennent de l’administration elle-même et ont été obtenus par <i>Le Matin Dimanche</i> et la <i>SonntagsZeitung</i> grâce à la Loi sur la transparence, après plus de trois ans de bataille juridique. <a href="#" data-toggle="modal" data-target="#myModal">En savoir plus</a><br><br>
-		<a href="javascript:void(0);" onclick="javascript:introJs().start();">
-			<div style="background-color:#f6f6f6; width:280px; padding:5px;text-align:center;border-radius:3px;border:1px solid #ddd;">
+	<div class="col-xs-12 col-sm-7 texteintro">
+		L’administration fédérale suisse achète chaque année pour <b>plus de cinq milliards de francs</b> de biens et de services à des entreprises privées. Notre application montre quels départements et offices ont le plus souvent recours à des prestataires externes et pour quels types de biens. Elle permet aussi de voir <b>quels sont les plus gros fournisseurs</b> de l’administration. Ces chiffres inédits proviennent de l’administration elle-même et ont été obtenus par <i>Le Matin Dimanche</i> et la <i>SonntagsZeitung</i> grâce à la Loi sur la transparence, après plus de trois ans de bataille juridique. <a href="#" data-toggle="modal" data-target="#myModal">En&nbsp;savoir&nbsp;plus</a>
+	</div>
+	<div class="col-xs-12 col-sm-5">
+		<a href="javascript:void(0);" style="text-decoration: none;" onclick="javascript:introJs().start();">
+			<div class="helper">
 				<img style="vertical-align: -15%;" src="img/help.png" alt="Aide" height="15" width="15">&nbsp;Comment fonctionne cette application?&nbsp;&nbsp;
 			</div>
-		</a><br>
+		</a>
 	</div>
 </div>
 <div class="row">
@@ -58,11 +64,9 @@
 		</div>
 	</form>
 </div>
-<div class="row">
-	<div id="breadcrumb" class="col-xs-12"></div>
-</div>
 <div class="row" id="graph-container">
 	<div class="col-sm-12 col-md-5" id="left-column">
+		<div id="breadcrumb"></div>
 		<div id="over-sunburst">
 			<div id="fixed-tooltip" class="hidden-xs"> <!-- hidden on mobile -->
 				<div id="fixed-tooltip-dept"></div>
@@ -70,7 +74,18 @@
 				<div id="fixed-tooltip-percent"></div>
 			</div>
 		</div>
-		<div id="sunburst-container" data-step="3" data-intro="Ou en cliquant sur ce graphique qui représente le montant des achats de chaque office en comparaison avec les autres" data-position='top'></div>
+		<div id="sunburst-container" data-step="3" data-intro="Ou en cliquant sur ce graphique qui représente le montant des achats de chaque office en comparaison avec les autres" data-position='top'>
+		</div>
+		<div class="visible-sm visible-xs">
+			<a href="javascript:void(0);" onclick="javascript:hideMe();">
+			<div id="tapinteract">
+				<div id="interacttext">
+					<img src="img/click.png" width="50"><br>
+					<b>Cliquez sur le graphique<br>pour interagir</b>
+				</div>
+			</div>
+			</a>
+		</div>
 	</div>
 	<div class="col-sm-12 col-md-7" id="right-column">
 		<div id="details-pane">
@@ -108,9 +123,11 @@
 
 <div class="row">
 	<div class="col-xs-12">
-		<div style="text-align: center; margin-top: 25px; margin-bottom: 0px; line-height: 1.5">
-			<div style="margin-bottom:15px;"><a href="#top">Retour en haut</a></div>
-			<img src="img/lmd.jpg" height="32" style="margin-top:10px;margin-right:10px;margin-left:10px;" alt="Logo Matin Dimanche"><img src="img/soz.jpg" height="30" style="margin-top:12px;margin-right:10px;margin-left:10px;" alt="Logo SonntagsZeitung">
+		<div class="footer">
+			<a href="#top">Retour&nbsp;en&nbsp;haut</a>&nbsp;| <a href="#" data-toggle="modal" data-target="#myModal">A propos</a>&nbsp;| <a href="https://github.com/alexhaed/Swiss_Procurement_Methodology">Méthodologie</a>&nbsp;| <a href="https://github.com/alexhaed/Swiss_Procurement_Methodology/tree/master/pdf">Données&nbsp;sources</a>
+		</div>
+		<div class="logos">
+			<a href="http://enquete.lematindimanche.ch"><img src="img/lmd.jpg" height="27" style="margin-top:10px" alt="Logo Matin Dimanche"></a><a href="http://dok.sonntagszeitung.ch"><img src="img/soz.jpg" height="25" style="margin-top:12px" alt="Logo SonntagsZeitung"></a>
 		</div>
 	</div>
 </div>
@@ -122,7 +139,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" style="border: 0px;">A PROPOS</h4>
+				<h4 class="modal-title" style="border: 0px;">A propos</h4>
 			</div>
 			<div class="modal-body">
 				<b>Que représente le graphique circulaire?</b><br>
@@ -131,21 +148,21 @@
 				Un clic sur le graphique permet de zoomer sur un département ou un office. Le graphique des fournisseurs principaux et celui des achats par catégories se mettent alors à jour avec les informations disponibles concernant l’entité choisie. 
 				<br><br>
 				<b>Pourquoi certains fournisseurs sont inconnus?</b><br>
-				L’administration a été contraint de dévoiler uniquement le nom des quarante fournisseurs les plus importants de chaque département.
+				L’administration a été contraint de dévoiler uniquement le nom des quarante fournisseurs les plus importants de chaque département. Cela signifie qu'il est possible que certains fournisseurs, importants pour certains offices mais ne figurant pas parmi les quarante plus grands fournisseurs au niveau du département, n'apparaissent pas dans ces données.
 				<br><br>
 				<b>D'où proviennent les données?</b><br>
-				Les informations ayant servi à réalsier cette application proviennent de l'administration fédérale. Le <i>Matin Dimanche</i> et la <i>SonntagsZeitung</i> ont demandé l’accès à ces données le [date] en s’appuyant sur la Loi sur la transparence. L’administration fédérale a refusé de donner le nom des fournisseurs, prétextant le secret des affaires. Le cas est remonté jusqu’au Tribunal fédéral qui a contraint, dans <a href="https://www.documentcloud.org/documents/2827266-2015-12-02-Urteil-BGer-BBL.html" target="_blank">sa décision du 2 décembre 2015</a>, l'administration fédérale à transmettreces informations.
+				Les informations ayant servi à réaliser cette application proviennent de l'administration fédérale. Le <i>Matin Dimanche</i> et la <i>SonntagsZeitung</i> ont demandé l’accès à ces données le [date] en s’appuyant sur la Loi sur la transparence. L’administration fédérale a refusé de donner le nom des fournisseurs, prétextant le secret des affaires. Le cas est remonté jusqu’au Tribunal fédéral qui a contraint, dans <a href="https://www.documentcloud.org/documents/2827266-2015-12-02-Urteil-BGer-BBL.html" target="_blank">sa décision du 2 décembre 2015</a>, l'administration fédérale à transmettreces informations.
 				<br><br>
 				<b>Puis-je télécharger les données?</b><br>
-				Le Matin Dimanche et la SonntagsZeitung mettent à disposition les informations obtenues. Cliquez <a href="">ici</a> pour télécharger les données reçues de l'administration (format PDF) ou <a href="">ici</a> pour les données au format tableur (CSV).
-				Pour savoir comment nous avons préparé ces données, vous pouvez consulter <a href="">cette page</a>.
-				Le code ayant servi à réaliser la visualisation est disponible <a href="">ici</a> sous licence MIT.
+				<i>Le Matin Dimanche</i> et la <i>SonntagsZeitung</i> mettent à disposition les informations obtenues. Cliquez <a href="https://github.com/alexhaed/Swiss_Procurement_Methodology/tree/master/pdf">ici</a> pour télécharger les données reçues de l'administration (format PDF) ou <a href="https://github.com/alexhaed/Swiss_Procurement_Methodology/tree/master/csv">ici</a> pour les données au format tableur (CSV).
+				Pour savoir comment nous avons préparé ces données, vous pouvez consulter <a href="https://github.com/alexhaed/Swiss_Procurement_Methodology">cette page</a>.
+				Le code ayant servi à réaliser la visualisation est disponible <a href="https://github.com/evequozf/Swiss_Procurement-LeMatinDimanche">ici</a> sous licence BSD.
 				<br><br>
 				<b>Contact</b><br>
 				Remarques, questions, suggestions: cellule-enquete[at]lematindimanche.ch
 				<br><br>
 				<b>Crédits</b><br>
-				Visualisation: Florian Evéquoz (<a href="http://www.datastory.ch" target="_blank">Datastory</a>), Noele Illien, Alexandre Haederli<br>
+				Visualisation: Florian Evéquoz (<a href="http://www.datastory.ch" target="_blank">Datastory</a>), Noele Illien, Alexandre Haederli (Le Matin Dimanche / SonntagsZeitung)<br>
 				Recherche: Titus Plattner, Martin Stoll, Christian Brönnimann
 				</p>
 			</div>
@@ -161,5 +178,35 @@
 <script src="dsutils.js"></script>
 <script src="queue.min.js"></script>
 <script src="viz.js"></script>
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MWBQ7Z"
+height="0" width="0"
+style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var
+f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j
+,f);
+})(window,document,'script','dataLayer','GTM-MWBQ7Z');</script>
+<!-- End Google Tag Manager -->
+<!-- NET-Metrix-Audit -->
+<script language="JavaScript" src="http://enquete.lematindimanche.ch/js/verge.min.js" type="text/JavaScript">
+</script>
+<!-- NET-Metrix-Audit version="1.5" -->
+<script language="JavaScript" type="text/javascript"> <!--
+if(verge.viewportW() > 755){
+var NETMX="http://lemadi.wemfbox.ch/cgi-bin/ivw/CP/home";
+}else{
+var NETMX="http://lemadi.wemfbox.ch/cgi-bin/ivw/CP/mobilesite/home";
+}
+document.write("<img src=\""+NETMX+"?r="+escape(document.referrer)+"&d="+(Math.random()*100000)+"&x="+screen.width+"x"+screen.height+"\" width=\"1\" height=\"1\" alt=\"\" />");
+// -->
+</script>
+<noscript>
+<img src="http://lemadi.wemfbox.ch/cgi-bin/ivw/CP/home" width="1" height="1" alt="" />
+</noscript>
+<!-- /NET-Metrix-Audit -->
 </body>
 </html>
