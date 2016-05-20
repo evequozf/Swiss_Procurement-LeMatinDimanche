@@ -44,7 +44,7 @@ test:
 #   then minified *.js files on DIST are not updated (because they are newer)
 #   therefore: call 'make clean debug' ('make clean all' if 'make debug' was called)
 # Copies index.html + custom.css + import folder + all js files unchanged (not minified)
-debug: $(DIST)/$(IMPORT) $(DIST)/index.html $(DIST)/custom.css viz.js
+debug: $(DIST)/$(IMPORT) $(DIST)/img $(DIST)/introjs $(DIST)/index.html $(DIST)/indexde.html $(DIST)/indexen.html $(DIST)/custom.css viz.js
 	@rsync -upE *.js $(DIST)/
 
 # Compile the final targets and copy to DIST (minified js)
